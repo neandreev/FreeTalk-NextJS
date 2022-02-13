@@ -15,84 +15,84 @@ firebase.initializeApp({
 export type User = firebase.User | null | false;
 
 export interface IAuthContext {
-	user: User;
-	signin: (email: string, password: string) => Promise<firebase.User | null>;
-	signup: (email: string, password: string) => Promise<firebase.User | null>;
-	signout: () => Promise<void>;
-	sendPasswordResetEmail: (email: string) => Promise<boolean>;
-	confirmPasswordReset: (code: string, password: string) => Promise<boolean>;
+  user: User;
+  signin: (email: string, password: string) => Promise<firebase.User | null>;
+  signup: (email: string, password: string) => Promise<firebase.User | null>;
+  signout: () => Promise<void>;
+  sendPasswordResetEmail: (email: string) => Promise<boolean>;
+  confirmPasswordReset: (code: string, password: string) => Promise<boolean>;
 }
 
 const useProvideAuth = () => {
-	const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User>(null);
 
-	const signin = (email: string, password: string) => {
-		return firebase
-			.auth()
-			.signInWithEmailAndPassword(email, password)
-			.then((response) => {
-				setUser(response.user);
-				return response.user;
-			});
-	};
+  const signin = (email: string, password: string) => {
+    return firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        setUser(response.user);
+        return response.user;
+      });
+  };
 
-	const signup = (email: string, password: string) => {
-		return firebase
-			.auth()
-			.createUserWithEmailAndPassword(email, password)
-			.then((response) => {
-				setUser(response.user);
-				return response.user;
-			});
-	};
+  const signup = (email: string, password: string) => {
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        setUser(response.user);
+        return response.user;
+      });
+  };
 
-	const signout = () => {
-		return firebase
-			.auth()
-			.signOut()
-			.then(() => {
-				setUser(false);
-			});
-	};
+  const signout = () => {
+    return firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setUser(false);
+      });
+  };
 
-	const sendPasswordResetEmail = (email: string) => {
-		return firebase
-			.auth()
-			.sendPasswordResetEmail(email)
-			.then(() => {
-				return true;
-			});
-	};
+  const sendPasswordResetEmail = (email: string) => {
+    return firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        return true;
+      });
+  };
 
-	const confirmPasswordReset = (code: string, password: string) => {
-		return firebase
-			.auth()
-			.confirmPasswordReset(code, password)
-			.then(() => {
-				return true;
-			});
-	};
+  const confirmPasswordReset = (code: string, password: string) => {
+    return firebase
+      .auth()
+      .confirmPasswordReset(code, password)
+      .then(() => {
+        return true;
+      });
+  };
 
-	useEffect(() => {
-		const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-			if (user) {
-				setUser(user);
-			} else {
-				setUser(false);
-			}
-		});
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(false);
+      }
+    });
 
-		return () => unsubscribe();
-	}, []);
+    return () => unsubscribe();
+  }, []);
 
-	return {
-		user,
-		signin,
-		signup,
-		signout,
-		sendPasswordResetEmail,
-		confirmPasswordReset,
-	};
+  return {
+    user,
+    signin,
+    signup,
+    signout,
+    sendPasswordResetEmail,
+    confirmPasswordReset,
+  };
 };
 
 const AuthContext = createContext<IAuthContext | null>(null);

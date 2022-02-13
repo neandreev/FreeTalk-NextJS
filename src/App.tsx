@@ -1,6 +1,22 @@
-import React from 'react';
-import { TrainingPage } from './modules/training/pages/TrainingPage';
+import {FC} from 'react';
 
-export const App: React.FC = () => {
-	return <TrainingPage />;
+import {AppRoutes} from './routes';
+
+import {Header} from "./components/organism/Header";
+import {Footer} from "./components/organism/Footer";
+
+import {Layout} from 'antd';
+
+import './styles/page.css';
+
+export const App: FC = () => {
+	return (
+		<div className="App">
+			<Layout>
+			<Header/>
+			<AppRoutes/>
+			<Footer/>
+			</Layout>
+		</div>
+	);
 };

@@ -1,6 +1,7 @@
 import {Translate} from "../components/organism/Translate";
 import {Collections} from "../components/organism/Collections";
 import {DetailCollection} from "../components/organism/DetailCollection";
+import {TrainingPage} from "../components/pages/TrainingPage";
 
 export const routes = [
   {
@@ -8,6 +9,12 @@ export const routes = [
     component: Translate,
     name: 'root',
     isProtected: false
+  },
+  {
+    path: '/training',
+    component: TrainingPage,
+    name: 'training',
+    isProtected: true
   },
   {
     path: '/collections',

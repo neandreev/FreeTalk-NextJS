@@ -2,7 +2,7 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import { answerQuestion, selectTraining } from "../../../../features/training/trainingSlice";
 import { useAppDispatch, useAppSelector } from "../../../../hooks";
-import { Word } from "../../../../interfaces/word";
+import { IWord } from "../../../../interfaces/word";
 import classes from "./QuizButton.module.css";
 
 interface QuizButtonProps {
@@ -16,7 +16,7 @@ export const QuizButton: React.FC<QuizButtonProps> = (props) => {
   const dispatch = useAppDispatch();
   const { trainingWords, currentQuestionId } = useAppSelector(selectTraining);
 
-  const word = _.find(trainingWords, { id: props.wordId }) as Word;
+  const word = _.find(trainingWords, { id: props.wordId }) as IWord;
   const isAnsweredCorrectly = props.type !== "wrong";
   const clickedButtonClasses = isAnsweredCorrectly
     ? classes.quizButton_correct : classes.quizButton_wrong;

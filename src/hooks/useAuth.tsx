@@ -14,7 +14,7 @@ firebase.initializeApp({
 
 export type User = firebase.User | null | false;
 
-export interface authContext {
+export interface IAuthContext {
   user: User;
   signin: (email: string, password: string) => Promise<firebase.User | null>;
   signup: (email: string, password: string) => Promise<firebase.User | null>;
@@ -95,7 +95,7 @@ const useProvideAuth = () => {
   };
 };
 
-const AuthContext = createContext<authContext | null>(null);
+const AuthContext = createContext<IAuthContext | null>(null);
 
 export const useAuth = () => {
   return useContext(AuthContext);

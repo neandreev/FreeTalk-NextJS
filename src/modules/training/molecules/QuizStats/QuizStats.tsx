@@ -1,19 +1,19 @@
 import _ from "lodash";
 import { Card, Col, Row } from "antd";
 
-import { Word } from "../../../../interfaces/word";
+import { IWord } from "../../../../interfaces/word";
 import { useAppSelector } from "../../../../hooks";
 import { selectTraining } from "../../../../features/training/trainingSlice";
 
 import classes from "./QuizStats.module.css";
 import "./QuizStats.css";
 
-interface WordStatProps {
-  word: Word;
+interface IWordStat {
+  word: IWord;
   correct: boolean;
 };
 
-const WordStat: React.FC<WordStatProps> = (props) => {
+const WordStat: React.FC<IWordStat> = (props) => {
   const { correct } = props;
   const wordStyle = correct ? classes['correct'] : classes['wrong'];
 
@@ -35,7 +35,7 @@ export const QuizStats: React.FC = () => {
 
   const questionsWordsStats = questions
     .map((question) => ({
-      word: _.find(trainingWords, { id: question.correctAnswerId }) as Word,
+      word: _.find(trainingWords, { id: question.correctAnswerId }) as IWord,
       correct: question.wasAnsweredCorrectly,
     }))
     .map((stat) => (

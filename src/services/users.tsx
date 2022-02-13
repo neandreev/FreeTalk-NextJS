@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Word } from '../interfaces/word';
+import { IWord } from '../interfaces/word';
 
-interface UpdateUserWords {
+interface IUpdateUserWords {
   userId: string;
   wordId: string;
-  word: Partial<Word>;
+  word: Partial<IWord>;
 };
 
-interface WordsObj {
-  [id: string]: Partial<Word>
+interface IWordsObj {
+  [id: string]: Partial<IWord>
 };
 
 export const usersApi = createApi({
@@ -17,31 +17,31 @@ export const usersApi = createApi({
     baseUrl: 'https://freetalk2022-default-rtdb.firebaseio.com/users/',
   }),
   endpoints: (builder) => ({
-    getUserWordsByUid: builder.query<Word[], string>({
+    getUserWordsByUid: builder.query<IWord[], string>({
       query: (uid) => `${uid}/words.json`,
-      transformResponse: (response: WordsObj) => {
+      transformResponse: (response: IWordsObj) => {
         const wordsEntries = Object.entries(response);
-        const wordsArray: Word[] = wordsEntries.map(([id, word]) => ({ ...word, id } as Word));
+        const wordsArray: IWord[] = wordsEntries.map(([id, word]) => ({ ...word, id } as IWord));
         console.log(wordsArray);
 
         return wordsArray;
       },
     }),
-    addUserWord: builder.mutation<void, Partial<UpdateUserWords>>({
+    addUserWord: builder.mutation<void, Partial<IUpdateUserWords>>({
       query: ({ word, userId }) => ({
         url: `${userId}/words.json`,
         method: 'POST',
         body: word,
       }),
     }),
-    updateUserWord: builder.mutation<void, UpdateUserWords>({
+    updateUserWord: builder.mutation<void, IUpdateUserWords>({
       query: ({ word, wordId, userId }) => ({
         url: `${userId}/words/${wordId}.json`,
         method: 'PATCH',
         body: word,
       }),
     }),
-    deleteUserWord: builder.mutation<void, Partial<UpdateUserWords>>({
+    deleteUserWord: builder.mutation<void, Partial<IUpdateUserWords>>({
       query: ({ userId, wordId }) => ({
         url: `${userId}/words/${wordId}.json`,
         method: 'DELETE',

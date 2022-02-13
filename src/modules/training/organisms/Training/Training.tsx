@@ -8,12 +8,12 @@ import {
   setQuestions,
   setTrainingWords,
 } from '../../../../features/training/trainingSlice';
-import { Word } from '../../../../interfaces/word';
-import { Question } from '../../../../interfaces/question';
+import { IWord } from '../../../../interfaces/word';
+import { IQuestion } from '../../../../interfaces/question';
 import { useGetUserWordsByUidQuery } from '../../../../services/users';
 import { useAuth } from '../../../../hooks/useAuth';
 
-const generateQuestions = (words: Word[]) => {
+const generateQuestions = (words: IWord[]) => {
   const questions = words.map((word) => {
     const correctAnswerId = word.id;
     const wrongAnswersIds = _.shuffle(words)
@@ -21,7 +21,7 @@ const generateQuestions = (words: Word[]) => {
       .filter((wordId) => wordId !== correctAnswerId)
       .slice(0, 3);
 
-    const question: Question = {
+    const question: IQuestion = {
       wasAnswered: false,
       wasAnsweredCorrectly: null,
       correctAnswerId,
@@ -34,7 +34,7 @@ const generateQuestions = (words: Word[]) => {
   return questions;
 };
 
-const selectWordsForTraining = (words: Word[]) => {
+const selectWordsForTraining = (words: IWord[]) => {
   const availableWordsForTraining = words.filter((word) => {
     const timestamp = Date.now();
     return word.timeToTrain <= timestamp;

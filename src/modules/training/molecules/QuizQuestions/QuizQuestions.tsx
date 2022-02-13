@@ -12,12 +12,12 @@ import {
 } from '../../../../features/training/trainingSlice';
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
 
-import { Word } from '../../../../interfaces/word';
+import { IWord } from '../../../../interfaces/word';
 
 import classes from "./QuizQuestions.module.css";
 import "./QuizQuestions.css";
 
-interface Variant {
+interface IVariant {
   wordId: string;
   type: 'wrong' | 'correct';
 }
@@ -30,7 +30,7 @@ export const QuizQuestions: React.FC = () => {
 
   const { wasAnswered } = currentQuestion;
   const answerId: string = currentQuestion.correctAnswerId;
-  const correctWord = _.find(trainingWords, { id: answerId }) as Word;
+  const correctWord = _.find(trainingWords, { id: answerId }) as IWord;
   const [wrongAnswer1, wrongAnswer2, wrongAnswer3] =
     currentQuestion.wrongAnswersIds;
 
@@ -40,7 +40,7 @@ export const QuizQuestions: React.FC = () => {
     dispatch(nextQuestion());
   };
 
-  const variants: Variant[] = [
+  const variants: IVariant[] = [
     { wordId: answerId, type: 'correct' },
     { wordId: wrongAnswer1, type: 'wrong' },
     { wordId: wrongAnswer2, type: 'wrong' },

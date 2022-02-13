@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
-import { Question } from '../../interfaces/question';
-import { Word } from '../../interfaces/word';
+import { IQuestion } from '../../interfaces/question';
+import { IWord } from '../../interfaces/word';
 
-interface TrainingSliceType {
-  questions: Question[];
-  trainingWords: Word[],
+interface ITrainingSlice {
+  questions: IQuestion[];
+  trainingWords: IWord[],
   currentQuestionId: number;
   isCompleted: boolean;
   correctAnswers: number,
   completedQuestions: number,
 };
 
-const initialState: TrainingSliceType = {
+const initialState: ITrainingSlice = {
   questions: [],
   trainingWords: [],
   currentQuestionId: 0,
@@ -25,10 +25,10 @@ export const trainingSlice = createSlice({
   name: 'words',
   initialState,
   reducers: {
-    setQuestions: (state, action: PayloadAction<Question[]>) => {
+    setQuestions: (state, action: PayloadAction<IQuestion[]>) => {
       state.questions = action.payload;
     },
-    setTrainingWords: (state, action: PayloadAction<Word[]>) => {
+    setTrainingWords: (state, action: PayloadAction<IWord[]>) => {
       state.trainingWords = action.payload;
     },
     answerQuestion: (state, action: PayloadAction<{ wordId: string, isAnsweredCorrectly: boolean }>) => {

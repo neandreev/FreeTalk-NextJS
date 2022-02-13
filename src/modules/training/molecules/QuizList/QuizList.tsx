@@ -4,16 +4,16 @@ import { selectCurrentQuestion } from '../../../../features/training/trainingSli
 import { useAppSelector } from '../../../../hooks';
 import { QuizButton } from '../../atoms/QuizButton';
 
-interface Variant {
+interface IVariant {
   wordId: string;
   type: 'wrong' | 'correct';
 }
 
-interface QuizListProps {
-  variants: Variant[];
+interface IQuizList {
+  variants: IVariant[];
 }
 
-export const QuizList: React.FC<QuizListProps> = (props) => {
+export const QuizList: React.FC<IQuizList> = (props) => {
   const { variants } = props;
   const { wasAnswered } = useAppSelector(selectCurrentQuestion);
 

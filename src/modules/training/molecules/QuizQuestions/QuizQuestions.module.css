@@ -16,3 +16,8 @@
 
   color: #0097ee;
 }
+
+.quizNextWord:hover {
+  cursor: pointer;
+  color: #0182cc;
+}

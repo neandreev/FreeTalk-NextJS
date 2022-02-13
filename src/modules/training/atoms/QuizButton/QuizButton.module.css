@@ -16,6 +16,8 @@
 }
 
 .quizButton:hover {
+  cursor: pointer;
+
   border-width: 3px;
   padding: 7px;
   font-size: 20px;

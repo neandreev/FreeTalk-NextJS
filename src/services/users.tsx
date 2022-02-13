@@ -22,7 +22,6 @@ export const usersApi = createApi({
       transformResponse: (response: IWordsObj) => {
         const wordsEntries = Object.entries(response);
         const wordsArray: IWord[] = wordsEntries.map(([id, word]) => ({ ...word, id } as IWord));
-        console.log(wordsArray);
 
         return wordsArray;
       },

@@ -1,0 +1,18 @@
+.wordStat {
+	text-align: center;
+	font-weight: bold;
+
+	font-size: 20px;
+}
+
+.wrong {
+	composes: wordStat;
+
+	color: #ff8a8a;
+}
+
+.correct {
+	composes: wordStat;
+
+	color: #a9da60;
+}

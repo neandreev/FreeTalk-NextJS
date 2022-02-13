@@ -3,13 +3,13 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyAudkAgWP66xM7S38SC2D-Ls75YzLmeZ3s',
-  authDomain: 'freetalk2022.firebaseapp.com',
-  databaseURL: 'https://freetalk2022-default-rtdb.firebaseio.com',
-  projectId: 'freetalk2022',
-  storageBucket: 'freetalk2022.appspot.com',
-  messagingSenderId: '1003236681631',
-  appId: '1:1003236681631:web:1a2ec2c0e896b494a87faa',
+	apiKey: 'AIzaSyAudkAgWP66xM7S38SC2D-Ls75YzLmeZ3s',
+	authDomain: 'freetalk2022.firebaseapp.com',
+	databaseURL: 'https://freetalk2022-default-rtdb.firebaseio.com',
+	projectId: 'freetalk2022',
+	storageBucket: 'freetalk2022.appspot.com',
+	messagingSenderId: '1003236681631',
+	appId: '1:1003236681631:web:1a2ec2c0e896b494a87faa',
 });
 
 export type User = firebase.User | null | false;
@@ -98,11 +98,11 @@ const useProvideAuth = () => {
 const AuthContext = createContext<IAuthContext | null>(null);
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+	return useContext(AuthContext);
 };
 
 export const ProvideAuth: React.FC = ({ children }) => {
-  const auth = useProvideAuth();
+	const auth = useProvideAuth();
 
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };

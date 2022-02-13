@@ -6,7 +6,10 @@ import { ProvideAuth } from './hooks/useAuth';
 
 import {store} from './store/store';
 
-import {App} from './App';
+import { App } from './App';
+import { store } from './store';
+
+import { ProvideAuth } from './hooks/useAuth';
 
 import 'antd/dist/antd.min.css';
 import './index.css';

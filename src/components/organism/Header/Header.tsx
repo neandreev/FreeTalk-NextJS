@@ -47,12 +47,14 @@ export const Header: FC = () => {
 				isModalVisible={isModalVisible}
 				handleCloseModal={handleCloseModal}
 			/>
-			<Menu theme='dark' mode='horizontal' defaultSelectedKeys={['1']}>
-				<Menu.Item key='1'>Перевести</Menu.Item>
-				<Menu.Item key='2'>Словарь</Menu.Item>
-				<Menu.Item key='3'>Тренировка</Menu.Item>
-				<Menu.Item key='4'>Коллекции</Menu.Item>
-			</Menu>
+			{user && (
+				<Menu theme='dark' mode='horizontal' defaultSelectedKeys={[]}>
+					<Menu.Item key='1'>Словарь</Menu.Item>
+					<Menu.Item key='2'>Тренировка</Menu.Item>
+					<Menu.Item key='3'>Коллекции</Menu.Item>
+					<Menu.Item key='4'>Статистика</Menu.Item>
+				</Menu>
+			)}
 		</HeaderAnt>
 	);
 };

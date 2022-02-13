@@ -1,10 +1,11 @@
-import {Collections} from "../components/molecules/Collections";
-import {DetailCollection} from "../components/molecules/DetailCollection";
+import {Translate} from "../components/organism/Translate";
+import {Collections} from "../components/organism/Collections";
+import {DetailCollection} from "../components/organism/DetailCollection";
 
 export const routes = [
   {
     path: '/',
-    component: Collections, // сюда подставить компоненту модуля Translator
+    component: Translate,
     name: 'root',
     isProtected: false
   },

@@ -8,7 +8,7 @@ import { columns } from './constants';
 import { getCollectionsAsync } from '../../../api/collectionsAPI';
 
 import { Row, Col, Radio, message } from 'antd';
-import { Table } from '../../atoms/Table';
+import { Table } from '../../molecules/Table';
 
 const rowSelection = {
 	onChange: (selectedRowKeys: React.Key[], selectedRows: ICollectionRow[]) => {

@@ -2,16 +2,12 @@ import {FC} from 'react';
 
 import {Layout} from 'antd';
 
-import styles from './PublicLayout.module.css';
-
 const {Content} = Layout;
 
 export const AppPublicLayout: FC = ({children}) => {
 	return (
-		<Layout className={styles.publicLayout}>
-			<Content>
-				<div>{children}</div>
-			</Content>
-		</Layout>
+		<Content className='page__layout layout__min-height'>
+			<div>{children}</div>
+		</Content>
 	);
 };

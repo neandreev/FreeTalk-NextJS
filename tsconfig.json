@@ -22,7 +22,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "./global.d.ts",
+    "./src/global.d.ts",
     "src"
   ]
 }

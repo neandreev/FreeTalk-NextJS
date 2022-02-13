@@ -1,12 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../hooks/hooks';
 
-import { getCollectionsAsync } from '../../../api/collectionsAPI';
-
-import {CollectionCard} from "../../atoms/CollectionCard";
-import { ICollection } from '../../../interfaces/collection';
+import {CollectionCard} from "../../molecules/CollectionCard";
 
 import { Pagination, message, Row, Col } from 'antd';
+
+import { getCollectionsAsync } from '../../../api/collectionsAPI';
+
+import {ICollection} from '../../../interfaces/collection';
+
 import styles from './Collections.module.css';
 
 interface IPagination {

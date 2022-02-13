@@ -1,0 +1,8 @@
+.page {
+  padding: 120px 150px;
+  margin-bottom: 30px;
+}
+
+.page__title {
+  font-size: 25px;
+}

@@ -1,6 +1,13 @@
-import React from 'react';
+import { FC } from 'react';
 
-export const App: React.FC = () => {
-  return <div>Только вперед!</div>;
+import { AppRoutes } from './app/routes';
+
+import './app/styles/page.css';
+
+export const App: FC = () => {
+  return (
+    <div className="App">
+      <AppRoutes />
+    </div>
+  );
 };
-

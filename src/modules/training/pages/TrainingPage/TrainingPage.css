@@ -1,8 +1,9 @@
 .training-page {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.training-page > div {
+/* .training-page > div {
   height: 50vh;
-}
+} */

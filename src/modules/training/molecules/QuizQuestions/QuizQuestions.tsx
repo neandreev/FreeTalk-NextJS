@@ -59,14 +59,18 @@ export const QuizQuestions: React.FC = () => {
   );
 
   return (
-    <Card className="quiz" title={QuestionTitle} style={{ width: 500 }}>
-      <QuizList variants={shuffledVariants} />
+    <>
+      <Card className='quiz' title={QuestionTitle}>
+        <QuizList variants={shuffledVariants} />
+      </Card>
       {wasAnswered ? (
         <div className={classes.quizFooter}>
           <AnswerInform />
-        <span className={classes.quizNextWord} onClick={handleNextQuestionLink}>Далее</span>
+          <span className={classes.quizNextWord} onClick={handleNextQuestionLink}>
+            Далее
+          </span>
         </div>
       ) : null}
-    </Card>
+    </>
   );
 };

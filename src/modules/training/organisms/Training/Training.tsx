@@ -13,6 +13,8 @@ import { IQuestion } from '../../../../interfaces/question';
 import { useGetUserWordsByUidQuery } from '../../../../services/users';
 import { useAuth } from '../../../../hooks/useAuth';
 
+import classes from "./Training.module.css";
+
 const generateQuestions = (words: IWord[]) => {
   const questions = words.map((word) => {
     const correctAnswerId = word.id;
@@ -70,12 +72,12 @@ export const Training: React.FC = (props) => {
   }, [isLoading]);
 
   return (
-    <>
+    <div className={classes.training}>
       {
         !isLoading && dataPrepared
         ? <Quiz />
         : <span>loading</span>
       }
-    </>
+    </div>
   )
 };

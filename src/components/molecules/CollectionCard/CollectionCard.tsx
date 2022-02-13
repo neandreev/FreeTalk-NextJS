@@ -9,7 +9,7 @@ export const CollectionCard: FC<ICollection> = ({ id, title, coverUrl }) => {
 	const navigate = useNavigate();
 
 	const handleOnClick = () => {
-		navigate(`collection-detail/${id}`);
+		navigate(`/collection-detail/${id}`);
 	};
 
 	return (

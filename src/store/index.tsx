@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import trainingReducer from '../features/training/trainingSlice';
+import { trainingReducer } from '../features/training/trainingSlice';
 import { usersApi } from '../services/users';
 
 export const store = configureStore({

@@ -1,3 +1,3 @@
-import { AnswerInform } from "./AnswerInform";
+import { AnswerInform } from './AnswerInform';
 
 export { AnswerInform };

@@ -5,15 +5,15 @@ import { selectTraining } from '../../../../features/training/trainingSlice';
 import { useAppSelector } from '../../../../hooks';
 
 export const Quiz: React.FC = () => {
-	const { isCompleted } = useAppSelector(selectTraining);
+  const { isCompleted } = useAppSelector(selectTraining);
 
-	return (
-		<>
-			{
-				!isCompleted
-				? <QuizQuestions />
-				: <QuizStats />
-			}
-		</>
-	);
+  return (
+    <>
+      {
+        !isCompleted
+        ? <QuizQuestions />
+        : <QuizStats />
+      }
+    </>
+  );
 };

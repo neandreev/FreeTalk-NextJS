@@ -10,12 +10,12 @@ import { ProvideAuth } from './hooks/useAuth';
 import './index.css';
 
 ReactDOM.render(
-	<React.StrictMode>
+  <React.StrictMode>
     <ProvideAuth>
       <Provider store={store}>
         <App />
       </Provider>
     </ProvideAuth>
-	</React.StrictMode>,
-	document.getElementById('root')
+  </React.StrictMode>,
+  document.getElementById('root')
 );

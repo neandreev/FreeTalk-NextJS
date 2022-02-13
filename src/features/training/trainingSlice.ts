@@ -22,9 +22,9 @@ const initialState: TrainingSliceType = {
 };
 
 export const trainingSlice = createSlice({
-	name: 'words',
-	initialState,
-	reducers: {
+  name: 'words',
+  initialState,
+  reducers: {
     setQuestions: (state, action: PayloadAction<Question[]>) => {
       state.questions = action.payload;
     },

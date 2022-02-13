@@ -1,13 +1,13 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
-import { AppRoutes } from './app/routes';
+import {AppRoutes} from './routes';
 
-import './app/styles/page.css';
+import './styles/page.css';
 
 export const App: FC = () => {
-  return (
-    <div className="App">
-      <AppRoutes />
-    </div>
-  );
+	return (
+		<div className="App">
+			<AppRoutes/>
+		</div>
+	);
 };

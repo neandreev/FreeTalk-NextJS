@@ -8,6 +8,9 @@
 	margin-right: 20px;
 }
 
-.user {
+.headerAction {
+	height: 100%;
 	float: right;
+	display: flex;
+	align-items: center;
 }

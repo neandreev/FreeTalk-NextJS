@@ -1,12 +1,14 @@
-import {FC, useCallback, useEffect, useState } from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 
-import { CardTranslateRes } from '../../molecules/CardTranslateRes';
-import { CardTranslateReq } from '../../molecules/CardTranslateReq/';
+import {CardTranslateRes} from '../../molecules/CardTranslateRes';
+import {CardTranslateReq} from '../../molecules/CardTranslateReq/';
 
-import { Button } from 'antd';
-import { SwapOutlined } from '@ant-design/icons';
+import {Button} from 'antd';
+import {SwapOutlined} from '@ant-design/icons';
 
 import {translateAPI} from "../../../api/translateAPI";
+
+import _ from "lodash";
 
 import style from './Translate.module.css';
 
@@ -39,7 +41,7 @@ export const Translate: FC = () => {
 				translate = await translateAPI.getTranslateEnToRu(translateRequest);
 			}
 			setIsFetching(false);
-			setTranslateResponse(translate);
+			setTranslateResponse(_.capitalize(translate));
 		}
 
 		getTranslate();
@@ -55,10 +57,10 @@ export const Translate: FC = () => {
 			<Button
 				shape='circle'
 				onClick={handleSwapLang}
-				icon={<SwapOutlined />}
+				icon={<SwapOutlined/>}
 				size='large'
 			/>
-			<CardTranslateRes title={toLang} translateResponse={translateResponse} />
+			<CardTranslateRes title={toLang} translateResponse={translateResponse}/>
 		</div>
 	);
 };

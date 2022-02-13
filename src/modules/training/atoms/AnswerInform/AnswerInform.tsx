@@ -3,7 +3,7 @@ import { selectCurrentQuestion } from "../../../../features/training/trainingSli
 
 export const AnswerInform: React.FC = () => {
   const question = useAppSelector(selectCurrentQuestion);
-  const informText = question.wasAnsweredCorrectly ? "Correct!" : "Incorrect!";
+  const informText = question.wasAnsweredCorrectly ? "Верно!" : "Неверно!";
 
   return (
     <span>

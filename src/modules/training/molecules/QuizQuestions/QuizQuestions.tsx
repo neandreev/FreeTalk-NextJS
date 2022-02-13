@@ -64,7 +64,7 @@ export const QuizQuestions: React.FC = () => {
       {wasAnswered ? (
         <div className={classes.quizFooter}>
           <AnswerInform />
-          <span className={classes.quizNextWord} onClick={handleNextQuestionLink}>Next word</span>
+        <span className={classes.quizNextWord} onClick={handleNextQuestionLink}>Далее</span>
         </div>
       ) : null}
     </Card>

@@ -11,6 +11,7 @@ export interface ITranslateFormValues {
 export interface ICardTranslateRes {
 	title: string;
 	translateResponse: string;
+	onAddWordToDictionary: () => void;
 }
 
 export interface ITranslateResponse {

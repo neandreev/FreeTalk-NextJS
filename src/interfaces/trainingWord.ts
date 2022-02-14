@@ -3,7 +3,7 @@ export interface ITrainingWord {
   id: string;
   translation: string;
   category: string;
-  isLearned: string;
+  isLearned: boolean;
   timeToTrain: number;
   completedTrains: number;
 }

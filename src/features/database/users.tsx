@@ -16,6 +16,7 @@ export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://freetalk2022-default-rtdb.firebaseio.com/users/',
   }),
+	tagTypes: ['Words'],
   endpoints: (builder) => ({
     getUserWordsByUid: builder.query<ITrainingWord[], string>({
       query: (uid) => `${uid}/words.json`,
@@ -25,6 +26,7 @@ export const usersApi = createApi({
 
         return wordsArray;
       },
+			providesTags: ['Words'],
     }),
     addUserWord: builder.mutation<void, Partial<IUpdateUserWords>>({
       query: ({ word, userId }) => ({
@@ -32,6 +34,7 @@ export const usersApi = createApi({
         method: 'POST',
         body: word,
       }),
+			invalidatesTags: ['Words'],
     }),
     updateUserWord: builder.mutation<void, IUpdateUserWords>({
       query: ({ word, wordId, userId }) => ({
@@ -39,12 +42,14 @@ export const usersApi = createApi({
         method: 'PATCH',
         body: word,
       }),
+			invalidatesTags: ['Words'],
     }),
     deleteUserWord: builder.mutation<void, Partial<IUpdateUserWords>>({
       query: ({ userId, wordId }) => ({
         url: `${userId}/words/${wordId}.json`,
         method: 'DELETE',
       }),
+			invalidatesTags: ['Words'],
     }),
   }),
 });

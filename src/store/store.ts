@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { collectionReducer } from '../features/collections/collectionsSlice';
+import { dictionaryReducer } from '../features/dictionary/dictionarySlice';
 import {trainingReducer} from "../features/training/trainingSlice";
 import {usersApi} from "../features/database/users";
 
 export const store = configureStore({
   reducer: {
     collections: collectionReducer,
+		dictionary: dictionaryReducer,
     training: trainingReducer,
     [usersApi.reducerPath]: usersApi.reducer,
   },

@@ -1,0 +1,13 @@
+.wrapper {
+	height: 88px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.cardText {
+	margin: 0;
+	padding: 7px 0;
+	font-size: 14px;
+}

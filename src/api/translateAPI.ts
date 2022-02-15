@@ -1,8 +1,28 @@
+import _ from 'lodash';
+
 const API_KEY =
 	'dict.1.1.20200629T110424Z.820c51d0c3c6ce08.edfcf3c77862c014dce8158ae4581d8a842e9b30';
 
+class ResponseWrapper {
+	word: string;
+	translation: string;
+	category: string;
+	isLearned: boolean;
+	timeToTrain: number;
+	completedTrains: number;
+
+	constructor(ru: string, en: string) {
+		this.word = _.capitalize(ru);
+		this.translation = _.capitalize(en);
+		this.category = 'Default';
+		this.isLearned = false;
+		this.timeToTrain = Date.now();
+		this.completedTrains = 0;
+	}
+}
+
 class TranslateAPI {
-	private API_KEY: string;
+	readonly API_KEY: string;
 
 	constructor(API_KEY: string) {
 		this.API_KEY = API_KEY;
@@ -22,13 +42,13 @@ class TranslateAPI {
 	getTranslateRuToEn = async (word: string) => {
 		const response = await this.getTranslate('ru', 'en', word);
 		const body = await response.json();
-		return body.translate;
+		return { ...new ResponseWrapper(word, body.translate) };
 	};
 
 	getTranslateEnToRu = async (word: string) => {
 		const response = await this.getTranslate('en', 'ru', word);
 		const body = await response.json();
-		return body.translate;
+		return { ...new ResponseWrapper(word, body.translate) };
 	};
 }
 

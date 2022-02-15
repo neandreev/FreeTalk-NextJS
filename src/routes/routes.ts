@@ -2,6 +2,7 @@ import {Translate} from "../components/organism/Translate";
 import {Collections} from "../components/organism/Collections";
 import {DetailCollection} from "../components/organism/DetailCollection";
 import {TrainingPage} from "../components/pages/TrainingPage";
+import { DictionaryPage } from "../components/pages/DictionaryPage";
 
 export const routes = [
   {
@@ -27,5 +28,11 @@ export const routes = [
     component: DetailCollection,
     name: 'collection-detail',
     isProtected: true
-  }
+  },
+	{
+		path: 'dictionary',
+		component: DictionaryPage,
+		name: 'dictionary',
+		isProtected: true,
+	}
 ];

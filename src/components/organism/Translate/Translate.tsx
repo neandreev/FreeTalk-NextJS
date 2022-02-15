@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from 'react';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../hooks';
 import { useAddUserWordMutation } from '../../../features/database/users';
 
 import { CardTranslateRes } from '../../molecules/CardTranslateRes';

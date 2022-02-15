@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../hooks';
 
 import { Training } from '../../organism/Training';
 

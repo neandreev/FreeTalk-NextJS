@@ -1,0 +1,30 @@
+.cardImg {
+	height: 260px;
+	width: 100%;
+	object-fit: cover;
+}
+
+.info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.info span {
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 0.09em;
+	color: var(--black-text);
+}
+
+.info a {
+	min-width: 15px;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 400;
+	color: var(--blue);
+}
+
+.info a:hover {
+	color: var(--black);
+}

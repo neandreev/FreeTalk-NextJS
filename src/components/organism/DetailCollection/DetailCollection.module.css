@@ -1,0 +1,22 @@
+.title {
+	text-transform: uppercase;
+	color: var(--gray);
+}
+
+.cards {
+	margin-top: 15px;
+}
+
+.pagination {
+  margin-top: 20px;
+}
+
+.btnCollections {
+	background-color: #fff!important;
+	color: var(--dark-text)!important;
+}
+
+.btnCollections:hover {
+	background-color: var(--dark-text)!important;
+	color: #fff!important;
+}

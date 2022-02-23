@@ -1,0 +1,23 @@
+.cardText {
+	margin: 0;
+	font-size: 14px;
+	text-align: left;
+}
+
+.cardText p{
+	margin: 0 0 7px 0;
+}
+
+.title {
+	margin-right: 10px;
+	font-weight: bold;
+	color: var(--green);
+}
+
+.translate {
+	color: var(--dark-text);
+}
+
+.none {
+	display: none;
+}

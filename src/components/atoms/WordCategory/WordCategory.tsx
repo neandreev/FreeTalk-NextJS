@@ -13,7 +13,7 @@ interface IWordCategory {
 export const WordCategory: FC<IWordCategory> = ({ record, handleUpdateWord }) => {
 	const [inputVisible, setInputVisible] = useState(false);
 	const [inputValue, setInputValue] = useState(record.category);
-	const inputRef = useRef<Input>(null);
+	const inputRef = useRef<any>(null);
 
 	useEffect(() => {
 		if (inputRef && inputRef.current) {

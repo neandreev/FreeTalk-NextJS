@@ -1,3 +1,3 @@
 import { LoginModalForm } from './LoginModalForm';
 
-export { LoginModalForm };
+export default LoginModalForm;

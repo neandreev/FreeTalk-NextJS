@@ -31,6 +31,7 @@ import calendar from 'dayjs/plugin/calendar';
 import { DeleteOutlined } from '@ant-design/icons';
 
 import style from './Dictionary.module.css';
+import ExpandableInfo from '../../atoms/ExpandableInfo';
 
 dayjs.locale('ru');
 dayjs.extend(localizedFormat);
@@ -217,56 +218,6 @@ export const Dictionary: FC = () => {
 		},
 	};
 
-	const getExpandableInfo = (record: IWord) => {
-		const timeToTrainFormat = dayjs(record.timeToTrain).format('DD MMMM YYYY');
-		const isAvailableForTraining = record.timeToTrain < Date.now();
-
-		const dayToTrainStyles = cn({
-			[style.green]: isAvailableForTraining,
-		});
-		const dayToTrain = (
-			<span className={dayToTrainStyles}>{timeToTrainFormat}</span>
-		);
-
-		return (
-			<>
-				<Row justify='space-between' gutter={[8, 8]} align='middle' wrap={false}>
-					<Col style={{ textAlign: 'start' }} span={12}>
-						{!breakpoint.md && (
-							<Space>
-								<span>Категория:</span>
-								<WordCategory record={record} handleUpdateWord={handleUpdateWord} />
-							</Space>
-						)}
-					</Col>
-					<Col style={{ textAlign: 'start' }} span={12}>
-						{!breakpoint.md && (
-							<Space>
-								<span>Изучено:</span>
-								<Checkbox
-									checked={record.isLearned}
-									onClick={() => handleLearnWord(record.id)}
-								/>
-							</Space>
-						)}
-					</Col>
-				</Row>
-				{record.isLearned ? null : (
-					<Row justify='space-between' gutter={[8, 8]} align='middle' wrap={false}>
-						<Col span={12}>
-							<span>
-								Кол-во повторений: {getWordsRepeatsPlural(record.completedTrains)}
-							</span>
-						</Col>
-						<Col span={12}>
-							<span>Доступно в тренировке с: {dayToTrain}</span>
-						</Col>
-					</Row>
-				)}
-			</>
-		);
-	};
-
 	const tableTitle = () => (
 		<Space style={{ lineHeight: 1.3 }}>
 			<Button
@@ -301,7 +252,7 @@ export const Dictionary: FC = () => {
 						loading={isLoading}
 						rowKey='id'
 						expandable={{
-							expandedRowRender: getExpandableInfo,
+							expandedRowRender: (record => <ExpandableInfo record={record} />),
 							rowExpandable: (record) =>
 								((!breakpoint.lg as boolean) && !record.isLearned) ||
 								(!breakpoint.md as boolean),

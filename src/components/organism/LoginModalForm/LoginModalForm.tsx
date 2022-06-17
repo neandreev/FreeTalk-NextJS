@@ -3,7 +3,6 @@ import { FC, useCallback } from 'react';
 import { Tabs, Modal } from 'antd';
 
 import { AuthorizationForm } from '../../molecules/AuthorizationForm';
-import { RegistrationForm } from '../../molecules/RegistrationForm';
 
 const { TabPane } = Tabs;
 
@@ -29,10 +28,10 @@ export const LoginModalForm: FC<ILoginModalForm> = ({
 		>
 			<Tabs defaultActiveKey='1'>
 				<TabPane tab='Вход' key='1'>
-					<AuthorizationForm onSuccess={handleCancel} />
+					<AuthorizationForm type="signin" onSuccess={handleCancel} />
 				</TabPane>
 				<TabPane tab='Создайте аккаунт' key='2'>
-					<RegistrationForm onSuccess={handleCancel} />
+					<AuthorizationForm type="signup" onSuccess={handleCancel} />
 				</TabPane>
 			</Tabs>
 		</Modal>

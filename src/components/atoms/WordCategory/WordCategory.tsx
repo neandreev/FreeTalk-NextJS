@@ -1,13 +1,13 @@
 import { EditOutlined } from '@ant-design/icons';
 import { Input, Tag } from 'antd';
 import _ from 'lodash';
-import { FC, Key, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { IWord } from '../../../interfaces/word';
 import style from './WordCategory.module.css';
 
 interface IWordCategory {
 	record: IWord;
-	handleUpdateWord: (wordKey: Key, wordData: Partial<IWord>) => void;
+	handleUpdateWord: (wordKey: string, wordData: Partial<IWord>) => void;
 }
 
 export const WordCategory: FC<IWordCategory> = ({ record, handleUpdateWord }) => {

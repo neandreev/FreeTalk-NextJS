@@ -1,21 +1,21 @@
-import { Checkbox, Col, Grid, Row, Space } from 'antd';
+import { FC } from 'react';
+import firebase from 'firebase';
 import cn from 'classnames';
 import plural from 'plural-ru';
+
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import _find from 'lodash/find';
-import { FC, Key } from 'react';
-import firebase from 'firebase';
 
-import { IWord } from '../../../interfaces/word';
+import { Checkbox, Col, Grid, Row, Space } from 'antd';
+
 import { WordCategory } from '../WordCategory';
 
-import style from './ExpandableInfo.module.css';
-import {
-	useGetUserWordsByUidQuery,
-	useUpdateUserWordMutation,
-} from '../../../features/database/users';
+import { useUpdateUserWordMutation } from '../../../features/database/users';
 import { useAuth } from '../../../hooks';
+
+import { IWord } from '../../../interfaces/word';
+
+import style from './ExpandableInfo.module.css';
 
 const { useBreakpoint } = Grid;
 
@@ -27,28 +27,24 @@ interface IExpandableInfo {
 }
 
 const ExpandableInfo: FC<IExpandableInfo> = ({ record }) => {
-	const auth = useAuth();
-	const user = auth!.user as firebase.User;
+	const user = useAuth()!.user as firebase.User;
 
 	const breakpoint = useBreakpoint();
-	const { data: words } = useGetUserWordsByUidQuery(user.uid);
 	const [updateWord] = useUpdateUserWordMutation();
 
 	const timeToTrainFormat = dayjs(record.timeToTrain).format('DD MMMM YYYY');
 	const isAvailableForTraining = record.timeToTrain < Date.now();
 
-	const handleUpdateWord = (wordKey: Key, wordData: Partial<IWord>) => {
-		const word = _find(words, { id: wordKey }) as IWord;
-		const wordsUpdate = { wordId: word.id, userId: user.uid, word: wordData };
+	const handleUpdateWord = (wordKey: string, wordData: Partial<IWord>) => {
+		const wordsUpdate = { wordId: wordKey, userId: user.uid, word: wordData };
 		updateWord(wordsUpdate);
 	};
 
-	const handleLearnWord = (wordKey: Key, fixLearn?: boolean) => {
-		const word = _find(words, { id: wordKey }) as IWord;
+	const handleLearnWord = (wordKey: string, fixLearn?: boolean) => {
 		const wordsUpdate = {
-			wordId: word.id,
+			wordId: wordKey,
 			userId: user.uid,
-			word: { isLearned: fixLearn || !word.isLearned },
+			word: { isLearned: fixLearn || !record.isLearned },
 		};
 		updateWord(wordsUpdate);
 	};
@@ -56,9 +52,6 @@ const ExpandableInfo: FC<IExpandableInfo> = ({ record }) => {
 	const dayToTrainStyles = cn({
 		[style.green]: isAvailableForTraining,
 	});
-	const dayToTrain = (
-		<span className={dayToTrainStyles}>{timeToTrainFormat}</span>
-	);
 
 	return (
 		<>
@@ -91,7 +84,10 @@ const ExpandableInfo: FC<IExpandableInfo> = ({ record }) => {
 						</span>
 					</Col>
 					<Col span={12}>
-						<span>Доступно в тренировке с: {dayToTrain}</span>
+						<span>
+							<span>Доступно в тренировке с: </span>
+							<span className={dayToTrainStyles}>{timeToTrainFormat}</span>
+						</span>
 					</Col>
 				</Row>
 			)}

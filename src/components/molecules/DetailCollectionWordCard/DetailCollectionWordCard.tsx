@@ -1,34 +1,50 @@
 import { FC, useState, useEffect } from 'react';
 
-import firebase from 'firebase';
-import { useAuth } from '../../../hooks';
 import { Card, Button } from 'antd';
 
-import { IWord } from '../../../interfaces/word';
-
-import { useAddUserWordMutation } from '../../../services/users';
-import { useGetUserWordsByUidQuery } from '../../../features/database/users';
-
 import styles from './DetailCollectionWordCard.module.css';
+import { CollectionWord } from '@prisma/client';
+import { useSession } from 'next-auth/react';
+import { trpc } from '../../../utils/trpc';
 
-export const DetailCollectionWordCard: FC<IWord> = ({ id, word, translation, imageURL, category, completedTrains, isLearned, timeToTrain  }) => {
-	const auth = useAuth();
-	const user = auth?.user as firebase.User;
-	const { data } = useGetUserWordsByUidQuery(user ? user.uid : undefined);
+export const DetailCollectionWordCard: FC<{ word: CollectionWord}> = ({ word }) => {
+	const utils = trpc.useContext();
+
+	const { data: session } = useSession();
+	const email = session?.user?.email || null;
+	const query = trpc.useQuery(['words', email]);
+	const words = query.data || [];
+
+	const addWordMutation = trpc.useMutation('add-word', {
+		onSuccess() {
+			utils.invalidateQueries('words');
+		}
+	});
+
 	const [isAddedToDictionary, setIsAddedToDictionary] = useState<boolean>(false);
-	const [addWord] = useAddUserWordMutation();
 
 	const checkDuplicateWords = (currentWord: string) => {
-		return data?.find((item) => item.word.toLowerCase() === currentWord.toLowerCase());
+		return words.find((item) => item.en.toLowerCase() === currentWord.toLowerCase());
 	}
 
 	const handleAddToDictionary = () => {
-		addWord({ word: { word, translation, imageURL, category, completedTrains, isLearned, timeToTrain: Date.now()  }, userId: user.uid });
+		const mutationData = {
+			email: session?.user?.email as string,
+			word: {
+				en: word.en,
+				ru: word.ru,
+				image: word.image,
+				timeToTrain: Math.round(Date.now() / 1000),
+				category: word.category,
+			},
+		};
+
+		addWordMutation.mutate(mutationData)
 		setIsAddedToDictionary(true);
 	};
 
 	useEffect(() => {
-		if (checkDuplicateWords(word)) {
+		if (checkDuplicateWords(word.en)) {
 			setIsAddedToDictionary(true);
 		}
 	}, [checkDuplicateWords, word]);
@@ -40,9 +56,9 @@ export const DetailCollectionWordCard: FC<IWord> = ({ id, word, translation, ima
 				cover={
 					<div style={{ overflow: "hidden", height: "200px" }}>
 						<img
-							alt={word}
+							alt={word.en}
 							style={{ height: "100%", width: "100%", objectFit: "cover" }}
-							src={imageURL}
+							src={word.image}
 						/>
 					</div>
   			}>
@@ -50,11 +66,11 @@ export const DetailCollectionWordCard: FC<IWord> = ({ id, word, translation, ima
 						<div>
 							<div>
 								<span className={styles.title}>EN:</span>
-								<span>{word}</span>
+								<span>{word.en}</span>
 							</div>
 							<div>
 								<span className={styles.title}>RU:</span>
-								<span>{translation}</span>
+								<span>{word.ru}</span>
 							</div>
 						</div>
 						<Button className='app-btn _green' disabled={isAddedToDictionary} onClick={handleAddToDictionary}>

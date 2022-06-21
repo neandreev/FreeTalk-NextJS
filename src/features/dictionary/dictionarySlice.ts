@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Key } from 'react';
 
 import type { RootState } from "../../store/store";
 
 interface IDictionarySlice {
-	selectedRows: Key[];
+	selectedRows: number[];
 };
 
 const initialState: IDictionarySlice = {
@@ -15,7 +14,7 @@ export const trainingSlice = createSlice({
   name: 'dictionary',
   initialState,
   reducers: {
-    setSelectedRows: (state, action: PayloadAction<Key[]>) => {
+    setSelectedRows: (state, action: PayloadAction<number[]>) => {
       state.selectedRows = action.payload;
     },
 	},

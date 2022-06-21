@@ -1,17 +1,25 @@
 import { FC, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
+import Link from 'next/link';
 import { Menu } from 'antd';
 
+const getCurrentKeyMenu = (route: string) => {
+	if (route.includes('collections')) return '3';
+	if (route.includes('training')) return '2';
+	if (route.includes('dictionary')) return '1';
+	return '';
+};
+
 const HeaderMenu: FC = () => {
-	const isRoot = useLocation().pathname === '/';
-	const [currentKeyMenu, setCurrentKeyMenu] = useState('');
+	const { route } = useRouter();
+	console.log('ROUTE', route);
+	// const isRoot = useRouter().pathname === '/';
+	const [currentKeyMenu, setCurrentKeyMenu] = useState(getCurrentKeyMenu(route));
 
 	useEffect(() => {
-		if (isRoot) {
-			setCurrentKeyMenu('');
-		}
-	}, [isRoot]);
+		setCurrentKeyMenu(getCurrentKeyMenu(route));
+	}, [route]);
 
 	return (
 		<Menu
@@ -19,16 +27,16 @@ const HeaderMenu: FC = () => {
 			className='header-navigation'
 			defaultSelectedKeys={[]}
 			selectedKeys={[currentKeyMenu]}
-			onClick={(e) => setCurrentKeyMenu(e.key)}
+			// onClick={(e) => setCurrentKeyMenu(e.key)}
 		>
 			<Menu.Item className='navigation-item' key='1'>
-				<Link to='/dictionary'>Словарь</Link>
+				<Link href='/dictionary'>Словарь</Link>
 			</Menu.Item>
 			<Menu.Item className='navigation-item' key='2'>
-				<Link to='/training'>Тренировка</Link>
+				<Link href='/training'>Тренировка</Link>
 			</Menu.Item>
 			<Menu.Item className='navigation-item' key='3'>
-				<Link to='/collections'>Коллекции</Link>
+				<Link href='/collections'>Коллекции</Link>
 			</Menu.Item>
 		</Menu>
 	);

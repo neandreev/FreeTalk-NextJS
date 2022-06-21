@@ -10,12 +10,14 @@ import HeaderLogo from '../../atoms/HeaderLogo';
 import HeaderEnter from '../../atoms/HeaderEnter';
 
 import style from './Header.module.css';
-import './Header.css';
+import { useSession } from 'next-auth/react';
+// import './Header.css'; //TODO: import header style
 
 const { Header: HeaderAnt } = Layout;
 
 export const Header: FC = () => {
-	const { user } = useAuth()!;
+	const session = useSession();
+	const isAuthenticated = session.status === 'authenticated';
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -28,7 +30,7 @@ export const Header: FC = () => {
 			<div className='container'>
 				<HeaderLogo />
 				<HeaderEnter handleModalVisible={() => setIsModalVisible(true)} />
-				{user && <HeaderMenu />}
+				{isAuthenticated && <HeaderMenu />}
 				<LoginModalForm
 					isModalVisible={isModalVisible}
 					handleCloseModal={handleCloseModal}

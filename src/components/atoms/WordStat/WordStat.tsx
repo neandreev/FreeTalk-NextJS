@@ -6,9 +6,10 @@ import { Col } from 'antd';
 import { IWord } from '../../../interfaces/word';
 
 import style from './WordStat.module.css';
+import { LearningWord } from '@prisma/client';
 
 interface IWordStat {
-	word: IWord;
+	word: LearningWord;
 	correct: boolean;
 }
 
@@ -21,7 +22,7 @@ export const WordStat: FC<IWordStat> = (props) => {
 
 	return (
 		<Col className={wordStyle} span={12}>
-			<span>{props.word.translation}</span>
+			<span>{props.word.en}</span>
 		</Col>
 	);
 };

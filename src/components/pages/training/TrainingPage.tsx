@@ -6,6 +6,6 @@ import style from './TrainingPage.module.css';
 
 export const TrainingPage: FC = () => (
 	<div>
-		<Training />
+		{/* <Training /> */}
 	</div>
 );

@@ -6,9 +6,10 @@ import { IPagination } from '../../../interfaces/pagination';
 
 import { Pagination, Row, Col } from 'antd';
 import styles from './Collections.module.css';
+import { Collection } from '@prisma/client';
 
-export const Collections: FC<{ data: ICollection[] }> = ({ data }) => {
-	const [collections, setCollections] = useState<Array<ICollection>>([]);
+export const Collections: FC<{ data: Collection[] }> = ({ data }) => {
+	const [collections, setCollections] = useState<Array<Collection>>([]);
 	const [pagination, setPagination] = useState<IPagination>({
 		limit: 3,
 		index: 1,
@@ -51,8 +52,7 @@ export const Collections: FC<{ data: ICollection[] }> = ({ data }) => {
 							<CollectionCard
 								id={item.id}
 								title={item.title}
-								coverUrl={item.coverUrl}
-								words={item.words}
+								cover={item.cover}
 							/>
 						</Col>
 					))}

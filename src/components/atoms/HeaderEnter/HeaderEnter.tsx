@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { useAuth } from '../../../hooks';
 
 import style from './HeaderEnter.module.css';
@@ -8,15 +9,16 @@ interface IHeaderEnter {
 }
 
 const HeaderEnter: FC<IHeaderEnter> = ({ handleModalVisible }) => {
-	const { user, signout } = useAuth()!;
-
+	const { data: session } = useSession();
+	
 	return (
 		<div className={style.headerAction}>
 			<span
 				className={style.authBtn}
-				onClick={user ? signout : handleModalVisible}
+				onClick={!session ? () => signIn() : () => signOut()}
 			>
-				{user ? 'Выход' : 'Вход'}
+				{session && session.user?.name}
+				{session ? 'Выход' : "Вход"}
 			</span>
 		</div>
 	);

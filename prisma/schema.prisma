@@ -1,0 +1,105 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+generator zod {
+  provider = "zod-prisma"
+  output   = "./zod"
+
+  relationModel = true
+  // relationModel         = "default" // Do not export model without relations.
+  // relationModel         = false // Do not generate related model
+
+  modelCase = "PascalCase"
+  // modelCase             = "camelCase" // Output models using camel case (ex. userModel, postModel)
+
+  modelSuffix = "Model"
+
+  // useDecimalJs          = false // (default) represent the prisma Decimal type using as a JS number
+  useDecimalJs = true
+
+  prismaJsonNullability = true
+  // prismaJsonNullability = false // allows null assignment to optional JSON fields
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  LearningWord  LearningWord[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model LearningWord {
+  id              Int      @id @default(autoincrement())
+  en              String   
+  ru              String
+  category        String   @default("Общее")
+  learned         Boolean  @default(false)
+  timeToTrain     Int 		 @db.UnsignedInt	 
+  completedTrains Int      @default(0)
+  image           String   @db.VarChar(256)
+  user            User     @relation(fields: [userEmail], references: [email])
+	userEmail				String
+}
+
+model CollectionWord {
+  id           Int        @id @default(autoincrement())
+  en           String
+  ru           String
+  image        String			@db.VarChar(512)
+  collection   Collection @relation(fields: [collectionId, category], references: [id, title])
+  collectionId Int
+  category     String
+}
+
+model Collection {
+  id    Int              @id @default(autoincrement())
+  title String						
+  cover String		@db.VarChar(256)
+  words CollectionWord[]
+}

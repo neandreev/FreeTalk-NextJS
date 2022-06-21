@@ -3,10 +3,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
 import { IQuestion } from '../../interfaces/question';
 import { IWord } from '../../interfaces/word';
+import { LearningWord } from '@prisma/client';
 
 interface ITrainingSlice {
 	questions: IQuestion[];
-	trainingWords: IWord[];
+	trainingWords: LearningWord[];
 	currentQuestionId: number;
 	isCompleted: boolean;
 	correctAnswers: number;
@@ -29,12 +30,12 @@ export const trainingSlice = createSlice({
 		setQuestions: (state, action: PayloadAction<IQuestion[]>) => {
 			state.questions = action.payload;
 		},
-		setTrainingWords: (state, action: PayloadAction<IWord[]>) => {
+		setTrainingWords: (state, action: PayloadAction<LearningWord[]>) => {
 			state.trainingWords = action.payload;
 		},
 		answerQuestion: (
 			state,
-			action: PayloadAction<{ answerId: string; isAnsweredCorrectly: boolean }>
+			action: PayloadAction<{ answerId: number; isAnsweredCorrectly: boolean }>
 		) => {
 			const question = state.questions[state.currentQuestionId];
 			const { isAnsweredCorrectly, answerId } = action.payload;

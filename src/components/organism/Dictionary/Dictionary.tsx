@@ -1,37 +1,34 @@
 import _ from 'lodash';
 import cn from 'classnames';
-import firebase from 'firebase';
 import plural from 'plural-ru';
-import { FC, Key, MouseEventHandler, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Button, Checkbox, Col, Grid, Row, Space, Table } from 'antd';
 import { hyphenateSync as hyphenateRuSync } from 'hyphen/ru';
 import { hyphenateSync as hyphenateEnSync } from 'hyphen/en';
 
-import { IWord } from '../../../interfaces/word';
+import { LearningWord } from '@prisma/client';
 import { TableRowSelection } from 'antd/lib/table/interface';
 import { ColumnsType } from 'antd/lib/table';
 import { WordCategory } from '../../atoms/WordCategory';
 
 import {
-	useDeleteUserWordMutation,
-	useGetUserWordsByUidQuery,
-	useUpdateUserWordMutation,
-} from '../../../features/database/users';
-import {
 	selectSelectedRows,
 	setSelectedRows,
 } from '../../../features/dictionary/dictionarySlice';
-import { useAppDispatch, useAppSelector, useAuth } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 
-import './Dictionary.css';
+// import './Dictionary.css'; //TODO: import Dictionary style
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import calendar from 'dayjs/plugin/calendar';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useSession } from 'next-auth/react';
 
 import style from './Dictionary.module.css';
 import ExpandableInfo from '../../atoms/ExpandableInfo';
+import { trpc } from '../../../utils/trpc';
+import { urlToHttpOptions } from 'url';
 
 dayjs.locale('ru');
 dayjs.extend(localizedFormat);
@@ -46,60 +43,77 @@ const getWordsRepeatsPlural = (count: number) =>
 	plural(count, '%d раз', '%d раза', '%d раз');
 
 export const Dictionary: FC = () => {
-	const auth = useAuth();
-	const user = auth!.user as firebase.User;
-
 	const dispatch = useAppDispatch();
 	const breakpoint = useBreakpoint();
 	const selectedRowKeys = useAppSelector(selectSelectedRows);
+	const utils = trpc.useContext();
+	const session = useSession();
 
-	const { data: words, error, isLoading } = useGetUserWordsByUidQuery(user.uid);
-	const [deleteWord] = useDeleteUserWordMutation();
-	const [updateWord] = useUpdateUserWordMutation();
+	const email = session.data?.user?.email || null;
+	const wordsQuery = trpc.useQuery(['words', email]);
+	const words = wordsQuery.data || [];
+
+	const deleteMutation = trpc.useMutation('delete-words', {
+		onSuccess() {
+			utils.invalidateQueries('words');
+		},
+	});
+	const updateCategoryMutation = trpc.useMutation('update-word-category', {
+		onSuccess() {
+			utils.invalidateQueries('words');
+		},
+	});
+	const updateStatusMutation = trpc.useMutation('update-words-status', {
+		async onMutate({ ids, learned }) {
+			await utils.cancelQuery(['words']);
+			const previousWords = utils.getQueryData(['words', email]) || [];
+			const newWords = previousWords.map((word) => {
+				return ids.includes(word.id) ? { ...word, learned } : word;
+			});
+			utils.setQueryData(['words', email], newWords);
+
+			return { previousWords };
+		},
+		onError(err, updateData, context: any) {
+			const previousWords = context?.previousWords || [];
+			utils.setQueryData(
+				['words', email],
+				previousWords
+			);
+		},
+		onSettled() {
+			utils.invalidateQueries(['words', email]);
+		},
+	});
 
 	const filterCategories = _.uniqBy(words, 'category').map((word) => ({
 		text: word.category,
 		value: word.category,
 	}));
 
-	const onFilter = (value: string | number | boolean, record: IWord) =>
+	const onFilter = (value: string | number | boolean, record: LearningWord) =>
 		record.category.indexOf(value as string) === 0;
 
-	const handleRemoveWord = (wordKey: Key) => {
-		const word = _.find(words, { id: wordKey }) as IWord;
-		const wordsUpdate = { wordId: word.id, userId: user.uid };
-		dispatch(setSelectedRows(selectedRowKeys.filter((key) => key !== wordKey)));
-		deleteWord(wordsUpdate);
+	const handleRemoveWords = (wordKeys: number[]) => {
+		const newSelectedRows = selectedRowKeys.filter(
+			(key) => !wordKeys.includes(key)
+		);
+		dispatch(setSelectedRows(newSelectedRows));
+		deleteMutation.mutate(wordKeys);
 	};
 
-	const handleUpdateWord = (wordKey: Key, wordData: Partial<IWord>) => {
-		const word = _.find(words, { id: wordKey }) as IWord;
-		const wordsUpdate = { wordId: word.id, userId: user.uid, word: wordData };
-		updateWord(wordsUpdate);
+	const handleUpdateWordCategory = (id: number, category: string) => {
+		updateCategoryMutation.mutate({ id, category });
 	};
 
-	const handleLearnWord = (wordKey: Key, fixLearn?: boolean) => {
-		const word = _.find(words, { id: wordKey }) as IWord;
-		const wordsUpdate = {
-			wordId: word.id,
-			userId: user.uid,
-			word: { isLearned: fixLearn || !word.isLearned },
-		};
-		updateWord(wordsUpdate);
-	};
-
-	const handleRemoveMultipleWords = () => {
-		selectedRowKeys.forEach((wordKey) => {
-			handleRemoveWord(wordKey);
-		});
-		dispatch(setSelectedRows([]));
-	};
-
-	const handleLearnMultipleWords: MouseEventHandler = (e) => {
-		selectedRowKeys.forEach((wordKey) => {
-			handleLearnWord(wordKey, true);
-		});
-		dispatch(setSelectedRows([]));
+	const handleLearnWords = (wordKey: number[], multiple?: boolean) => {
+		if (multiple) {
+			updateStatusMutation.mutate({ ids: wordKey, learned: true });
+			dispatch(setSelectedRows([]));
+		} else {
+			const word = _.find(words, { id: wordKey[0] }) as LearningWord;
+			updateStatusMutation.mutate({ ids: wordKey, learned: !word.learned });
+		}
 	};
 
 	useEffect(() => {
@@ -108,24 +122,24 @@ export const Dictionary: FC = () => {
 		};
 	}, []);
 
-	const columns: ColumnsType<IWord> = [
+	const columns: ColumnsType<LearningWord> = [
 		{
 			title: 'Слово',
 			dataIndex: 'translation',
 			key: 'translation',
-			render: (value: string, record: IWord) => (
-				<span>{hyphenateRuSync(record.translation)}</span>
+			render: (value: string, record: LearningWord) => (
+				<span>{hyphenateEnSync(record.en)}</span>
 			),
-			sorter: (a, b) => a.translation.localeCompare(b.translation),
+			sorter: (a, b) => a.en.localeCompare(b.en),
 		},
 		{
 			title: 'Перевод',
 			dataIndex: 'word',
 			key: 'word',
-			render: (value: string, record: IWord) => (
-				<span>{hyphenateEnSync(record.word)}</span>
+			render: (value: string, record: LearningWord) => (
+				<span>{hyphenateRuSync(record.ru)}</span>
 			),
-			sorter: (a, b) => a.word.localeCompare(b.word),
+			sorter: (a, b) => a.en.localeCompare(b.en),
 		},
 		{
 			title: 'Категория',
@@ -133,8 +147,8 @@ export const Dictionary: FC = () => {
 			width: '100px',
 			filters: filterCategories,
 			onFilter,
-			render: (text: string, record: IWord) => (
-				<WordCategory record={record} handleUpdateWord={handleUpdateWord} />
+			render: (text: string, record: LearningWord) => (
+				<WordCategory record={record} handleUpdateWord={handleUpdateWordCategory} />
 			),
 			showSorterTooltip: {
 				title: 'Сортировать категории слов в алфавитном порядке',
@@ -147,16 +161,16 @@ export const Dictionary: FC = () => {
 			title: 'Изучено',
 			width: '30px',
 			className: 'centered',
-			render: (text: string, record: IWord) => (
+			render: (text: string, record: LearningWord) => (
 				<Checkbox
-					checked={record.isLearned}
-					onClick={() => handleLearnWord(record.id)}
+					checked={record.learned}
+					onClick={() => handleLearnWords([record.id])}
 				/>
 			),
 			showSorterTooltip: {
 				title: 'Сортировать слова в порядке изученности',
 			},
-			sorter: (a, b) => (a.isLearned === b.isLearned ? 0 : a.isLearned ? -1 : 1),
+			sorter: (a, b) => (a.learned === b.learned ? 0 : a.learned ? -1 : 1),
 			responsive: ['md'],
 		},
 		{
@@ -165,8 +179,8 @@ export const Dictionary: FC = () => {
 			width: '110px',
 			key: 'completedTrains',
 			sortDirections: ['descend', 'ascend'],
-			render: (text: string, record: IWord) => {
-				if (record.isLearned) return null;
+			render: (text: string, record: LearningWord) => {
+				if (record.learned) return null;
 				const completedTrainsStyles = cn({
 					[style.green]: record.completedTrains >= 7,
 				});
@@ -183,11 +197,11 @@ export const Dictionary: FC = () => {
 			title: 'Доступно в тренировке',
 			key: 'timeToTrain',
 			width: '130px',
-			render: (text: string, record: IWord) => {
-				if (record.isLearned) return null;
-				const timeToTrainFormat = dayjs(record.timeToTrain).format('DD-MM-YYYY');
+			render: (text: string, record: LearningWord) => {
+				if (record.learned) return null;
+				const timeToTrainFormat = dayjs(record.timeToTrain * 1000).format('DD-MM-YYYY');
 
-				const isAvailableForTraining = record.timeToTrain < Date.now();
+				const isAvailableForTraining = record.timeToTrain * 1000 < Date.now();
 				const timeToTrainStyles = cn({
 					[style.green]: isAvailableForTraining,
 				});
@@ -203,25 +217,28 @@ export const Dictionary: FC = () => {
 		{
 			key: 'actions',
 			className: 'centered',
-			render: (text: string, record: IWord) => (
-				<DeleteOutlined className='' onClick={() => handleRemoveWord(record.id)} />
+			render: (text: string, record: LearningWord) => (
+				<DeleteOutlined
+					className=''
+					onClick={() => handleRemoveWords([record.id])}
+				/>
 			),
 			responsive: ['sm'],
 		},
 	];
 
-	const rowSelection: TableRowSelection<IWord> = {
+	const rowSelection: TableRowSelection<LearningWord> = {
 		type: 'checkbox',
 		selectedRowKeys,
 		onChange: (selectedRowKeys) => {
-			dispatch(setSelectedRows(selectedRowKeys));
+			dispatch(setSelectedRows(selectedRowKeys as number[]));
 		},
 	};
 
-	const tableTitle = () => (
+	const tableHeader = () => (
 		<Space style={{ lineHeight: 1.3 }}>
 			<Button
-				onClick={handleRemoveMultipleWords}
+				onClick={() => handleRemoveWords(selectedRowKeys)}
 				disabled={selectedRowKeys.length === 0}
 				className='app-btn _green _hover-red'
 			>
@@ -231,7 +248,7 @@ export const Dictionary: FC = () => {
 			<Button
 				className='app-btn _green'
 				disabled={selectedRowKeys.length === 0}
-				onClick={handleLearnMultipleWords}
+				onClick={() => handleLearnWords(selectedRowKeys, true)}
 			>
 				Изучить слова
 			</Button>
@@ -248,13 +265,19 @@ export const Dictionary: FC = () => {
 					<h1 className={`page__title ${style.title}`}>Словарь</h1>
 					<hr />
 					<Table
-						title={tableTitle}
-						loading={isLoading}
+						title={tableHeader}
+						// loading={isLoading}
 						rowKey='id'
 						expandable={{
-							expandedRowRender: (record => <ExpandableInfo record={record} />),
+							expandedRowRender: (record) => (
+								<ExpandableInfo
+									record={record}
+									onUpdateCategory={handleUpdateWordCategory}
+									onUpdateStatus={handleLearnWords}
+								/>
+							),
 							rowExpandable: (record) =>
-								((!breakpoint.lg as boolean) && !record.isLearned) ||
+								((!breakpoint.lg as boolean) && !record.learned) ||
 								(!breakpoint.md as boolean),
 							showExpandColumn: !breakpoint.lg as boolean,
 						}}

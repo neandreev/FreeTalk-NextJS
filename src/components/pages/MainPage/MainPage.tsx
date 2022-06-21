@@ -6,19 +6,20 @@ import { Description } from '../../organism/Description';
 import styles from './MainPage.module.css';
 
 export const MainPage: FC = () => {
-	const [startTranslate, setStartTranslate] = useState(false);
+	// const [startTranslate, setStartTranslate] = useState(false);
 
-	const handleStartTranslate = useCallback((status: boolean) => {
-		setStartTranslate(status);
-	}, [])
+	// const handleStartTranslate = useCallback((status: boolean) => {
+	// 	setStartTranslate(status);
+	// }, [])
 
-	return (
-		<div>
-			<h2 className={`page__title ${styles.title}`}>Время учить слова онлайн</h2>
-			<Translate onStartTranslate={handleStartTranslate}/>
-			{
-				!startTranslate && <Description />
-			}
-		</div>
-	);
+	// return (
+	// 	<div>
+	// 		<h2 className={`page__title ${styles.title}`}>Время учить слова онлайн</h2>
+	// 		<Translate onStartTranslate={handleStartTranslate}/>
+	// 		{
+	// 			!startTranslate && <Description />
+	// 		}
+	// 	</div>
+	// );
+	return <div></div>
 };

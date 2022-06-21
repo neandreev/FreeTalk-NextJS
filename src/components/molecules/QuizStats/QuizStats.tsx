@@ -10,15 +10,16 @@ import { WordStat } from '../../atoms/WordStat';
 import { IQuestion } from '../../../interfaces/question';
 
 import { IWord } from '../../../interfaces/word';
+import { LearningWord } from '@prisma/client';
 
-import './QuizStats.css';
+// import './QuizStats.css'; TODO: import QuizStats style
 
-const getWordsStats = (questions: IQuestion[], trainingWords: IWord[]) =>
+const getWordsStats = (questions: IQuestion[], trainingWords: LearningWord[]) =>
 	questions
 		.map((question) => ({
 			word: _.find(trainingWords, {
 				id: question.correctAnswerId,
-			}) as IWord,
+			}) as LearningWord,
 			correct: question.wasAnsweredCorrectly,
 		}))
 		.map((stat) => (

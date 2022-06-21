@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Card } from 'antd';
 
 import styles from './Description.module.css';
-import './Description.css';
+// import './Description.css';
 
 const DESC_DATA = [
 	{

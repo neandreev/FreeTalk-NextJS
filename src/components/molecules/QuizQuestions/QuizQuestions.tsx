@@ -14,8 +14,9 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 
 import { IWord } from '../../../interfaces/word';
 import { ITrainingAnswer } from '../../../interfaces/training';
+import { LearningWord } from '@prisma/client';
 
-import './QuizQuestions.css';
+// import './QuizQuestions.css'; TODO: import QuizQuestions style
 
 export const QuizQuestions: FC = () => {
 	const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ export const QuizQuestions: FC = () => {
 	);
 	const { currentQuestionId, trainingWords } = useAppSelector(selectTraining);
 
-	const correctWord = _.find(trainingWords, { id: correctAnswerId }) as IWord;
+	const correctWord = _.find(trainingWords, { id: correctAnswerId }) as LearningWord;
 	const [wrongAnswer1, wrongAnswer2, wrongAnswer3] = wrongAnswersIds;
 
 	const handleNextQuestionLink: React.MouseEventHandler = (e) => {
@@ -47,7 +48,7 @@ export const QuizQuestions: FC = () => {
 	const QuestionTitle = (
 		<Space wrap>
 			<span>Выберите перевод слова:</span>
-			<span style={{ fontWeight: 'bold' }}>{correctWord.word}</span>
+			<span style={{ fontWeight: 'bold' }}>{correctWord.en}</span>
 		</Space>
 	);
 

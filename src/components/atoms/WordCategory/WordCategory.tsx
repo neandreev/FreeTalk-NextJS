@@ -1,16 +1,22 @@
-import { EditOutlined } from '@ant-design/icons';
-import { Input, Tag } from 'antd';
 import _ from 'lodash';
 import { FC, useEffect, useRef, useState } from 'react';
-import { IWord } from '../../../interfaces/word';
+
+import { Input, Tag } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+
+import { LearningWord } from '@prisma/client';
+
 import style from './WordCategory.module.css';
 
 interface IWordCategory {
-	record: IWord;
-	handleUpdateWord: (wordKey: string, wordData: Partial<IWord>) => void;
+	record: LearningWord;
+	handleUpdateWord: (wordKey: number, category: string) => void;
 }
 
-export const WordCategory: FC<IWordCategory> = ({ record, handleUpdateWord }) => {
+export const WordCategory: FC<IWordCategory> = ({
+	record,
+	handleUpdateWord,
+}) => {
 	const [inputVisible, setInputVisible] = useState(false);
 	const [inputValue, setInputValue] = useState(record.category);
 	const inputRef = useRef<any>(null);
@@ -22,13 +28,13 @@ export const WordCategory: FC<IWordCategory> = ({ record, handleUpdateWord }) =>
 	}, [inputVisible]);
 
 	const handleUpdate = () => {
-		if (inputValue !== "") {
-			handleUpdateWord(record.id, { category: _.capitalize(inputValue) });
+		if (inputValue !== '') {
+			handleUpdateWord(record.id, _.capitalize(inputValue));
 		} else {
 			setInputValue(record.category);
 		}
 		setInputVisible(false);
-	}
+	};
 
 	return (
 		<>

@@ -1,4 +1,4 @@
 export interface ITrainingAnswer {
-	wordId: string;
+	wordId: number;
 	isCorrect: boolean;
 };

@@ -1,9 +1,9 @@
 export interface IWord {
-	word: string;
+	en: string;
 	id: string;
-	translation: string;
+	ru: string;
 	category: string;
-	isLearned: boolean;
+	learned: boolean;
 	timeToTrain: number;
 	completedTrains: number;
 	imageURL: string;

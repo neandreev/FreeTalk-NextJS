@@ -1,11 +1,9 @@
 import _ from 'lodash';
-import firebase from 'firebase';
 import { FC, MouseEventHandler, useEffect, useState } from 'react';
 
 import { Quiz } from '../Quiz';
 import { RepeatTraining } from '../../atoms/RepeatTraining';
 
-import { useAuth } from '../../../hooks/useAuth';
 import {
 	resetTraining,
 	selectTraining,
@@ -13,17 +11,17 @@ import {
 	setTrainingWords,
 } from '../../../features/training/trainingSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/';
-import { useGetUserWordsByUidQuery } from '../../../features/database/users';
-
-import { IWord } from '../../../interfaces/word';
 import { IQuestion } from '../../../interfaces/question';
 import { TrainingIntro } from '../../atoms/TrainingIntro';
 
 import style from './Training.module.css';
-import './Training.css'
+// import './Training.css' //TODO: import 
 import { Col, Row } from 'antd';
+import { trpc } from '../../../utils/trpc';
+import { useSession } from 'next-auth/react';
+import { LearningWord } from '@prisma/client';
 
-const generateQuestions = (words: IWord[]) => {
+const generateQuestions = (words: LearningWord[]) => {
 	const questions = words.map((word) => {
 		const correctAnswerId = word.id;
 		const wrongAnswersIds = _.shuffle(words)
@@ -34,7 +32,7 @@ const generateQuestions = (words: IWord[]) => {
 		const question: IQuestion = {
 			wasAnswered: false,
 			wasAnsweredCorrectly: null,
-			answerId: '',
+			answerId: 0,
 			correctAnswerId,
 			wrongAnswersIds,
 		};
@@ -45,10 +43,10 @@ const generateQuestions = (words: IWord[]) => {
 	return questions;
 };
 
-const selectWordsForTraining = (words: IWord[]) => {
+const selectWordsForTraining = (words: LearningWord[]) => {
 	const availableWordsForTraining = words.filter((word) => {
 		const timestamp = Date.now();
-		return word.timeToTrain <= timestamp && !word.isLearned;
+		return word.timeToTrain * 1000 <= timestamp && !word.learned;
 	});
 	const shuffledWords = _.shuffle(availableWordsForTraining);
 	const wordsForTraining = shuffledWords.slice(0, 10);
@@ -57,12 +55,14 @@ const selectWordsForTraining = (words: IWord[]) => {
 };
 
 export const Training: FC = (props) => {
-	const auth = useAuth();
-	const user = auth!.user as firebase.User;
+	const { data: session } = useSession();
+	const email = session?.user?.email || null;
 
 	const dispatch = useAppDispatch();
 	const { isCompleted } = useAppSelector(selectTraining);
-	const { data: words, isLoading } = useGetUserWordsByUidQuery(user.uid);
+	const wordsQuery = trpc.useQuery(['words', email])
+	const isLoading = wordsQuery.isLoading;
+	const words = wordsQuery.data || [];
 
 	const [startTraining, setStartTraining] = useState(false);
 	const [isDataPrepared, setIsDataPrepared] = useState(false);
@@ -80,6 +80,7 @@ export const Training: FC = (props) => {
 	useEffect(() => {
 		if (!isLoading || isTrainingRepeated) {
 			const wordsForTraining = selectWordsForTraining(words!);
+			console.log(wordsForTraining);
 			const questions = generateQuestions(wordsForTraining);
 
 			dispatch(setTrainingWords(wordsForTraining));

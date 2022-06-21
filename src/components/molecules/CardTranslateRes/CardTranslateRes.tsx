@@ -1,11 +1,11 @@
 import { FC, useCallback } from 'react';
 
-import { Row, Col, Card, Button } from 'antd';
+import { Row, Col, Card, Button, message } from 'antd';
 
 import { ICardTranslateRes } from '../../../interfaces/translate';
 
 import styles from './CardTranslateRes.module.css'
-import './CardTranslateRes.css'
+// import './CardTranslateRes.css'
 
 export const CardTranslateRes: FC<ICardTranslateRes> = (
 	{ word, onAddWordToDictionary }
@@ -16,8 +16,8 @@ export const CardTranslateRes: FC<ICardTranslateRes> = (
 
 	return (
 			<Card
-				className='card-translate-res'
-				cover={<img className='card-cover' alt={word.word} src={word.imageURL} />}
+				className={styles['card-translate-res']}
+				cover={<img className='card-cover' alt={word.en} src={word.imageURL} />}
 			>
 				<Row
 					justify='space-between'
@@ -30,13 +30,13 @@ export const CardTranslateRes: FC<ICardTranslateRes> = (
 							<span className={styles.title}>
 								EN:
 							</span>
-							{word.word}
+							{word.en}
 						</p>
 						<p className={styles.translate}>
 							<span className={styles.title}>
 								RU:
 							</span>
-							{word.translation}
+							{word.ru}
 						</p>
 					</Col>
 					<Col>

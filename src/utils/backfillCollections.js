@@ -12,7 +12,6 @@ const backfillCollections = async () => {
 			}
 		});
 
-		console.log("COLLECTION", collectionDb);
 
 		const words = collection.words;
 		const wordsForDb = words.map((word) => ({
@@ -22,13 +21,11 @@ const backfillCollections = async () => {
 			collectionId: collectionDb.id,
 			image: word.imageURL,
 		}));
-		console.log(wordsForDb);
 
 		const added = await prisma.collectionWord.createMany({
 			data: wordsForDb,
 		})
 
-		console.log(added);
 	})
 };
 

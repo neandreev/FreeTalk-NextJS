@@ -26,14 +26,8 @@ export const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
 		total: 0,
 	});
 
-	console.log('COLLECTION WORDS', collectionWords);
-	console.log('WORDS', words);
-
 	useEffect(() => {
-		console.log('GOT INTO EFFECT');
-
 		if (data) {
-			console.log('GOT INFO EFFECT WITH DATA');
 			setCollections(data as Array<Collection>);
 			setSelectedCollection(
 				collections.find((item) => item.id === pid) as Collection
@@ -50,7 +44,6 @@ export const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
 				.map((item) => {
 					return { ...item };
 				});
-			console.log("NEW WORDS", newWords);
 			setWords(newWords);
 		}
 	}, [collections, collectionWords, pid, selectedCollection, data, pagination.index]);

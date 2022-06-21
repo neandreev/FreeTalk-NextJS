@@ -71,9 +71,6 @@ export const QuizButton: FC<IQuizButton> = (props) => {
 	const word = _.find(trainingWords, { id: wordId }) as LearningWord;
 
 	const handleButtonClick = () => {
-		console.log("HANDLING ANSWER CLICK")
-		console.log('IS CLICKED', isClicked);
-		console.log('IS ANSWERED', wasAnswered);
 		if (isClicked || wasAnswered) return;
 		if (isCorrect) {
 			const completedTrains = word.completedTrains + 1;

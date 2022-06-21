@@ -80,7 +80,6 @@ export const Training: FC = (props) => {
 	useEffect(() => {
 		if (!isLoading || isTrainingRepeated) {
 			const wordsForTraining = selectWordsForTraining(words!);
-			console.log(wordsForTraining);
 			const questions = generateQuestions(wordsForTraining);
 
 			dispatch(setTrainingWords(wordsForTraining));

@@ -13,7 +13,6 @@ const getCurrentKeyMenu = (route: string) => {
 
 const HeaderMenu: FC = () => {
 	const { route } = useRouter();
-	console.log('ROUTE', route);
 	// const isRoot = useRouter().pathname === '/';
 	const [currentKeyMenu, setCurrentKeyMenu] = useState(getCurrentKeyMenu(route));
 

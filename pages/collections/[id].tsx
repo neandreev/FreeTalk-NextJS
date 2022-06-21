@@ -54,8 +54,6 @@ const DetailCollectionPage: FC = (
 	const collectionWords = trpc.useQuery(['collections']);
 	const { data } = collectionWords;
 
-	console.log("TYPEOF", typeof props.collectionId);
-
 	return (
 		<div style={{ height: '100%' }}>
 			{data ? (

@@ -1,29 +1,21 @@
-import { FC, useCallback, useEffect, useState } from 'react';
-import { useAuth } from '../../../hooks';
+import { useEffect, useState } from 'react';
 
-import { CardTranslateRes } from '../../molecules/CardTranslateRes';
-import { Spin } from 'antd';
+import { Description } from '@/components/organism/Description';
+import { trpc } from '@/utils/trpc';
 
 import { useSession } from 'next-auth/react';
-import { client } from '../../../utils/client';
-import { translateAPI } from '../../../api/translateAPI';
-import { findImageAPI } from '../../../api/findImageAPI';
-import { findHyponemesAPI } from '../../../api/findHyponemesAPI';
-import firebase from 'firebase';
-
-import { IWord } from '../../../interfaces/word';
-import { TranslateReqForm } from '../../molecules/TranslateReqForm';
-
-import { Row, Col, Empty, message } from 'antd';
-
-import styles from './Translate.module.css';
-import { trpc } from '../../../utils/trpc';
 import { LearningWord } from '@prisma/client';
+import { TranslateReqForm } from '@/components/molecules/TranslateReqForm';
+import { Col, Empty, Row, Spin, message } from 'antd';
+import { CardTranslateRes } from '@/components/molecules/CardTranslateRes';
+import { IWord } from '@/interfaces/word';
 
-interface ITranslateFormData {
-	TranslateDirection: string;
-	TranslateRequest: string;
-}
+import { translateAPI } from '@/api/translateAPI';
+import { findImageAPI } from '@/api/findImageAPI';
+import { findHyponemesAPI } from '@/api/findHyponemesAPI';
+
+// import styles from './MainPage.module.css'; //TODO: add Mainpage style
+import styles from '@/components/organism/Training/Training.module.css';
 
 interface ITranslateData {
 	fromLang: string;
@@ -31,65 +23,71 @@ interface ITranslateData {
 	word: string;
 }
 
-interface ITranslate {
-	onStartTranslate: (status: boolean) => void;
-	words: LearningWord[];
-}
-
 type TWordWithoutID = Omit<IWord, 'id'>;
+type translateStatus = 'idle' | 'translating' | 'error' | 'success';
 
-type TCheckDuplicateWords = (
-	ru: string,
-	en: string,
-	data: LearningWord[]
-) => boolean;
-
-type TGetMainTranslate = ({
-	fromLang,
-	toLang,
-	word,
-}: ITranslateData) => Promise<TWordWithoutID>;
-
-type TGetTranslateAddWords = (
-	word: TWordWithoutID
-) => Promise<(TWordWithoutID | null)[]>;
-
-type THandleSubmitTranslateReqForm = ({
-	TranslateDirection,
-	TranslateRequest,
-}: ITranslateFormData) => void;
-
-const checkDuplicateWords: TCheckDuplicateWords = (ru, en, data) => {
+const wordIsDublicated = (en: string, data: LearningWord[]) => {
 	if (!data || data?.length === 0) {
 		return false;
 	} else {
-		return !!data.find((element) => element.ru === ru);
+		return !!data.find((element) => element.en === en);
 	}
 };
 
-export const Translate: FC<ITranslate> = ({ onStartTranslate, words }) => {
+const Translate = () => {
+	const utils = trpc.useContext();
+	const { data: session } = useSession();
+	const email = session?.user?.email || null;
+
+	const query = trpc.useQuery(['words', email]);
+	const words = query.data || [];
+
+	const addWord = trpc.useMutation('add-word', {
+		onError(e) {
+			message.error({
+				content: 'Не удалось добавить новое слово: проблемы с сетью',
+				duration: 2,
+			});
+			console.error(e);
+		},
+		onSuccess(data) {
+			utils.invalidateQueries('words');
+			message.success({
+				content: `Добавлено новое слово: ${data.word.en}`,
+				duration: 2,
+			});
+		},
+	});
+
 	const controller = new AbortController();
 	const signal = controller.signal;
 
-	const auth = useAuth();
-	const user = auth?.user as firebase.User;
-
-	const { data: session } = useSession();
-	const addWordMutation = trpc.useMutation(['add-word']);
-
+	const [translateStatus, setTranslateStatus] = useState('idle');
+	const [startTranslate, setStartTranslate] = useState(false);
 	const [translateResponse, setTranslateResponse] =
 		useState<TWordWithoutID | null>(null);
-	const [translateError, setTranslateError] = useState(false);
+	const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [addWords, setAddWords] = useState<(TWordWithoutID | null)[] | []>([]);
-	const [addWordsError, setAddWordsError] = useState(false);
-	const [isLoadingAdd, setIsLoadingAdd] = useState(false);
-	const [disabledForm, setDisabledForm] = useState(false);
+	const [additionalWords, setAdditionalWords] = useState<
+		(TWordWithoutID | null)[] | []
+	>([]);
+	const [isAdditionalWordsError, setIsAdditionalWordsError] = useState(false);
+	const [isAdditionalWordsLoading, setIsAdditionalWordsLoading] =
+		useState(false);
+	const [isFormDisabled, setIsFormDisabled] = useState(false);
 
 	const handleAddWordToDictionary = async (word: TWordWithoutID) => {
 		if (!session) {
 			message.warning({
 				content: 'Авторизуйтесь для добавления слова в словарь',
+				duration: 2,
+			});
+			return;
+		}
+
+		if (wordIsDublicated(word.en, words)) {
+			message.warning({
+				content: 'Такое слово уже есть в словаре',
 				duration: 2,
 			});
 			return;
@@ -105,27 +103,14 @@ export const Translate: FC<ITranslate> = ({ onStartTranslate, words }) => {
 			},
 		};
 
-		if (checkDuplicateWords(word.ru, word.en, words)) {
-			message.warning({
-				content: 'Такое слово уже есть в словаре',
-				duration: 2,
-			});
-			return;
-		}
-
-		const newWordMutation = addWordMutation.mutate(mutationData);
-
-		message.success({
-			content: 'Добавлено новое слово',
-			duration: 2,
-		});
+		addWord.mutate(mutationData);
 	};
 
-	const getMainTranslate: TGetMainTranslate = async ({
+	const getMainTranslate = async ({
 		fromLang,
 		toLang,
 		word,
-	}) => {
+	}: ITranslateData) => {
 		const response = await translateAPI.getTranslate(
 			fromLang,
 			toLang,
@@ -140,7 +125,7 @@ export const Translate: FC<ITranslate> = ({ onStartTranslate, words }) => {
 			} catch (e) {}
 			setTranslateResponse(response);
 		} else {
-			setTranslateError(true);
+			setIsError(true);
 			message.warning({
 				content: 'Перевод не найден. Попробуйте другое слово',
 				duration: 2,
@@ -151,7 +136,7 @@ export const Translate: FC<ITranslate> = ({ onStartTranslate, words }) => {
 		return response;
 	};
 
-	const getTranslateAddWords: TGetTranslateAddWords = async (word) => {
+	const getTranslateAddWords = async (word: TWordWithoutID) => {
 		const getTranslatePromise = async (
 			word: string
 		): Promise<TWordWithoutID | null> => {
@@ -172,7 +157,7 @@ export const Translate: FC<ITranslate> = ({ onStartTranslate, words }) => {
 				return null;
 			}
 
-			setIsLoadingAdd(false);
+			setIsAdditionalWordsLoading(false);
 
 			return null;
 		};
@@ -190,130 +175,133 @@ export const Translate: FC<ITranslate> = ({ onStartTranslate, words }) => {
 		toLang: string,
 		word: string
 	) => {
-		setDisabledForm(true);
+		setIsFormDisabled(true);
 
 		try {
 			const mainTranslate = await getMainTranslate({
-				fromLang: fromLang,
-				toLang: toLang,
-				word: word,
-			});
-			const addTranslate = await getTranslateAddWords(mainTranslate);
+			fromLang: fromLang,
+			toLang: toLang,
+			word: word,
+		});
+		const addTranslate = await getTranslateAddWords(mainTranslate);
 
-			const addTranslateLength = addTranslate.length;
-			const counterNull = addTranslate.filter((item) => item === null).length;
+		const addTranslateLength = addTranslate.length;
+		const counterNull = addTranslate.filter((item) => item === null).length;
 
-			if (addTranslateLength === counterNull) {
-				setAddWordsError(true);
-			}
-
-			setAddWords(addTranslate);
+		if (addTranslateLength === counterNull) {
+			setIsAdditionalWordsError(true);
+		}		
+		
+		setAdditionalWords(addTranslate);
 		} catch (e) {}
 
-		setIsLoadingAdd(false);
-		setDisabledForm(false);
+		setIsAdditionalWordsLoading(false);
+		setIsFormDisabled(false);
 	};
 
-	const handleSubmitTranslateReqForm =
-		useCallback<THandleSubmitTranslateReqForm>(
-			({ TranslateDirection, TranslateRequest }) => {
-				const [fromLang, toLang] = TranslateDirection.toLowerCase().split('-');
+	const handleSubmitTranslateReqForm = (props: {
+		TranslateDirection: string;
+		TranslateRequest: string;
+	}) => {
+		const [fromLang, toLang] = props.TranslateDirection.toLowerCase().split('-');
 
-				onStartTranslate && onStartTranslate(true);
+		setStartTranslate(true);
+		setIsError(false);
+		setIsLoading(true);
+		setTranslateResponse(null);
+		setAdditionalWords([]);
+		setIsAdditionalWordsError(false);
+		setIsAdditionalWordsLoading(true);
 
-				setTranslateError(false);
-				setIsLoading(true);
-				setTranslateResponse(null);
-				setAddWordsError(false);
-				setAddWords([]);
-				setAddWordsError(false);
-				setIsLoadingAdd(true);
-
-				getTranslate(fromLang, toLang, TranslateRequest);
-			},
-			[isLoading, isLoadingAdd]
-		);
+		getTranslate(fromLang, toLang, props.TranslateRequest);
+	};
 
 	useEffect(() => {
-		return () => {
-			controller.abort();
-		};
+		return () => controller.abort();
 	}, []);
 
 	useEffect(() => {
-		if (!user) {
+		if (!session?.user) {
 			setTranslateResponse(null);
-			setAddWords([]);
-			onStartTranslate && onStartTranslate(false);
+			setAdditionalWords([]);
+			setStartTranslate(false);
 		}
-	}, [user]);
+	}, [session]);
 
 	return (
-		<div className={styles.wrapper}>
-			<TranslateReqForm
-				onSubmitForm={handleSubmitTranslateReqForm}
-				disabled={disabledForm}
-			/>
-			<div className={styles.mainTranslate}>
-				{isLoading && (
-					<div className={styles.loading}>
-						<h3 className={styles.title}>Ищем перевод ...</h3>
-						<Spin className={styles.spin} size='large' />
-					</div>
-				)}
-				{translateError && (
-					<div className={styles.translateError}>
-						<h3 className={styles.title}>Сожалеем, перевод не найден</h3>
-						<Empty description={false} />
-					</div>
-				)}
-				{translateResponse && (
-					<Row gutter={[8, 8]} justify='center'>
-						<Col span={24}>
-							<h3 className={styles.title}>Ваше слово:</h3>
-						</Col>
-						<Col xs={24} sm={24} md={11} lg={11} xl={10}>
-							<CardTranslateRes
-								word={translateResponse}
-								onAddWordToDictionary={handleAddWordToDictionary}
-							/>
-						</Col>
-					</Row>
-				)}
-			</div>
+		<div>
+			<h2 className={`page__title ${styles.title}`}>Время учить слова онлайн</h2>
+			<div className={styles.wrapper}>
+				<TranslateReqForm
+					onSubmitForm={handleSubmitTranslateReqForm}
+					disabled={isFormDisabled}
+				/>
+				<div className={styles.mainTranslate}>
+					{isLoading && (
+						<div className={styles.loading}>
+							<h3 className={styles.title}>Ищем перевод ...</h3>
+							<Spin className={styles.spin} size='large' />
+						</div>
+					)}
+					{isError && (
+						<div className={styles.translateError}>
+							<h3 className={styles.title}>Сожалеем, перевод не найден</h3>
+							<Empty description={false} />
+						</div>
+					)}
+					{translateResponse && (
+						<Row gutter={[8, 8]} justify='center'>
+							<Col span={24}>
+								<h3 className={styles.title}>Ваше слово:</h3>
+							</Col>
+							<Col xs={24} sm={24} md={11} lg={11} xl={10}>
+								<CardTranslateRes
+									word={translateResponse}
+									onAddWordToDictionary={handleAddWordToDictionary}
+								/>
+							</Col>
+						</Row>
+					)}
+				</div>
 
-			<div className={styles.addTranslate}>
-				{isLoadingAdd && (
-					<div className={styles.loading}>
-						<h3 className={styles.title}>Ищем дополнительные слова ...</h3>
-						<Spin className={styles.spin} size='large' />
-					</div>
-				)}
-				{addWordsError && (
-					<div className={styles.translateError}>
-						<h3 className={styles.title}>Сожалеем, похожие слова не найдены</h3>
-						<Empty description={false} />
-					</div>
-				)}
-				{!disabledForm && !addWordsError && !!addWords.length && (
-					<h3 className={styles.title}>Посмотрите похожие слова:</h3>
-				)}
-				<Row gutter={[8, 8]} justify='center'>
-					{addWords.map((item, index) => {
-						if (!!item) {
-							return (
-								<Col key={index} xs={24} sm={24} md={11} lg={11} xl={10}>
-									<CardTranslateRes
-										key={index}
-										word={item}
-										onAddWordToDictionary={handleAddWordToDictionary}
-									/>
-								</Col>
-							);
-						}
-					})}
-				</Row>
+				<div className={styles.addTranslate}>
+					{isAdditionalWordsLoading && (
+						<div className={styles.loading}>
+							<h3 className={styles.title}>Ищем дополнительные слова ...</h3>
+							<Spin className={styles.spin} size='large' />
+						</div>
+					)}
+					{isAdditionalWordsError && (
+						<div className={styles.translateError}>
+							<h3 className={styles.title}>Сожалеем, похожие слова не найдены</h3>
+							<Empty description={false} />
+						</div>
+					)}
+					{!isFormDisabled &&
+						!isAdditionalWordsError &&
+						!!additionalWords.length && (
+							<h3 className={styles.title}>Посмотрите похожие слова:</h3>
+						)}
+					<Row gutter={[8, 8]} justify='center'>
+						{additionalWords.map((item, index) => {
+							if (!!item) {
+								return (
+									<Col key={index} xs={24} sm={24} md={11} lg={11} xl={10}>
+										<CardTranslateRes
+											key={index}
+											word={item}
+											onAddWordToDictionary={handleAddWordToDictionary}
+										/>
+									</Col>
+								);
+							}
+						})}
+					</Row>
+				</div>
 			</div>
+			{!startTranslate && <Description />}
 		</div>
 	);
 };
+
+export { Translate };

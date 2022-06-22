@@ -54,3 +54,11 @@
 	letter-spacing: 0.04em;
 	color: var(--dark-text);
 }
+
+h2.title {
+	text-align: center;
+	text-transform: uppercase;
+	color: var(--gray);
+	margin-bottom: 35px;
+}
+

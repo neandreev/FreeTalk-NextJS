@@ -8,25 +8,25 @@ import { Translate } from 'src/components/organism/Translate';
 
 import { appRouter } from 'pages/api/trpc/[trpc]';
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const ssg = await createSSGHelpers({
-		router: appRouter,
-		ctx: {},
-		transformer: superjson,
-	});
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+// 	const ssg = await createSSGHelpers({
+// 		router: appRouter,
+// 		ctx: {},
+// 		transformer: superjson,
+// 	});
 
-	const session = await getSession(context);
-	const email = session?.user?.email || null;
+// 	const session = await getSession(context);
+// 	const email = session?.user?.email || null;
 
-	await ssg.fetchQuery('words', email);
+// 	await ssg.fetchQuery('words', email);
 
-	return {
-		props: {
-			trpcState: ssg.dehydrate(),
-			session,
-		},
-	};
-}
+// 	return {
+// 		props: {
+// 			trpcState: ssg.dehydrate(),
+// 			session,
+// 		},
+// 	};
+// }
 
 export const MainPage = () => <Translate />;
 

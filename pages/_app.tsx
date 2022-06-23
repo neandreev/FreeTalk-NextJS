@@ -105,3 +105,5 @@ export default withTRPC<AppRouter>({
 		};
 	},
 })(FreeTalk);
+
+export { reportWebVitals } from 'next-axiom';

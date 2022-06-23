@@ -3,7 +3,6 @@ import * as trpcNext from '@trpc/server/adapters/next';
 import { z } from 'zod';
 import { prisma } from '../../../src/server/db';
 import superjson from 'superjson';
-import { LearningWordModel } from '../../../prisma/zod/learningword';
 
 export const appRouter = trpc
 	.router()

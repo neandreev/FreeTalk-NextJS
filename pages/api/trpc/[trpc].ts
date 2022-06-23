@@ -7,18 +7,6 @@ import superjson from 'superjson';
 export const appRouter = trpc
 	.router()
 	.transformer(superjson)
-	.query('hello', {
-		input: z
-			.object({
-				text: z.string().nullable(),
-			})
-			.nullish(),
-		resolve({ input }) {
-			return {
-				greeting: `hello ${input?.text ?? 'world'}`,
-			};
-		},
-	})
 	.query('words', {
 		input: z.string().nullable(),
 		async resolve({ input }) {

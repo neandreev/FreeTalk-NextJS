@@ -4,30 +4,36 @@ import { Card } from 'antd';
 
 import styles from './Description.module.css';
 
+import Translate from '../../../assets/books-in-english-1.webp';
+import Dictionary from '../../../assets/how-to-choose-english-dictionary.webp';
+import Training from '../../../assets/english-for-trainers-and-athletes.webp';
+import Collections from '../../../assets/surround-yourself-with-english.webp';
+import Image from 'next/image';
+
 const DESC_DATA = [
 	{
 		title: 'Расширенный перевод',
 		description: 'Подберем похожие слова дополнительно к основному переводу.',
-		imgURL: 'https://englex.ru/app/uploads/books-in-english-1.png',
+		imgURL: Translate,
 		imgALT: 'translate',
 	},
 	{
 		title: 'Онлайн словарь',
 		description:
 			'Персональный словарь всегда с вами и доступен с любого устройства.',
-		imgURL: 'https://englex.ru/app/uploads/how-to-choose-english-dictionary.png',
+		imgURL: Dictionary,
 		imgALT: 'dictionary',
 	},
 	{
 		title: 'Тренировки',
 		description: 'Поможем вам быстро выучить новые слова и повторить старые.',
-		imgURL: 'https://englex.ru/app/uploads/english-for-trainers-and-athletes.png',
+		imgURL: Training,
 		imgALT: 'training',
 	},
 	{
 		title: 'Коллекции',
 		description: 'Мы собрали для вас слова по темам и регулярно их обновляем.',
-		imgURL: 'https://englex.ru/app/uploads/surround-yourself-with-english.png',
+		imgURL: Collections,
 		imgALT: 'collections',
 	},
 ];
@@ -43,7 +49,7 @@ export const Description: FC = () => {
 					<Card
 						key={index}
 						hoverable
-						cover={<img className='card-cover' alt={item.imgALT} src={item.imgURL} />}
+						cover={<Image className='card-cover' alt={item.imgALT} src={item.imgURL} />}
 						className={`card-description ${styles.card}`}
 					>
 						<h4 className={styles.cardTitle}>{item.title}</h4>

@@ -1,10 +1,16 @@
-import _ from 'lodash';
+import _uniqBy from 'lodash-es/uniqBy';
+import _find from 'lodash-es/find';
 import cn from 'classnames';
 import plural from 'plural-ru';
+import { useSession } from 'next-auth/react';
 import { FC, useEffect } from 'react';
-import { Button, Checkbox, Col, Grid, Row, Space, Table } from 'antd';
 import { hyphenateSync as hyphenateRuSync } from 'hyphen/ru';
 import { hyphenateSync as hyphenateEnSync } from 'hyphen/en';
+
+import { DeleteOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Col, Grid, Row, Space, Table } from 'antd';
+
+import ExpandableInfo from '../../atoms/ExpandableInfo';
 
 import { LearningWord } from '@prisma/client';
 import { TableRowSelection } from 'antd/lib/table/interface';
@@ -17,17 +23,13 @@ import {
 } from '../../../features/dictionary/dictionarySlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 
+import style from './Dictionary.module.css';
+import { trpc } from '../../../utils/trpc';
+
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import calendar from 'dayjs/plugin/calendar';
-import { DeleteOutlined } from '@ant-design/icons';
-import { useSession } from 'next-auth/react';
-
-import style from './Dictionary.module.css';
-import ExpandableInfo from '../../atoms/ExpandableInfo';
-import { trpc } from '../../../utils/trpc';
-import { urlToHttpOptions } from 'url';
 
 dayjs.locale('ru');
 dayjs.extend(localizedFormat);
@@ -75,17 +77,14 @@ export const Dictionary: FC = () => {
 		},
 		onError(err, updateData, context: any) {
 			const previousWords = context?.previousWords || [];
-			utils.setQueryData(
-				['words', email],
-				previousWords
-			);
+			utils.setQueryData(['words', email], previousWords);
 		},
 		onSettled() {
 			utils.invalidateQueries(['words', email]);
 		},
 	});
 
-	const filterCategories = _.uniqBy(words, 'category').map((word) => ({
+	const filterCategories = _uniqBy(words, 'category').map((word) => ({
 		text: word.category,
 		value: word.category,
 	}));
@@ -110,7 +109,7 @@ export const Dictionary: FC = () => {
 			updateStatusMutation.mutate({ ids: wordKey, learned: true });
 			dispatch(setSelectedRows([]));
 		} else {
-			const word = _.find(words, { id: wordKey[0] }) as LearningWord;
+			const word = _find(words, { id: wordKey[0] }) as LearningWord;
 			updateStatusMutation.mutate({ ids: wordKey, learned: !word.learned });
 		}
 	};
@@ -198,7 +197,9 @@ export const Dictionary: FC = () => {
 			width: '130px',
 			render: (text: string, record: LearningWord) => {
 				if (record.learned) return null;
-				const timeToTrainFormat = dayjs(record.timeToTrain * 1000).format('DD-MM-YYYY');
+				const timeToTrainFormat = dayjs(record.timeToTrain * 1000).format(
+					'DD-MM-YYYY'
+				);
 
 				const isAvailableForTraining = record.timeToTrain * 1000 < Date.now();
 				const timeToTrainStyles = cn({

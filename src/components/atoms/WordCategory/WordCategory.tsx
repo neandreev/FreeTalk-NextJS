@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _capitalize from 'lodash-es/capitalize';
 import { FC, useEffect, useRef, useState } from 'react';
 
 import { Input, Tag } from 'antd';
@@ -29,7 +29,7 @@ export const WordCategory: FC<IWordCategory> = ({
 
 	const handleUpdate = () => {
 		if (inputValue !== '') {
-			handleUpdateWord(record.id, _.capitalize(inputValue));
+			handleUpdateWord(record.id, _capitalize(inputValue));
 		} else {
 			setInputValue(record.category);
 		}
@@ -57,7 +57,7 @@ export const WordCategory: FC<IWordCategory> = ({
 						setInputVisible(true);
 					}}
 				>
-					<span>{_.capitalize(record.category)}</span>
+					<span>{_capitalize(record.category)}</span>
 				</Tag>
 			)}
 		</>

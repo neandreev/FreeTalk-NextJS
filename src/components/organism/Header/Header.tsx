@@ -1,8 +1,7 @@
 import { FC, useState, useCallback } from 'react';
+import { useSession } from 'next-auth/react';
 
 import { Layout } from 'antd';
-
-import { useAuth } from '../../../hooks';
 
 import LoginModalForm from '../LoginModalForm';
 import HeaderMenu from '../../atoms/HeaderMenu';
@@ -10,7 +9,6 @@ import HeaderLogo from '../../atoms/HeaderLogo';
 import HeaderEnter from '../../atoms/HeaderEnter';
 
 import style from './Header.module.css';
-import { useSession } from 'next-auth/react';
 
 const { Header: HeaderAnt } = Layout;
 

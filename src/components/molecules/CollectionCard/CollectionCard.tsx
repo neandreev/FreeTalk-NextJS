@@ -1,20 +1,17 @@
 import { FC } from 'react';
-// import { Link } from 'react-router-dom';
 import Link from 'next/link';
 
-import { ICollection } from '../../../interfaces/collection';
-
 import { Card } from 'antd';
-import styles from './CollectionCard.module.css';
+
 import { Collection } from '@prisma/client';
+
+import styles from './CollectionCard.module.css';
 
 export const CollectionCard: FC<Collection> = ({ id, title, cover }) => {
 	return (
-		<Card
-			cover={<img alt={title} src={cover} className={styles.cardImg} />}
-		>
+		<Card cover={<img alt={title} src={cover} className={styles.cardImg} />}>
 			<div className={styles.info}>
-				<span>{ title }</span>
+				<span>{title}</span>
 				<Link href={`/collections/${id}`}>Изучить слова</Link>
 			</div>
 		</Card>

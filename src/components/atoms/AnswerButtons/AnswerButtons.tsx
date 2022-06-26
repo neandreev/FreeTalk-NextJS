@@ -20,7 +20,11 @@ export const AnswerButtons: FC<IAnswerButtons> = (props) => {
 		<Row gutter={[16, 16]}>
 			{props.variants.map((variant, i) => (
 				<Col span={12} key={variant.wordId + currentQuestionId}>
-					<QuizButton key={variant.wordId + currentQuestionId} placement={i % 2 === 1 ? 'right' : 'left'} {...variant} />
+					<QuizButton
+						key={variant.wordId + currentQuestionId}
+						placement={i % 2 === 1 ? 'right' : 'left'}
+						{...variant}
+					/>
 				</Col>
 			))}
 		</Row>

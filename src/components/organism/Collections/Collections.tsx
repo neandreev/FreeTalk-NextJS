@@ -1,12 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 
+import { Pagination, Row, Col } from 'antd';
+
 import { CollectionCard } from '../../molecules/CollectionCard';
-import { ICollection } from '../../../interfaces/collection';
+
+import { Collection } from '@prisma/client';
 import { IPagination } from '../../../interfaces/pagination';
 
-import { Pagination, Row, Col } from 'antd';
 import styles from './Collections.module.css';
-import { Collection } from '@prisma/client';
 
 export const Collections: FC<{ data: Collection[] }> = ({ data }) => {
 	const [collections, setCollections] = useState<Array<Collection>>([]);
@@ -17,23 +18,23 @@ export const Collections: FC<{ data: Collection[] }> = ({ data }) => {
 	});
 
 	useEffect(() => {
-			if (data) {
-				setPagination({
-					...pagination,
-					total: data.length,
-				});
-	
-				setCollections(
-					data
-						.slice(
-							(pagination.index - 1) * pagination.limit,
-							(pagination.index - 1) * pagination.limit + pagination.limit
-						)
-						.map((item) => {
-							return { ...item };
-						})
-				);
-			}
+		if (data) {
+			setPagination({
+				...pagination,
+				total: data.length,
+			});
+
+			setCollections(
+				data
+					.slice(
+						(pagination.index - 1) * pagination.limit,
+						(pagination.index - 1) * pagination.limit + pagination.limit
+					)
+					.map((item) => {
+						return { ...item };
+					})
+			);
+		}
 	}, [data, pagination.index]);
 
 	const handleChangePagination = (page: number, pageSize: number) => {
@@ -45,29 +46,25 @@ export const Collections: FC<{ data: Collection[] }> = ({ data }) => {
 	};
 
 	return (
-			<>
-				<Row className={styles.cards} gutter={[16, 16]}>
-					{collections.map((item) => (
-						<Col xs={24} sm={12} lg={8} key={item.id}>
-							<CollectionCard
-								id={item.id}
-								title={item.title}
-								cover={item.cover}
-							/>
-						</Col>
-					))}
-				</Row>
-				<Row className={styles.pagination}>
-					<Col span={24}>
-						<Pagination
-							total={pagination.total}
-							pageSize={pagination.limit}
-							current={pagination.index}
-							onChange={handleChangePagination}
-							hideOnSinglePage={false}
-						/>
+		<>
+			<Row className={styles.cards} gutter={[16, 16]}>
+				{collections.map((item) => (
+					<Col xs={24} sm={12} lg={8} key={item.id}>
+						<CollectionCard id={item.id} title={item.title} cover={item.cover} />
 					</Col>
-				</Row>
-			</>
+				))}
+			</Row>
+			<Row className={styles.pagination}>
+				<Col span={24}>
+					<Pagination
+						total={pagination.total}
+						pageSize={pagination.limit}
+						current={pagination.index}
+						onChange={handleChangePagination}
+						hideOnSinglePage={false}
+					/>
+				</Col>
+			</Row>
+		</>
 	);
 };

@@ -18,7 +18,7 @@ type ITrainingStartButton = Omit<ITrainingIntro, 'isDataPrepared'>;
 const TrainingStartButton: FC<ITrainingStartButton> = (props) => {
 	const { trainingWords } = useAppSelector(selectTraining);
 	const tooltipTitle = `Вы не можете начать тренировку, так как у вас недостаточно доступных для
-	повторения слов в словаре. Доступно слов: ${trainingWords.length}. Необходимо: 10`
+	повторения слов в словаре. Доступно слов: ${trainingWords.length}. Необходимо: 10`;
 
 	return (
 		<>
@@ -31,9 +31,7 @@ const TrainingStartButton: FC<ITrainingStartButton> = (props) => {
 					Начать тренировку
 				</Button>
 			) : (
-				<Tooltip
-					title={tooltipTitle}
-				>
+				<Tooltip title={tooltipTitle}>
 					<Button className={'app-btn _green _disabled'}>Начать тренировку</Button>
 				</Tooltip>
 			)}

@@ -1,7 +1,6 @@
-import _ from 'lodash';
+import _find from 'lodash-es/find';
 import dayjs from 'dayjs';
 import cn from 'classnames';
-import firebase from 'firebase';
 import { FC, useState } from 'react';
 
 import { Card } from 'antd';
@@ -11,16 +10,13 @@ import {
 	selectCurrentQuestion,
 	selectTraining,
 } from '../../../features/training/trainingSlice';
-import { useAuth } from '../../../hooks/useAuth';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { useUpdateUserWordMutation } from '../../../features/database/users';
 
-import { IWord } from '../../../interfaces/word';
+import { LearningWord } from '@prisma/client';
 
 import style from './QuizButton.module.css';
-import { LearningWord } from '@prisma/client';
+
 import { trpc } from '../../../utils/trpc';
-// import './QuizButton.css'; //TODO: import QuizButton style
 
 interface IQuizButton {
 	wordId: number;
@@ -42,7 +38,9 @@ const fibonacci = (n: number) => {
 const updateTimeToTrain = (timeToTrain: number, completedTrains: number) => {
 	const oneDayTimestamp = 24 * 60 * 60 * 1000;
 	const daysToNextTraining = fibonacci(completedTrains);
-	const roundedTimeToTrain = dayjs(timeToTrain * 1000).endOf('day').valueOf();
+	const roundedTimeToTrain = dayjs(timeToTrain * 1000)
+		.endOf('day')
+		.valueOf();
 	const newTimeToTrain =
 		roundedTimeToTrain + oneDayTimestamp * daysToNextTraining;
 
@@ -52,45 +50,32 @@ const updateTimeToTrain = (timeToTrain: number, completedTrains: number) => {
 export const QuizButton: FC<IQuizButton> = (props) => {
 	const { wordId, isCorrect } = props;
 
-	// const auth = useAuth();
-	// const user = auth!.user as firebase.User;
 	const [isClicked, setIsClicked] = useState(false);
 
 	const utils = trpc.useContext();
 	const dispatch = useAppDispatch();
 	const { trainingWords } = useAppSelector(selectTraining);
 	const { wasAnswered } = useAppSelector(selectCurrentQuestion);
-	const [updateWord, updateData] = useUpdateUserWordMutation();
 
 	const updateWordMutation = trpc.useMutation('update-word-trainingdata', {
 		onSuccess() {
 			utils.invalidateQueries(['words']);
-		}
+		},
 	});
 
-	const word = _.find(trainingWords, { id: wordId }) as LearningWord;
+	const word = _find(trainingWords, { id: wordId }) as LearningWord;
 
 	const handleButtonClick = () => {
 		if (isClicked || wasAnswered) return;
 		if (isCorrect) {
 			const completedTrains = word.completedTrains + 1;
 			const timeToTrain = updateTimeToTrain(word.timeToTrain, completedTrains);
-
-			// const wordsUpdate = {
-			// 	wordId: wordId,
-			// 	userId: user.uid,
-			// 	word: {
-			// 		completedTrains,
-			// 		timeToTrain,
-			// 	},
-			// };
 			const wordUpdate = {
 				id: wordId,
 				completedTrains,
 				timeToTrain: Math.round(timeToTrain / 1000),
-			}
+			};
 
-			// updateWord(wordsUpdate);
 			updateWordMutation.mutate(wordUpdate);
 		}
 

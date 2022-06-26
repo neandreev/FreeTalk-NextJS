@@ -1,6 +1,5 @@
 import { FC } from 'react';
 
-import { useGetCollectionsQuery } from '../../src/services/collections';
 import { DetailCollection } from '../../src/components/organism/DetailCollection';
 
 import { Row, Col, Spin } from 'antd';

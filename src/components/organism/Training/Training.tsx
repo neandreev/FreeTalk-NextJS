@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _shuffle from 'lodash-es/shuffle';
 import { FC, MouseEventHandler, useEffect, useState } from 'react';
 
 import { Quiz } from '../Quiz';
@@ -23,7 +23,7 @@ import { LearningWord } from '@prisma/client';
 const generateQuestions = (words: LearningWord[]) => {
 	const questions = words.map((word) => {
 		const correctAnswerId = word.id;
-		const wrongAnswersIds = _.shuffle(words)
+		const wrongAnswersIds = _shuffle(words)
 			.map((word) => word.id)
 			.filter((wordId) => wordId !== correctAnswerId)
 			.slice(0, 3);
@@ -47,7 +47,7 @@ const selectWordsForTraining = (words: LearningWord[]) => {
 		const timestamp = Date.now();
 		return word.timeToTrain * 1000 <= timestamp && !word.learned;
 	});
-	const shuffledWords = _.shuffle(availableWordsForTraining);
+	const shuffledWords = _shuffle(availableWordsForTraining);
 	const wordsForTraining = shuffledWords.slice(0, 10);
 
 	return wordsForTraining;
@@ -59,7 +59,7 @@ export const Training: FC = (props) => {
 
 	const dispatch = useAppDispatch();
 	const { isCompleted } = useAppSelector(selectTraining);
-	const wordsQuery = trpc.useQuery(['words', email])
+	const wordsQuery = trpc.useQuery(['words', email]);
 	const isLoading = wordsQuery.isLoading;
 	const words = wordsQuery.data || [];
 
@@ -100,23 +100,23 @@ export const Training: FC = (props) => {
 	};
 
 	return (
-		<Row justify="center" align="middle">
+		<Row justify='center' align='middle'>
 			<Col className='training'>
-			<h1 className={`page__title ${style.title}`}>Тренировка</h1>
-			<hr />
-			{!isLoading && isDataPrepared && startTraining ? (
-				<Quiz />
-			) : (
-				<TrainingIntro
-					isDataPrepared={isDataPrepared}
-					isTrainingAvailable={isTrainingAvailable}
-					handleStart={handleStartTraining}
+				<h1 className={`page__title ${style.title}`}>Тренировка</h1>
+				<hr />
+				{!isLoading && isDataPrepared && startTraining ? (
+					<Quiz />
+				) : (
+					<TrainingIntro
+						isDataPrepared={isDataPrepared}
+						isTrainingAvailable={isTrainingAvailable}
+						handleStart={handleStartTraining}
+					/>
+				)}
+				<RepeatTraining
+					isCompleted={isCompleted}
+					handleReset={handleResetTraining}
 				/>
-			)}
-			<RepeatTraining
-				isCompleted={isCompleted}
-				handleReset={handleResetTraining}
-			/>
 			</Col>
 		</Row>
 	);

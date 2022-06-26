@@ -5,20 +5,13 @@ import { dictionaryReducer } from '@/features/dictionary/dictionarySlice';
 import { translateReducer } from '@/features/translate/translateSlice';
 import { trainingReducer } from '@/features/training/trainingSlice';
 
-import { usersApi } from '@/features/database/users';
-import { collectionsApi } from '@/services/collections';
-
 export const store = configureStore({
 	reducer: {
 		translate: translateReducer,
 		collections: collectionReducer,
 		dictionary: dictionaryReducer,
 		training: trainingReducer,
-		[usersApi.reducerPath]: usersApi.reducer,
-		[collectionsApi.reducerPath]: collectionsApi.reducer,
 	},
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(usersApi.middleware, collectionsApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

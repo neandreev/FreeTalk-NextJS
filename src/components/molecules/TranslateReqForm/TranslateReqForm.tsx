@@ -1,37 +1,40 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 
-import { Button, Form, Input, Select } from 'antd';
+import { Form, Input, Select } from 'antd';
 
 const { Option } = Select;
 
 interface ITranslateReqForm {
-	onSubmitForm: ({}:ITranslateReqFormValue) => void;
-	disabled: boolean
+	onSubmitForm: ({}: ITranslateReqFormValue) => void;
+	disabled: boolean;
 }
 
 interface ITranslateReqFormValue {
 	TranslateRequest: string;
-	TranslateDirection: string
+	TranslateDirection: string;
 }
 
-export const TranslateReqForm: FC<ITranslateReqForm> = ({ onSubmitForm, disabled }) => {
+export const TranslateReqForm: FC<ITranslateReqForm> = ({
+	onSubmitForm,
+	disabled,
+}) => {
 	const [form] = Form.useForm();
 	const [directTranslate, setDirectTranslate] = useState('EN-RU');
 
 	const onFinish = useCallback(
 		(values: ITranslateReqFormValue) => {
 			onSubmitForm &&
-			onSubmitForm({
-				TranslateDirection: values.TranslateDirection, TranslateRequest: values.TranslateRequest
-			});
+				onSubmitForm({
+					TranslateDirection: values.TranslateDirection,
+					TranslateRequest: values.TranslateRequest,
+				});
 		},
 		[onSubmitForm, form]
 	);
 
 	const handleChangeTranslateDirection = useCallback((value: string) => {
 		setDirectTranslate(value);
-	}, [])
-
+	}, []);
 
 	useEffect(() => {
 		form.resetFields();
@@ -53,7 +56,7 @@ export const TranslateReqForm: FC<ITranslateReqForm> = ({ onSubmitForm, disabled
 			style={{ width: '100%' }}
 			initialValues={{ TranslateDirection: directTranslate }}
 			onKeyPress={(e) => {
-				if (e.key === "Enter") {
+				if (e.key === 'Enter') {
 					form.submit();
 				}
 			}}
@@ -64,7 +67,7 @@ export const TranslateReqForm: FC<ITranslateReqForm> = ({ onSubmitForm, disabled
 					size='large'
 					addonBefore={prefixSelector}
 					disabled={disabled}
-					autoComplete="off"
+					autoComplete='off'
 				/>
 			</Form.Item>
 		</Form>

@@ -1,15 +1,17 @@
 import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { DetailCollectionWordCard } from '../../molecules/DetailCollectionWordCard';
-import { IPagination } from '../../../interfaces/pagination';
-import { IWord } from '../../../interfaces/word';
+import { trpc } from '../../../utils/trpc';
 
 import { Row, Col, Pagination, Button } from 'antd';
 
-import styles from './DetailCollection.module.css';
+import { DetailCollectionWordCard } from '../../molecules/DetailCollectionWordCard';
+
+import { IPagination } from '../../../interfaces/pagination';
 import { Collection, CollectionWord } from '@prisma/client';
-import { trpc } from '../../../utils/trpc';
+
+import styles from './DetailCollection.module.css';
+
 export const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
 	data,
 	pid,
@@ -46,7 +48,14 @@ export const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
 				});
 			setWords(newWords);
 		}
-	}, [collections, collectionWords, pid, selectedCollection, data, pagination.index]);
+	}, [
+		collections,
+		collectionWords,
+		pid,
+		selectedCollection,
+		data,
+		pagination.index,
+	]);
 
 	const handleChangePagination = (page: number, pageSize: number) => {
 		setPagination({
@@ -73,17 +82,7 @@ export const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
 			<Row className={styles.cards} gutter={[8, 8]}>
 				{words?.map((item) => (
 					<Col key={item.en} xs={24} sm={12} lg={8}>
-						<DetailCollectionWordCard
-							word={item}
-							// id={item.id}
-							// en={item.en}
-							// ru={item.ru}
-							// image={item.image}
-							// category={item.category}
-							// completedTrains={item.completedTrains}
-							// isLearned={item.isLearned}
-							// timeToTrain={item.timeToTrain}
-						/>
+						<DetailCollectionWordCard word={item} />
 					</Col>
 				))}
 			</Row>

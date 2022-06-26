@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _capitalize from 'lodash-es/capitalize';
 
 import {IWord } from '../interfaces/word';
 
@@ -26,8 +26,8 @@ class TranslateAPI {
 		);
 		const body = await response.json();
 		const translate: TWordWithoutID = {
-			en: from === 'en' ? _.capitalize(word): _.capitalize(body.translate),
-			ru: from === 'en' ? _.capitalize(body.translate): _.capitalize(word),
+			en: from === 'en' ? _capitalize(word): _capitalize(body.translate),
+			ru: from === 'en' ? _capitalize(body.translate): _capitalize(word),
 			category:'Общее',
 			learned: false,
 			timeToTrain: Date.now(),

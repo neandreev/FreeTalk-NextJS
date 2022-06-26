@@ -1,5 +1,7 @@
-import _ from 'lodash';
+import _find from 'lodash-es/find';
+import _shuffle from 'lodash-es/shuffle';
 import { FC, useMemo } from 'react';
+
 import { Card, Space } from 'antd';
 
 import { QuizList } from '../QuizList';
@@ -12,7 +14,6 @@ import {
 } from '../../../features/training/trainingSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 
-import { IWord } from '../../../interfaces/word';
 import { ITrainingAnswer } from '../../../interfaces/training';
 import { LearningWord } from '@prisma/client';
 
@@ -23,7 +24,9 @@ export const QuizQuestions: FC = () => {
 	);
 	const { currentQuestionId, trainingWords } = useAppSelector(selectTraining);
 
-	const correctWord = _.find(trainingWords, { id: correctAnswerId }) as LearningWord;
+	const correctWord = _find(trainingWords, {
+		id: correctAnswerId,
+	}) as LearningWord;
 	const [wrongAnswer1, wrongAnswer2, wrongAnswer3] = wrongAnswersIds;
 
 	const handleNextQuestionLink: React.MouseEventHandler = (e) => {
@@ -39,7 +42,7 @@ export const QuizQuestions: FC = () => {
 	];
 
 	const shuffledVariants = useMemo(
-		() => _.shuffle(variants),
+		() => _shuffle(variants),
 		[currentQuestionId]
 	);
 

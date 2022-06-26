@@ -30,7 +30,9 @@ const ExpandableInfo: FC<IExpandableInfo> = ({
 }) => {
 	const breakpoint = useBreakpoint();
 
-	const timeToTrainFormat = dayjs(record.timeToTrain * 1000).format('DD MMMM YYYY');
+	const timeToTrainFormat = dayjs(record.timeToTrain * 1000).format(
+		'DD MMMM YYYY'
+	);
 	const isAvailableForTraining = record.timeToTrain * 1000 < Date.now();
 
 	const dayToTrainStyles = cn({

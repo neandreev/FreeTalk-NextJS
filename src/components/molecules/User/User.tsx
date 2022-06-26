@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import { FC } from 'react';
 
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -9,7 +9,10 @@ export const User: FC = () => {
 	return (
 		<div className={style.userWrapper}>
 			<p className={style.userName}>Вася Пупкин</p>
-			<Avatar className={style.user + ' ' + style.avatar} icon={<UserOutlined />} />
+			<Avatar
+				className={style.user + ' ' + style.avatar}
+				icon={<UserOutlined />}
+			/>
 		</div>
 	);
 };

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Button, Col, Row, Space } from 'antd';
+import { Button, Col, Row } from 'antd';
 
 import style from './RepeatTraining.module.css';
 

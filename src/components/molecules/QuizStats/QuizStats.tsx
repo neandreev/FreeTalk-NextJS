@@ -1,21 +1,20 @@
-import _ from 'lodash';
+import _find from 'lodash-es/find';
 import { FC } from 'react';
 
 import { Card, Row } from 'antd';
 
+import { WordStat } from '../../atoms/WordStat';
+
 import { useAppSelector } from '../../../hooks';
 import { selectTraining } from '../../../features/training/trainingSlice';
 
-import { WordStat } from '../../atoms/WordStat';
-import { IQuestion } from '../../../interfaces/question';
-
-import { IWord } from '../../../interfaces/word';
 import { LearningWord } from '@prisma/client';
+import { IQuestion } from '../../../interfaces/question';
 
 const getWordsStats = (questions: IQuestion[], trainingWords: LearningWord[]) =>
 	questions
 		.map((question) => ({
-			word: _.find(trainingWords, {
+			word: _find(trainingWords, {
 				id: question.correctAnswerId,
 			}) as LearningWord,
 			correct: question.wasAnsweredCorrectly,

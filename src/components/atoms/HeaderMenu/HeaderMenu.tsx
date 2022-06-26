@@ -13,7 +13,6 @@ const getCurrentKeyMenu = (route: string) => {
 
 const HeaderMenu: FC = () => {
 	const { route } = useRouter();
-	// const isRoot = useRouter().pathname === '/';
 	const [currentKeyMenu, setCurrentKeyMenu] = useState(getCurrentKeyMenu(route));
 
 	useEffect(() => {
@@ -26,7 +25,6 @@ const HeaderMenu: FC = () => {
 			className='header-navigation'
 			defaultSelectedKeys={[]}
 			selectedKeys={[currentKeyMenu]}
-			// onClick={(e) => setCurrentKeyMenu(e.key)}
 		>
 			<Menu.Item className='navigation-item' key='1'>
 				<Link href='/dictionary'>Словарь</Link>

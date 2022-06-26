@@ -178,20 +178,20 @@ const Translate = () => {
 
 		try {
 			const mainTranslate = await getMainTranslate({
-			fromLang: fromLang,
-			toLang: toLang,
-			word: word,
-		});
-		const addTranslate = await getTranslateAddWords(mainTranslate);
+				fromLang: fromLang,
+				toLang: toLang,
+				word: word,
+			});
+			const addTranslate = await getTranslateAddWords(mainTranslate);
 
-		const addTranslateLength = addTranslate.length;
-		const counterNull = addTranslate.filter((item) => item === null).length;
+			const addTranslateLength = addTranslate.length;
+			const counterNull = addTranslate.filter((item) => item === null).length;
 
-		if (addTranslateLength === counterNull) {
-			setIsAdditionalWordsError(true);
-		}		
-		
-		setAdditionalWords(addTranslate);
+			if (addTranslateLength === counterNull) {
+				setIsAdditionalWordsError(true);
+			}
+
+			setAdditionalWords(addTranslate);
 		} catch (e) {}
 
 		setIsAdditionalWordsLoading(false);

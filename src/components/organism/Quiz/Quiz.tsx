@@ -9,5 +9,7 @@ import { useAppSelector } from '../../../hooks';
 export const Quiz: FC = () => {
 	const { isCompleted } = useAppSelector(selectTraining);
 
-	return <div className='quiz'>{!isCompleted ? <QuizQuestions /> : <QuizStats />}</div>;
+	return (
+		<div className='quiz'>{!isCompleted ? <QuizQuestions /> : <QuizStats />}</div>
+	);
 };

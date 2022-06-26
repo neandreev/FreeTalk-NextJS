@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store/store';
 import { IQuestion } from '../../interfaces/question';
-import { IWord } from '../../interfaces/word';
 import { LearningWord } from '@prisma/client';
 
 interface ITrainingSlice {

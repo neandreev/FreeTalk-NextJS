@@ -12,8 +12,6 @@ import { IQuestion } from '../../../interfaces/question';
 import { IWord } from '../../../interfaces/word';
 import { LearningWord } from '@prisma/client';
 
-// import './QuizStats.css'; TODO: import QuizStats style
-
 const getWordsStats = (questions: IQuestion[], trainingWords: LearningWord[]) =>
 	questions
 		.map((question) => ({

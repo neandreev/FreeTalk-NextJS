@@ -17,7 +17,6 @@ import {
 } from '../../../features/dictionary/dictionarySlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 
-// import './Dictionary.css'; //TODO: import Dictionary style
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';

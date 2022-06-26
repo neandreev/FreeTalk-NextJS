@@ -15,7 +15,6 @@ import { IQuestion } from '../../../interfaces/question';
 import { TrainingIntro } from '../../atoms/TrainingIntro';
 
 import style from './Training.module.css';
-// import './Training.css' //TODO: import 
 import { Col, Row } from 'antd';
 import { trpc } from '../../../utils/trpc';
 import { useSession } from 'next-auth/react';

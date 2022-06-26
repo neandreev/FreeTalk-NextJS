@@ -5,7 +5,6 @@ import { Row, Col, Card, Button, message } from 'antd';
 import { ICardTranslateRes } from '../../../interfaces/translate';
 
 import styles from './CardTranslateRes.module.css'
-// import './CardTranslateRes.css'
 
 export const CardTranslateRes: FC<ICardTranslateRes> = (
 	{ word, onAddWordToDictionary }

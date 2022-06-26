@@ -16,8 +16,6 @@ import { IWord } from '../../../interfaces/word';
 import { ITrainingAnswer } from '../../../interfaces/training';
 import { LearningWord } from '@prisma/client';
 
-// import './QuizQuestions.css'; TODO: import QuizQuestions style
-
 export const QuizQuestions: FC = () => {
 	const dispatch = useAppDispatch();
 	const { wasAnswered, correctAnswerId, wrongAnswersIds } = useAppSelector(

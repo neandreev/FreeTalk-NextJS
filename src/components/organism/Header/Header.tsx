@@ -11,7 +11,6 @@ import HeaderEnter from '../../atoms/HeaderEnter';
 
 import style from './Header.module.css';
 import { useSession } from 'next-auth/react';
-// import './Header.css'; //TODO: import header style
 
 const { Header: HeaderAnt } = Layout;
 

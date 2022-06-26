@@ -14,7 +14,6 @@ import { translateAPI } from '@/api/translateAPI';
 import { findImageAPI } from '@/api/findImageAPI';
 import { findHyponemesAPI } from '@/api/findHyponemesAPI';
 
-// import styles from './MainPage.module.css'; //TODO: add Mainpage style
 import styles from '@/components/organism/Training/Training.module.css';
 
 interface ITranslateData {

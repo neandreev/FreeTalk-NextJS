@@ -6,8 +6,6 @@ import { QuizQuestions } from '../../molecules/QuizQuestions';
 import { selectTraining } from '../../../features/training/trainingSlice';
 import { useAppSelector } from '../../../hooks';
 
-// import './Quiz.css'; //TODO: import quiz style
-
 export const Quiz: FC = () => {
 	const { isCompleted } = useAppSelector(selectTraining);
 

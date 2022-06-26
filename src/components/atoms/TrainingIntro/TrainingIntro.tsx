@@ -6,7 +6,6 @@ import { useAppSelector } from '../../../hooks';
 import { selectTraining } from '../../../features/training/trainingSlice';
 
 import style from './TrainingIntro.module.css';
-// import './TrainingIntro.css'; TODO: import TrainingIntro style
 
 interface ITrainingIntro {
 	isDataPrepared: boolean;

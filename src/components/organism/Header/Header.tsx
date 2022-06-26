@@ -26,7 +26,8 @@ export const Header: FC = () => {
 		<HeaderAnt className={style.header}>
 			<div className='container'>
 				<HeaderLogo />
-				<HeaderEnter handleModalVisible={() => setIsModalVisible(true)} />
+				{/* <HeaderEnter handleModalVisible={() => setIsModalVisible(true)} /> */}
+				<HeaderEnter />
 				{isAuthenticated && <HeaderMenu />}
 				<LoginModalForm
 					isModalVisible={isModalVisible}

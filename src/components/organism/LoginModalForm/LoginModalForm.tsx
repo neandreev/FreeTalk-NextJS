@@ -28,10 +28,12 @@ export const LoginModalForm: FC<ILoginModalForm> = ({
 		>
 			<Tabs defaultActiveKey='1'>
 				<TabPane tab='Вход' key='1'>
-					<AuthorizationForm type='signin' onSuccess={handleCancel} />
+					{/* <AuthorizationForm type='signin' onSuccess={handleCancel} /> */}
+					<AuthorizationForm />
 				</TabPane>
 				<TabPane tab='Создайте аккаунт' key='2'>
-					<AuthorizationForm type='signup' onSuccess={handleCancel} />
+					{/* <AuthorizationForm type='signup' onSuccess={handleCancel} /> */}
+					<AuthorizationForm />
 				</TabPane>
 			</Tabs>
 		</Modal>

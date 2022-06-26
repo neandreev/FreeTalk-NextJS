@@ -12,7 +12,6 @@ const HeaderEnter: FC = () => {
 				className={style.authBtn}
 				onClick={!session ? () => signIn() : () => signOut()}
 			>
-				{session && session.user?.name}
 				{session ? 'Выход' : 'Вход'}
 			</span>
 		</div>

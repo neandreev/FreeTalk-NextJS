@@ -13,13 +13,22 @@ const HeaderLogo: FC = () => {
 		<div className={style.logoWrapper}>
 			<Link href='/'>
 				<div>
-					<Image src={FreeTalk} height='63px' width='200px' className={style.logo} />
-					<Image
-						src={FreeTalkMobile}
-						height='63px'
-						width='93px'
-						className={style.logoMobile}
-					/>
+					<div className={style.logo}>
+						<Image
+							src={FreeTalk}
+							height='63px'
+							width='200px'
+							// className={style.logo}
+						/>
+					</div>
+					<div className={style.logoMobile}>
+						<Image
+							src={FreeTalkMobile}
+							height='63px'
+							width='93px'
+							// className={style.logoMobile}
+						/>
+					</div>
 				</div>
 			</Link>
 		</div>

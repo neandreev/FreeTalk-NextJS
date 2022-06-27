@@ -1,9 +1,22 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/ec1ee30122a180787e19/maintainability)](https://codeclimate.com/github/neandreev/FreeTalk-NextJS/maintainability)
-# FreeTalk-NextJS
+<h1 align='center'>
+	FreeTalk
+</h1>
 
-Ссылка: https://free-talk-next-js.vercel.app
+<p align='center'>
+	<img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/neandreev/FreeTalk-NextJS?label=CodeClimate&style=flat-square">
+	<img alt="CodeFactor Grade" src="https://img.shields.io/codefactor/grade/github/neandreev/freetalk-nextjs?label=CodeFactor&style=flat-square">
+	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/neandreev/FreeTalk-NextJS?label=Last%20commit&style=flat-square">
+</p>
 
-Сайт-сервис для перевода, изучения и повторения иностранных слов.
+<h3 align='center'>
+	Сайт-сервис для перевода, изучения и повторения иностранных слов.
+</h3>
+
+<h3 align='center'>
+	Ссылка: <a href="https://free-talk-next-js.vercel.app" target="_blank">https://free-talk-next-js.vercel.app</a>
+</h3>
+
+![FreeTalk](https://www.neandreev.ru/images/FreeTalk.webp)
 
 Форк https://github.com/neandreev/FreeTalk с мажорными изменениями стека:
 

@@ -1,3 +1,4 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/ec1ee30122a180787e19/maintainability)](https://codeclimate.com/github/neandreev/FreeTalk-NextJS/maintainability)
 # FreeTalk-NextJS
 
 Ссылка: https://free-talk-next-js.vercel.app

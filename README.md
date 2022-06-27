@@ -8,13 +8,13 @@
 	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/neandreev/FreeTalk-NextJS?label=Last%20commit&style=flat-square">
 </p>
 
-<h3 align='center'>
+<h4 align='center'>
 	Сайт-сервис для перевода, изучения и повторения иностранных слов.
-</h3>
+</h4>
 
-<h3 align='center'>
+<h4 align='center'>
 	Ссылка: <a href="https://free-talk-next-js.vercel.app" target="_blank">https://free-talk-next-js.vercel.app</a>
-</h3>
+</h4>
 
 > [![screenshot][1]][1]
 

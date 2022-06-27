@@ -16,7 +16,9 @@
 	Ссылка: <a href="https://free-talk-next-js.vercel.app" target="_blank">https://free-talk-next-js.vercel.app</a>
 </h3>
 
-![FreeTalk](https://www.neandreev.ru/images/FreeTalk.webp)
+> [![screenshot][1]][1]
+
+  [1]: https://www.neandreev.ru/images/FreeTalk.webp
 
 Форк https://github.com/neandreev/FreeTalk с мажорными изменениями стека:
 

@@ -18,6 +18,7 @@ jobs:
         uses: lowlighter/metrics@latest
         with:
           filename: pagespeed.svg
+					token: ${{ secrets.METRICS_TOKEN }}
           output_action: gist
           committer_gist: ${{ secrets.GIST }}
           config_timezone: Asia/Yekaterinburg

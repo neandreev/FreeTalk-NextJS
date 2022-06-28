@@ -27,4 +27,5 @@ jobs:
 
           base: ''
           plugin_pagespeed: yes
+					plugin_pagespeed_token: ${{ secrets.PAGESPEED_TOKEN }}
           plugin_pagespeed_url: https://free-talk-next-js.vercel.app/

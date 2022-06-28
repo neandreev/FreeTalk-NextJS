@@ -16,6 +16,12 @@
 	Ссылка: <a href="https://free-talk-next-js.vercel.app" target="_blank">https://free-talk-next-js.vercel.app</a>
 </h4>
 
+<div align='center'>
+
+![PageSpeed](https://gist.githubusercontent.com/neandreev/d92e2b7e58dd903a609271efa20f745c/raw/4b2193c41f3e438bfb62dadfd3f82ac76bdf11f9/pagespeed.svg)
+
+</div>
+
 > [![screenshot][1]][1]
 
   [1]: https://www.neandreev.ru/images/FreeTalk.webp

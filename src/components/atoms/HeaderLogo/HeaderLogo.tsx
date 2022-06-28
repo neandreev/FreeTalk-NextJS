@@ -18,6 +18,7 @@ const HeaderLogo: FC = () => {
 							src={FreeTalk}
 							height='63px'
 							width='200px'
+							alt='FreeTalk logo'
 							// className={style.logo}
 						/>
 					</div>
@@ -26,6 +27,7 @@ const HeaderLogo: FC = () => {
 							src={FreeTalkMobile}
 							height='63px'
 							width='93px'
+							alt='FreeTalk Mobile logo'
 							// className={style.logoMobile}
 						/>
 					</div>

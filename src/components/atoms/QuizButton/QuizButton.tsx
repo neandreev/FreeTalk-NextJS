@@ -35,12 +35,10 @@ const fibonacci = (n: number) => {
 	return b;
 };
 
-const updateTimeToTrain = (timeToTrain: number, completedTrains: number) => {
+const updateTimeToTrain = (completedTrains: number) => {
 	const oneDayTimestamp = 24 * 60 * 60 * 1000;
 	const daysToNextTraining = fibonacci(completedTrains);
-	const roundedTimeToTrain = dayjs(timeToTrain * 1000)
-		.endOf('day')
-		.valueOf();
+  const roundedTimeToTrain = dayjs().endOf('day').valueOf();
 	const newTimeToTrain =
 		roundedTimeToTrain + oneDayTimestamp * daysToNextTraining;
 
@@ -69,7 +67,7 @@ export const QuizButton: FC<IQuizButton> = (props) => {
 		if (isClicked || wasAnswered) return;
 		if (isCorrect) {
 			const completedTrains = word.completedTrains + 1;
-			const timeToTrain = updateTimeToTrain(word.timeToTrain, completedTrains);
+			const timeToTrain = updateTimeToTrain(completedTrains);
 			const wordUpdate = {
 				id: wordId,
 				completedTrains,

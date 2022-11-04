@@ -2,7 +2,6 @@ import superjson from 'superjson';
 
 import { GetServerSidePropsContext } from 'next';
 import { createSSGHelpers } from '@trpc/react/ssg';
-import { getSession } from 'next-auth/react';
 
 import { Translate } from 'src/components/organism/Translate';
 
@@ -15,12 +14,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 		transformer: superjson,
 	});
 
-	// const session = await getSession(context);
-
 	return {
 		props: {
 			trpcState: ssg.dehydrate(),
-			// session,
 		},
 	};
 }

@@ -6,8 +6,6 @@ import style from './HeaderEnter.module.css';
 const HeaderEnter: FC = () => {
 	const { data: session } = useSession();
 
-  console.log(session);
-
 	return (
 		<div className={style.headerAction}>
 			<span

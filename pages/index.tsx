@@ -15,12 +15,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 		transformer: superjson,
 	});
 
-	const session = await getSession(context);
+	// const session = await getSession(context);
 
 	return {
 		props: {
 			trpcState: ssg.dehydrate(),
-			session,
+			// session,
 		},
 	};
 }

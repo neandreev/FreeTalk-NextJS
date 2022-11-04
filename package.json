@@ -17,11 +17,11 @@
     "dayjs": "^1.10.7",
     "hyphen": "^1.6.4",
     "lodash-es": "^4.17.21",
-    "next": "^12.1.6",
+    "next": "^13.0.2",
     "next-auth": "^4.5.0",
     "plural-ru": "^2.0.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-query": "^3.39.1",
     "react-redux": "^7.2.6",
     "superjson": "^1.9.1",
@@ -40,9 +40,9 @@
       "react-app/jest"
     ]
   },
-	"engines": {
-		"node": "16.*.*"
-	},
+  "engines": {
+    "node": "16.*.*"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

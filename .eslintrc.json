@@ -1,4 +1,9 @@
 {
+		"settings": {
+			"import/resolver": {
+				"typescript": {}
+			}
+		},
     "env": {
         "es2021": true
     },
@@ -9,6 +14,9 @@
 				"airbnb",
 				"airbnb-typescript",
 				"airbnb/hooks",
+				"prettier",
+				
+				"plugin:react/jsx-runtime",
 				"plugin:@next/next/recommended"
     ],
     "overrides": [
@@ -17,11 +25,14 @@
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module",
-				"project": "./tsconfig.json"
+				"project": "./tsconfig.json",
+				"tsconfigRootDir": "./"
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+				"import",
+				"prettier"
     ],
     "rules": {
 			"no-shadow": "off",
@@ -31,6 +42,7 @@
 			"jsx-a11y/label-has-associated-control": "off",
 			"jsx-a11y/no-static-element-interactions": "off",
 			"import/no-cycle": "off",
-			"react/require-default-props": "off"
+			"react/require-default-props": "off",
+			"prettier/prettier": "error"
     }
 }

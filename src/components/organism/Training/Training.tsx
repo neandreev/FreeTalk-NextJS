@@ -4,13 +4,6 @@ import { FC, MouseEventHandler, useEffect, useState } from 'react';
 import { Quiz } from '../Quiz';
 import { RepeatTraining } from '../../atoms/RepeatTraining';
 
-import {
-	resetTraining,
-	selectTraining,
-	setQuestions,
-	setTrainingWords,
-} from '../../../features/training/trainingSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks/';
 import { IQuestion } from '../../../interfaces/question';
 import { TrainingIntro } from '../../atoms/TrainingIntro';
 
@@ -19,6 +12,8 @@ import { Col, Row } from 'antd';
 import { trpc } from '../../../utils/trpc';
 import { useSession } from 'next-auth/react';
 import { LearningWord } from '@prisma/client';
+import { useStore } from '@/store/store';
+import shallow from 'zustand/shallow';
 
 const generateQuestions = (words: LearningWord[]) => {
 	const questions = words.map((word) => {
@@ -57,8 +52,16 @@ export const Training: FC = (props) => {
 	const { data: session } = useSession();
 	const email = session?.user?.email || null;
 
-	const dispatch = useAppDispatch();
-	const { isCompleted } = useAppSelector(selectTraining);
+	const [isCompleted, resetTraining, setTrainingWords, setQuestions] = useStore(
+		(state) => [
+			state.isCompleted,
+			state.resetTraining,
+			state.setTrainingWords,
+			state.setQuestions,
+		],
+		shallow
+	);
+
 	const wordsQuery = trpc.useQuery(['words', email]);
 	const isLoading = wordsQuery.isLoading;
 	const words = wordsQuery.data || [];
@@ -69,7 +72,7 @@ export const Training: FC = (props) => {
 	const [isTrainingRepeated, setIsTrainingRepeated] = useState(false);
 
 	const handleResetTraining = () => {
-		dispatch(resetTraining());
+		resetTraining();
 		setStartTraining(false);
 		setIsDataPrepared(false);
 		setIsTrainingAvailable(false);
@@ -81,8 +84,8 @@ export const Training: FC = (props) => {
 			const wordsForTraining = selectWordsForTraining(words!);
 			const questions = generateQuestions(wordsForTraining);
 
-			dispatch(setTrainingWords(wordsForTraining));
-			dispatch(setQuestions(questions));
+			setTrainingWords(wordsForTraining);
+			setQuestions(questions);
 
 			if (wordsForTraining.length >= 10) {
 				setIsTrainingAvailable(true);
@@ -93,7 +96,7 @@ export const Training: FC = (props) => {
 		}
 
 		return handleResetTraining;
-	}, [dispatch, isLoading, isTrainingRepeated]);
+	}, [isLoading, isTrainingRepeated]);
 
 	const handleStartTraining: MouseEventHandler = (e) => {
 		setStartTraining(true);

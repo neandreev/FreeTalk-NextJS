@@ -47,7 +47,7 @@ export async function getServerSideProps(
 	};
 }
 
-const DetailCollectionPage: FC = (
+const DetailCollectionPage = (
 	props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
 	const collectionWords = trpc.useQuery(['collections']);

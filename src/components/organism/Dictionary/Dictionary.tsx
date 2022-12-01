@@ -17,12 +17,6 @@ import { TableRowSelection } from 'antd/lib/table/interface';
 import { ColumnsType } from 'antd/lib/table';
 import { WordCategory } from '../../atoms/WordCategory';
 
-import {
-	selectSelectedRows,
-	setSelectedRows,
-} from '../../../features/dictionary/dictionarySlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-
 import style from './Dictionary.module.css';
 import { trpc } from '../../../utils/trpc';
 
@@ -30,6 +24,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import calendar from 'dayjs/plugin/calendar';
+import { useStore } from "@/store/store";
 
 dayjs.locale('ru');
 dayjs.extend(localizedFormat);
@@ -44,9 +39,10 @@ const getWordsRepeatsPlural = (count: number) =>
 	plural(count, '%d раз', '%d раза', '%d раз');
 
 export const Dictionary: FC = () => {
-	const dispatch = useAppDispatch();
 	const breakpoint = useBreakpoint();
-	const selectedRowKeys = useAppSelector(selectSelectedRows);
+
+	const selectedRowKeys = useStore(({ selectedRows }) => selectedRows);
+	const setSelectedRows = useStore(({ setSelectedRows }) => setSelectedRows);
 	const utils = trpc.useContext();
 	const session = useSession();
 
@@ -96,7 +92,7 @@ export const Dictionary: FC = () => {
 		const newSelectedRows = selectedRowKeys.filter(
 			(key) => !wordKeys.includes(key)
 		);
-		dispatch(setSelectedRows(newSelectedRows));
+		setSelectedRows(newSelectedRows);
 		deleteMutation.mutate(wordKeys);
 	};
 
@@ -107,7 +103,7 @@ export const Dictionary: FC = () => {
 	const handleLearnWords = (wordKey: number[], multiple?: boolean) => {
 		if (multiple) {
 			updateStatusMutation.mutate({ ids: wordKey, learned: true });
-			dispatch(setSelectedRows([]));
+			setSelectedRows([]);
 		} else {
 			const word = _find(words, { id: wordKey[0] }) as LearningWord;
 			updateStatusMutation.mutate({ ids: wordKey, learned: !word.learned });
@@ -116,7 +112,7 @@ export const Dictionary: FC = () => {
 
 	useEffect(() => {
 		return () => {
-			dispatch(setSelectedRows([]));
+			setSelectedRows([]);
 		};
 	}, []);
 
@@ -231,7 +227,7 @@ export const Dictionary: FC = () => {
 		type: 'checkbox',
 		selectedRowKeys,
 		onChange: (selectedRowKeys) => {
-			dispatch(setSelectedRows(selectedRowKeys as number[]));
+			setSelectedRows(selectedRowKeys as number[]);
 		},
 	};
 
@@ -266,7 +262,6 @@ export const Dictionary: FC = () => {
 					<hr />
 					<Table
 						title={tableHeader}
-						// loading={isLoading}
 						rowKey='id'
 						expandable={{
 							expandedRowRender: (record) => (

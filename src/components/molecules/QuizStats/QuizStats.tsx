@@ -1,15 +1,14 @@
 import _find from 'lodash-es/find';
 import { FC } from 'react';
+import shallow from "zustand/shallow";
 
 import { Card, Row } from 'antd';
 
 import { WordStat } from '../../atoms/WordStat';
 
-import { useAppSelector } from '../../../hooks';
-import { selectTraining } from '../../../features/training/trainingSlice';
-
 import { LearningWord } from '@prisma/client';
 import { IQuestion } from '../../../interfaces/question';
+import { useStore } from "@/store/store";
 
 const getWordsStats = (questions: IQuestion[], trainingWords: LearningWord[]) =>
 	questions
@@ -24,8 +23,13 @@ const getWordsStats = (questions: IQuestion[], trainingWords: LearningWord[]) =>
 		));
 
 export const QuizStats: FC = () => {
-	const { trainingWords, questions, correctAnswers, completedQuestions } =
-		useAppSelector(selectTraining);
+	const [trainingWords, questions, correctAnswers, completedQuestions] =
+		useStore((store) => ([
+			store.trainingWords,
+			store.questions,
+			store.correctAnswers,
+			store.completedQuestions
+		]), shallow);
 
 	const title = `Вы перевели ${correctAnswers} из ${completedQuestions} слов!`;
 

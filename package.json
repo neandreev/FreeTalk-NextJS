@@ -7,7 +7,6 @@
     "@next-auth/prisma-adapter": "^1.0.3",
     "@next/bundle-analyzer": "^12.1.6",
     "@prisma/client": "3.15.2",
-    "@reduxjs/toolkit": "^1.7.2",
     "@trpc/client": "^9.25.3",
     "@trpc/next": "^9.25.3",
     "@trpc/react": "^9.25.3",
@@ -16,6 +15,7 @@
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
     "hyphen": "^1.6.4",
+    "immer": "^9.0.16",
     "lodash-es": "^4.17.21",
     "next": "^13.0.2",
     "next-auth": "^4.5.0",
@@ -23,10 +23,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.1",
-    "react-redux": "^7.2.6",
     "superjson": "^1.9.1",
     "web-vitals": "^2.1.4",
-    "zod": "^3.17.3"
+    "zod": "^3.17.3",
+    "zustand": "^4.1.4"
   },
   "scripts": {
     "dev": "next dev",

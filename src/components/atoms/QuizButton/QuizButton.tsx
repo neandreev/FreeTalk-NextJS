@@ -5,18 +5,12 @@ import { FC, useState } from 'react';
 
 import { Card } from 'antd';
 
-import {
-	answerQuestion,
-	selectCurrentQuestion,
-	selectTraining,
-} from '../../../features/training/trainingSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-
 import { LearningWord } from '@prisma/client';
 
 import style from './QuizButton.module.css';
 
 import { trpc } from '../../../utils/trpc';
+import { selectCurrentQuestion, useStore } from "@/store/store";
 
 interface IQuizButton {
 	wordId: number;
@@ -50,10 +44,11 @@ export const QuizButton: FC<IQuizButton> = (props) => {
 
 	const [isClicked, setIsClicked] = useState(false);
 
+	const answerQuestion = useStore(({ answerQuestion }) => answerQuestion);
+
 	const utils = trpc.useContext();
-	const dispatch = useAppDispatch();
-	const { trainingWords } = useAppSelector(selectTraining);
-	const { wasAnswered } = useAppSelector(selectCurrentQuestion);
+	const trainingWords = useStore(({ trainingWords }) => trainingWords);
+	const { wasAnswered } = useStore(selectCurrentQuestion);
 
 	const updateWordMutation = trpc.useMutation('update-word-trainingdata', {
 		onSuccess() {
@@ -79,7 +74,7 @@ export const QuizButton: FC<IQuizButton> = (props) => {
 
 		const answer = { answerId: wordId, isAnsweredCorrectly: isCorrect };
 
-		dispatch(answerQuestion(answer));
+		answerQuestion(answer);
 		setIsClicked(true);
 	};
 

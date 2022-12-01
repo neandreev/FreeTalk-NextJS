@@ -2,10 +2,8 @@ import { FC, MouseEventHandler } from 'react';
 
 import { Spin, Button, Card, Tooltip, Row, Col } from 'antd';
 
-import { useAppSelector } from '../../../hooks';
-import { selectTraining } from '../../../features/training/trainingSlice';
-
 import style from './TrainingIntro.module.css';
+import { useStore } from "@/store/store";
 
 interface ITrainingIntro {
 	isDataPrepared: boolean;
@@ -16,7 +14,7 @@ interface ITrainingIntro {
 type ITrainingStartButton = Omit<ITrainingIntro, 'isDataPrepared'>;
 
 const TrainingStartButton: FC<ITrainingStartButton> = (props) => {
-	const { trainingWords } = useAppSelector(selectTraining);
+	const trainingWords = useStore(({ trainingWords }) => trainingWords);
 	const tooltipTitle = `Вы не можете начать тренировку, так как у вас недостаточно доступных для
 	повторения слов в словаре. Доступно слов: ${trainingWords.length}. Необходимо: 10`;
 

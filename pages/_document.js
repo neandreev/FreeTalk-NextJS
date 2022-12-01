@@ -4,7 +4,6 @@ export default function Document() {
 	return (
 		<Html lang='ru'>
 			<Head>
-				<title>FreeTalk</title>
 				<meta name='description' content='Сайт-сервис для изучения иностранных слов' />
 			</Head>
 			<body>

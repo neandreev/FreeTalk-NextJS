@@ -1,28 +1,25 @@
 import _find from 'lodash-es/find';
 import _shuffle from 'lodash-es/shuffle';
 import { FC, useMemo } from 'react';
+import shallow from "zustand/shallow";
 
 import { Card, Space } from 'antd';
 
 import { QuizList } from '../QuizList';
 import { QuizResponse } from '../../atoms/QuizResponse';
 
-import {
-	nextQuestion,
-	selectCurrentQuestion,
-	selectTraining,
-} from '../../../features/training/trainingSlice';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { selectCurrentQuestion, useStore } from "@/store/store";
 
 import { ITrainingAnswer } from '../../../interfaces/training';
 import { LearningWord } from '@prisma/client';
 
 export const QuizQuestions: FC = () => {
-	const dispatch = useAppDispatch();
-	const { wasAnswered, correctAnswerId, wrongAnswersIds } = useAppSelector(
-		selectCurrentQuestion
+	const { wasAnswered, correctAnswerId, wrongAnswersIds } = useStore(selectCurrentQuestion);
+	const [currentQuestionId, trainingWords] = useStore((store) => (
+		[store.currentQuestionId, store.trainingWords]), shallow
 	);
-	const { currentQuestionId, trainingWords } = useAppSelector(selectTraining);
+
+	const nextQuestion = useStore(({ nextQuestion }) => nextQuestion);
 
 	const correctWord = _find(trainingWords, {
 		id: correctAnswerId,
@@ -31,7 +28,7 @@ export const QuizQuestions: FC = () => {
 
 	const handleNextQuestionLink: React.MouseEventHandler = (e) => {
 		e.preventDefault();
-		dispatch(nextQuestion());
+		nextQuestion();
 	};
 
 	const variants: ITrainingAnswer[] = [

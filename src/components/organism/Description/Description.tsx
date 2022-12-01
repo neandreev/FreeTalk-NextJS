@@ -49,7 +49,7 @@ export const Description: FC = () => {
 					<Card
 						key={index}
 						hoverable
-						cover={<Image className='card-cover' alt={item.imgALT} src={item.imgURL} />}
+						cover={<Image className='card-cover' alt={item.imgALT} src={item.imgURL} priority />}
 						className={`card-description ${styles.card}`}
 					>
 						<h4 className={styles.cardTitle}>{item.title}</h4>

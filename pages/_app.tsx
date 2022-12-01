@@ -1,4 +1,3 @@
-import { Provider } from 'react-redux';
 import { ConfigProvider } from 'antd';
 import { SessionProvider } from 'next-auth/react';
 import ruRU from 'antd/lib/locale/ru_RU';
@@ -6,8 +5,7 @@ import ruRU from 'antd/lib/locale/ru_RU';
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 
-import { store } from '../src/store/store';
-
+import type { AppProps } from 'next/app'
 import superjson from 'superjson';
 
 import { AppRouter } from './api/trpc/[trpc]';
@@ -20,26 +18,28 @@ import { Footer } from '../src/components/organism/Footer';
 import { Layout } from 'antd';
 
 import '../src/index.css';
+import Head from "next/head";
 
 const { Content } = Layout;
 
-const FreeTalk: AppType = ({
+const FreeTalk = ({
 	Component,
 	pageProps: { session, ...pageProps },
-}) => {
+}: AppProps) => {
 	return (
 		<SessionProvider session={session}>
-			<Provider store={store}>
-				<ConfigProvider locale={ruRU}>
-					<Layout className='layout'>
-						<Header />
+			<ConfigProvider locale={ruRU}>
+				<Head>
+					<title>FreeTalk</title>
+				</Head>
+				<Layout className='layout'>
+					<Header />
 						<Content className='content container'>
 							<Component {...pageProps} />
 						</Content>
-						<Footer />
-					</Layout>
-				</ConfigProvider>
-			</Provider>
+					<Footer />
+				</Layout>
+			</ConfigProvider>
 		</SessionProvider>
 	);
 };

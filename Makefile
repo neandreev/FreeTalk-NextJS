@@ -13,3 +13,6 @@ start:
 bstart:
 	pnpm build
 	pnpm start
+
+lint:
+	npx eslint . --ext .js,.jsx,.ts,.tsx

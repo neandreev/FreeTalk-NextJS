@@ -4,17 +4,15 @@ import { Col, Row } from 'antd';
 
 import { QuizButton } from '../QuizButton';
 
-import { useAppSelector } from '../../../hooks';
-import { selectTraining } from '../../../features/training/trainingSlice';
-
 import { ITrainingAnswer } from '../../../interfaces/training';
+import { useStore } from "@/store/store";
 
 interface IAnswerButtons {
 	variants: ITrainingAnswer[];
 }
 
 export const AnswerButtons: FC<IAnswerButtons> = (props) => {
-	const { currentQuestionId } = useAppSelector(selectTraining);
+	const currentQuestionId = useStore(({ currentQuestionId }) => currentQuestionId)
 
 	return (
 		<Row gutter={[16, 16]}>

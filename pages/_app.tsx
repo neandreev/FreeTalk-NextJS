@@ -20,6 +20,7 @@ import { Footer } from '../src/components/organism/Footer';
 import { Layout } from 'antd';
 
 import '../src/index.css';
+import Head from "next/head";
 
 const { Content } = Layout;
 
@@ -31,11 +32,14 @@ const FreeTalk: AppType = ({
 		<SessionProvider session={session}>
 			<Provider store={store}>
 				<ConfigProvider locale={ruRU}>
+					<Head>
+						<title>FreeTalk</title>
+					</Head>
 					<Layout className='layout'>
 						<Header />
-						<Content className='content container'>
-							<Component {...pageProps} />
-						</Content>
+							<Content className='content container'>
+								<Component {...pageProps} />
+							</Content>
 						<Footer />
 					</Layout>
 				</ConfigProvider>

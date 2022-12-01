@@ -8,7 +8,8 @@
         "plugin:@typescript-eslint/recommended",
 				"airbnb",
 				"airbnb-typescript",
-				"airbnb/hooks"
+				"airbnb/hooks",
+				"plugin:@next/next/recommended"
     ],
     "overrides": [
     ],

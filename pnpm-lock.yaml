@@ -4,6 +4,7 @@ specifiers:
   '@ant-design/icons': ^4.7.0
   '@next-auth/prisma-adapter': ^1.0.3
   '@next/bundle-analyzer': ^12.1.6
+  '@next/eslint-plugin-next': ^13.0.5
   '@prisma/client': 3.15.2
   '@testing-library/jest-dom': ^5.16.2
   '@testing-library/react': ^12.1.2
@@ -80,6 +81,7 @@ dependencies:
   zustand: 4.1.4_immer@9.0.16+react@18.2.0
 
 devDependencies:
+  '@next/eslint-plugin-next': 13.0.5
   '@testing-library/jest-dom': 5.16.2
   '@testing-library/react': 12.1.4_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 13.5.0
@@ -243,6 +245,12 @@ packages:
   /@next/env/13.0.2:
     resolution: {integrity: sha512-Qb6WPuRriGIQ19qd6NBxpcrFOfj8ziN7l9eZUfwff5gl4zLXluqtuZPddYZM/oWjN53ZYcuRXzL+oowKyJeYtA==}
     dev: false
+
+  /@next/eslint-plugin-next/13.0.5:
+    resolution: {integrity: sha512-H9U9B1dFnCDmylDZ6/dYt95Ie1Iu+SLBMcO6rkIGIDcj5UK+DNyMiWm83xWBZ1gREM8cfp5Srv1g6wqf8pM4lw==}
+    dependencies:
+      glob: 7.1.7
+    dev: true
 
   /@next/swc-android-arm-eabi/13.0.2:
     resolution: {integrity: sha512-X54UQCTFyOGnJP//Z71dPPlp4BCYcQL2ncikKXQcPzVpqPs4C3m+tKC8ivBNH6edAXkppwsLRz1/yQwgSZ9Swg==}
@@ -1730,6 +1738,17 @@ packages:
     engines: {node: '>=10.13.0'}
     dependencies:
       is-glob: 4.0.3
+
+  /glob/7.1.7:
+    resolution: {integrity: sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==}
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 3.1.2
+      once: 1.4.0
+      path-is-absolute: 1.0.1
+    dev: true
 
   /glob/7.2.0:
     resolution: {integrity: sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==}

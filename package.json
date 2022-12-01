@@ -59,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^13.0.5",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

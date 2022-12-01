@@ -28,7 +28,7 @@
 
 Форк https://github.com/neandreev/FreeTalk с мажорными изменениями стека:
 
--	[Create React App](https://create-react-app.dev) ==> [NextJS](https://nextjs.org)
+- [Create React App](https://create-react-app.dev) ==> [NextJS](https://nextjs.org)
 	- Позволил имплементировать Server-Side Rendering
 	- Избавил от React-Router
 	- Изначально содержит в себе множество способов оптимизации производительности приложения
@@ -44,8 +44,6 @@
 	- Server-Side Rendering не имел бы никакой пользы если бы я не мог производить префетчинг данных перед выдачей страницы пользователю, а RTK Query по своей природе этого не умеет
 	- tRPC же в свою очередь может работать на сервере, а также нативно работает с NextJS
 	- TypeScript-совместим
--	В процессе размышления: [Redux Toolkit](https://redux-toolkit.js.org) ==> [Zustand](https://github.com/pmndrs/zustand)
-	-	RTK Query больше не нужен, а он - очень большой довод в пользу Redux
-	- Zustang позволяет писать store'ы с намного меньшим boilerplate-кодом, при этом не лишая всего функционала redux
-	- Придётся отдельно подключать [Immer](https://github.com/immerjs/immer) ибо к его встроенной поддержке в Redux привыкаешь
-	- Просто интересно потыкать Zustang, но переписывать store'ы всех модулей приложения...
+- [Redux Toolkit](https://redux-toolkit.js.org) ==> [Zustand](https://github.com/pmndrs/zustand)
+	- RTK Query больше не нужен, а он - очень большой довод в пользу Redux
+	- Zustang позволяет писать store'ы с намного меньшим boilerplate-кодом, при этом не лишая основного функционала redux

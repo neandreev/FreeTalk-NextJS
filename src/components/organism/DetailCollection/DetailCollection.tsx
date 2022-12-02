@@ -38,10 +38,10 @@ const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
       setSelectedCollection(
         collections.find((item) => item.id === pid) as Collection
       );
-      setPagination({
+      setPagination((pagination) => ({
         ...pagination,
         total: collectionWords.length,
-      });
+      }));
       const newWords = collectionWords
         .slice(
           (pagination.index - 1) * pagination.limit,
@@ -50,7 +50,15 @@ const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
         .map((item) => ({ ...item }));
       setWords(newWords);
     }
-  }, [collections, collectionWords, pid, selectedCollection, data, pagination]);
+  }, [
+    collections,
+    collectionWords,
+    pid,
+    selectedCollection,
+    data,
+    pagination.index,
+    pagination.limit,
+  ]);
 
   const handleChangePagination = (page: number, pageSize: number) => {
     setPagination({

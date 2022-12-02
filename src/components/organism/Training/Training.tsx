@@ -1,7 +1,7 @@
 import _shuffle from 'lodash-es/shuffle';
 import { FC, MouseEventHandler, useEffect, useState } from 'react';
 
-import { Quiz } from '../Quiz';
+import Quiz from '../Quiz';
 import { RepeatTraining } from '../../atoms/RepeatTraining';
 
 import { IQuestion } from '../../../interfaces/question';

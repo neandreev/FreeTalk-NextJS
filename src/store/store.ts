@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import create, { StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';

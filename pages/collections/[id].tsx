@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { DetailCollection } from '../../src/components/organism/DetailCollection';
+import DetailCollection from '../../src/components/organism/DetailCollection';
 
 import { Row, Col, Spin } from 'antd';
 

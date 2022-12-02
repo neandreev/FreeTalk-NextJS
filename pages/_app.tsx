@@ -13,7 +13,7 @@ import { withTRPC } from '@trpc/next';
 
 import { AppType } from 'next/dist/shared/lib/utils';
 
-import { Header } from '../src/components/organism/Header';
+import Header from '../src/components/organism/Header';
 import Footer from '../src/components/organism/Footer';
 import { Layout } from 'antd';
 

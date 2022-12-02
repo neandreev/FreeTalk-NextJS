@@ -12,28 +12,29 @@ import style from './Header.module.css';
 
 const { Header: HeaderAnt } = Layout;
 
-export const Header: FC = () => {
-	const session = useSession();
-	const isAuthenticated = session.status === 'authenticated';
+const Header: FC = () => {
+  const session = useSession();
+  const isAuthenticated = session.status === 'authenticated';
 
-	const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-	const handleCloseModal = useCallback(() => {
-		setIsModalVisible(false);
-	}, [setIsModalVisible]);
+  const handleCloseModal = useCallback(() => {
+    setIsModalVisible(false);
+  }, [setIsModalVisible]);
 
-	return (
-		<HeaderAnt className={style.header}>
-			<div className='container'>
-				<HeaderLogo />
-				{/* <HeaderEnter handleModalVisible={() => setIsModalVisible(true)} /> */}
-				<HeaderEnter />
-				{isAuthenticated && <HeaderMenu />}
-				<LoginModalForm
-					isModalVisible={isModalVisible}
-					handleCloseModal={handleCloseModal}
-				/>
-			</div>
-		</HeaderAnt>
-	);
+  return (
+    <HeaderAnt className={style.header}>
+      <div className="container">
+        <HeaderLogo />
+        <HeaderEnter />
+        {isAuthenticated && <HeaderMenu />}
+        <LoginModalForm
+          isModalVisible={isModalVisible}
+          handleCloseModal={handleCloseModal}
+        />
+      </div>
+    </HeaderAnt>
+  );
 };
+
+export default Header;

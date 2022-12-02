@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 
 import { Pagination, Row, Col } from 'antd';
 
-import { CollectionCard } from '../../molecules/CollectionCard';
+import CollectionCard from '../../molecules/CollectionCard';
 
 import { Collection } from '@prisma/client';
 import { IPagination } from '../../../interfaces/pagination';

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Collections } from '../../src/components/organism/Collections/Collections';
+import Collections from '../../src/components/organism/Collections';
 
 import { Row, Col, Spin } from 'antd';
 import styles from './CollectionsPage.module.css';

@@ -131,9 +131,12 @@ const Dictionary: FC = () => {
     }
   };
 
-  useEffect(() => () => {
-    setSelectedRows([]);
-  });
+  useEffect(
+    () => () => {
+      setSelectedRows([]);
+    },
+    [setSelectedRows]
+  );
 
   const columns: ColumnsType<LearningWord> = [
     {

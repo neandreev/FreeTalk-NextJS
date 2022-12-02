@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { getSession } from 'next-auth/react';
-import { Dictionary } from '../../src/components/organism/Dictionary';
+import Dictionary from '../../src/components/organism/Dictionary';
 
 import style from './Dictionary.module.css';
 import { createSSGHelpers } from '@trpc/react/ssg';

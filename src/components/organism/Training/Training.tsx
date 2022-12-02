@@ -9,7 +9,7 @@ import { TrainingIntro } from '../../atoms/TrainingIntro';
 
 import style from './Training.module.css';
 import { Col, Row } from 'antd';
-import { trpc } from '../../../utils/trpc';
+import trpc from '../../../utils/trpc';
 import { useSession } from 'next-auth/react';
 import { LearningWord } from '@prisma/client';
 import { useStore } from '@/store/store';

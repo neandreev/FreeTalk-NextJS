@@ -11,7 +11,7 @@ import superjson from 'superjson';
 
 import { appRouter } from '../api/trpc/[trpc]';
 import { getSession } from 'next-auth/react';
-import { trpc } from '../../src/utils/trpc';
+import trpc from '../../src/utils/trpc';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
 	const ssg = await createSSGHelpers({

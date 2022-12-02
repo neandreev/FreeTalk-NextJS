@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { trpc } from '../../../utils/trpc';
+import trpc from '../../../utils/trpc';
 
 import { Row, Col, Pagination, Button } from 'antd';
 

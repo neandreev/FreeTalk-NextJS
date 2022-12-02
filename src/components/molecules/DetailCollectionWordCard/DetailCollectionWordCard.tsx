@@ -5,7 +5,7 @@ import { Card, Button } from 'antd';
 
 import { CollectionWord } from '@prisma/client';
 
-import { trpc } from '../../../utils/trpc';
+import trpc from '../../../utils/trpc';
 
 import styles from './DetailCollectionWordCard.module.css';
 

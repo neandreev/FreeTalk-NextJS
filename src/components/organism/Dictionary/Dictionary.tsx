@@ -18,7 +18,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { WordCategory } from '../../atoms/WordCategory';
 
 import style from './Dictionary.module.css';
-import { trpc } from '../../../utils/trpc';
+import trpc from '../../../utils/trpc';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';

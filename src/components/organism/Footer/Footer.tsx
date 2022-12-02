@@ -6,12 +6,12 @@ import style from './Footer.module.css';
 
 const { Footer: FooterAnt } = Layout;
 
-export const Footer: FC = () => {
-	return (
-		<FooterAnt className={style.footer}>
-			<div className='container'>
-				<span className={style.copyright}>©FreeTalk 2022</span>
-			</div>
-		</FooterAnt>
-	);
-};
+const Footer: FC = () => (
+  <FooterAnt className={style.footer}>
+    <div className="container">
+      <span className={style.copyright}>©FreeTalk 2022</span>
+    </div>
+  </FooterAnt>
+);
+
+export default Footer;

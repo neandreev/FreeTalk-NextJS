@@ -2,9 +2,9 @@
 import create, { StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { LearningWord } from '@prisma/client';
 
 import { IQuestion } from '../interfaces/question';
-import { LearningWord } from '@prisma/client';
 
 interface DictionaryState {
 	selectedRows: number[];

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Description } from '@/components/organism/Description';
+import Description from '@/components/organism/Description';
 import trpc from '@/utils/trpc';
 
 import { useSession } from 'next-auth/react';

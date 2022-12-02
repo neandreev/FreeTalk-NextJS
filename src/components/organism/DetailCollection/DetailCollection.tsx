@@ -6,7 +6,7 @@ import { Row, Col, Pagination, Button } from 'antd';
 
 import trpc from '../../../utils/trpc';
 
-import { DetailCollectionWordCard } from '../../molecules/DetailCollectionWordCard';
+import DetailCollectionWordCard from '../../molecules/DetailCollectionWordCard';
 
 import { IPagination } from '../../../interfaces/pagination';
 

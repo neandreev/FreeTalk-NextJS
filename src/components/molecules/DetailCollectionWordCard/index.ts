@@ -1,3 +1,3 @@
-import { DetailCollectionWordCard } from "./DetailCollectionWordCard";
+import DetailCollectionWordCard from './DetailCollectionWordCard';
 
-export { DetailCollectionWordCard };
+export default DetailCollectionWordCard;

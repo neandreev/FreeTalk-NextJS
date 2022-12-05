@@ -9,7 +9,7 @@ import { LearningWord } from '@prisma/client';
 
 import style from './QuizButton.module.css';
 
-import { trpc } from '../../../utils/trpc';
+import trpc from '../../../utils/trpc';
 import { selectCurrentQuestion, useStore } from "@/store/store";
 
 interface IQuizButton {

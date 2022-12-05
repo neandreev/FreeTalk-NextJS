@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { DetailCollection } from '../../src/components/organism/DetailCollection';
+import DetailCollection from '../../src/components/organism/DetailCollection';
 
 import { Row, Col, Spin } from 'antd';
 
@@ -10,7 +10,7 @@ import superjson from 'superjson';
 
 import { appRouter } from '../api/trpc/[trpc]';
 import { getSession } from 'next-auth/react';
-import { trpc } from '../../src/utils/trpc';
+import trpc from '../../src/utils/trpc';
 import { promisify } from 'util';
 
 export async function getServerSideProps(

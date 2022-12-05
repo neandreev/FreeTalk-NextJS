@@ -1,15 +1,18 @@
 import { IWord } from './word';
 
 export interface ITranslateFormValues {
-	TranslateRequest: string;
+  TranslateRequest: string;
 }
 
 export interface ICardTranslateRes {
-	word: Omit<IWord, 'id'>;
-	onAddWordToDictionary: (word: Omit<IWord, 'id'>) => void;
+  // word: Omit<IWord, 'id'>;
+  word: string;
+  toLang: string;
+  signal: AbortSignal;
+  onAddWordToDictionary: (word: Omit<IWord, 'id'>) => void;
 }
 
 export interface ITranslateResponse {
-	text: string;
-	translate: string;
+  text: string;
+  translate: string;
 }

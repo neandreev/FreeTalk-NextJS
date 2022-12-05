@@ -1,3 +1,3 @@
-import { Dictionary } from "./Dictionary";
+import Dictionary from './Dictionary';
 
-export { Dictionary }
+export default Dictionary;

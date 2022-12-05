@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { createSSGHelpers } from '@trpc/react/ssg';
 import superjson from 'superjson';
 
-import { Training } from '../../src/components/organism/Training';
+import Training from '../../src/components/organism/Training';
 import { appRouter } from '../api/trpc/[trpc]';
 import { getSession } from 'next-auth/react';
 

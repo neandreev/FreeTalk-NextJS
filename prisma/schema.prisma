@@ -1,12 +1,11 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  relationMode         = "prisma"
 }
 
 model Account {
@@ -25,6 +24,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -33,6 +33,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -55,31 +57,37 @@ model VerificationToken {
 }
 
 model LearningWord {
-  id              Int      @id @default(autoincrement())
-  en              String   
+  id              Int     @id @default(autoincrement())
+  en              String
   ru              String
-  category        String   @default("Общее")
-  learned         Boolean  @default(false)
-  timeToTrain     Int 		 @db.UnsignedInt	 
-  completedTrains Int      @default(0)
-  image           String   @db.VarChar(256)
-  user            User     @relation(fields: [userEmail], references: [email])
-	userEmail				String
+  category        String  @default("Общее")
+  learned         Boolean @default(false)
+  timeToTrain     Int     @db.UnsignedInt
+  completedTrains Int     @default(0)
+  image           String  @db.VarChar(512)
+  user            User    @relation(fields: [userEmail], references: [email])
+  userEmail       String
+
+  @@index([userEmail])
 }
 
 model CollectionWord {
   id           Int        @id @default(autoincrement())
   en           String
   ru           String
-  image        String			@db.VarChar(512)
+  image        String     @db.VarChar(512)
   collection   Collection @relation(fields: [collectionId, category], references: [id, title])
   collectionId Int
   category     String
+
+  @@index([collectionId, category])
 }
 
 model Collection {
   id    Int              @id @default(autoincrement())
-  title String						
-  cover String		@db.VarChar(256)
+  title String
+  cover String           @db.VarChar(512)
   words CollectionWord[]
+
+  @@unique([id, title])
 }

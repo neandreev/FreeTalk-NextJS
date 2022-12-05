@@ -1,13 +1,10 @@
+/* eslint-disable no-param-reassign */
 import create, { StateCreator } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-
-import { IWord } from '@/interfaces/word';
-import { IQuestion } from '../interfaces/question';
 import { LearningWord } from '@prisma/client';
 
-type TWordWithoutID = Omit<IWord, 'id'>;
-type TranslateStatus = 'idle' | 'loading' | 'error' | 'success';
+import { IQuestion } from '../interfaces/question';
 
 interface DictionaryState {
 	selectedRows: number[];

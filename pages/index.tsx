@@ -3,7 +3,7 @@ import superjson from 'superjson';
 import { GetServerSidePropsContext } from 'next';
 import { createSSGHelpers } from '@trpc/react/ssg';
 
-import { Translate } from 'src/components/organism/Translate';
+import Translate from 'src/components/organism/Translate';
 
 import { appRouter } from 'pages/api/trpc/[trpc]';
 

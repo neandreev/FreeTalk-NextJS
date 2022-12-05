@@ -1,3 +1,3 @@
-import { CardTranslateRes } from './CardTranslateRes';
+import CardTranslateRes from './CardTranslateRes';
 
-export { CardTranslateRes };
+export default CardTranslateRes;

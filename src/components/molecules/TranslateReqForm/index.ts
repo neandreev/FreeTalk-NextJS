@@ -1,3 +1,3 @@
-import {TranslateReqForm} from './TranslateReqForm';
+import TranslateReqForm from './TranslateReqForm';
 
-export {TranslateReqForm};
+export default TranslateReqForm;

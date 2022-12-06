@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler } from 'react';
 
-import { AnswerInform } from '../AnswerInform';
+import AnswerInform from '../AnswerInform';
 
 import style from './QuizResponse.module.css';
 

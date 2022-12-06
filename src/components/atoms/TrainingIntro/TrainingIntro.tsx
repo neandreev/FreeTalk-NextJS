@@ -1,9 +1,12 @@
 import { FC, MouseEventHandler } from 'react';
 
+import Image from 'next/image';
 import { Spin, Button, Card, Tooltip, Row, Col } from 'antd';
 
 import style from './TrainingIntro.module.css';
 import { useStore } from "@/store/store";
+
+import Training from '../../../assets/english-for-trainers-and-athletes.webp';
 
 interface ITrainingIntro {
 	isDataPrepared: boolean;
@@ -44,11 +47,11 @@ export const TrainingIntro: FC<ITrainingIntro> = (props) => {
 				<Col className={style.col}>
 					{props.isDataPrepared ? (
 						<div>
-							<img
-								className={style.img}
-								src='https://englex.ru/app/uploads/english-for-trainers-and-athletes.png'
-								alt=''
-							/>
+              <Image
+                src={Training}
+                alt="Training description illustration"
+                width={350}
+              />
 						</div>
 					) : (
 						<Spin />

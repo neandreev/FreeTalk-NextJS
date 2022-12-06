@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { FC, useState } from 'react';
 
 import { Card } from 'antd';
+import Image from 'next/image';
 
 import { LearningWord } from '@prisma/client';
 
@@ -81,7 +82,7 @@ export const QuizButton: FC<IQuizButton> = (props) => {
 	const coverStyles = cn(style.img, { [style.blurred]: !wasAnswered });
 	const cover = (
 		<div className={cn(style.imgContainer, { [style.answered]: wasAnswered })}>
-			<img className={coverStyles} src={word.image} alt={word.ru} />
+      <Image className={coverStyles} src={word.image} alt={word.ru} fill/>
 		</div>
 	);
 

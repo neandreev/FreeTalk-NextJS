@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import _capitalize from 'lodash-es/capitalize';
 
 import { Row, Col, Card, Button, Spin, Empty } from 'antd';
+import Image from 'next/image';
 
 import { IWord } from '@/interfaces/word';
 import styles from './CardTranslateRes.module.css';
@@ -72,11 +73,14 @@ const CardTranslateRes: FC<TranslateCardI> = ({
     <Card
       className={styles['card-translate-res']}
       cover={
-        <img
-          className={styles['card-cover']}
-          alt={russianWord}
-          src={imageURL}
-        />
+        <div className={styles['card-cover']}>
+          <Image
+            className={styles['card-image']}
+            alt={russianWord}
+            src={imageURL}
+            fill
+          />
+        </div>
       }
     >
       <Row justify="space-between" align="middle" wrap={false} gutter={[8, 8]}>

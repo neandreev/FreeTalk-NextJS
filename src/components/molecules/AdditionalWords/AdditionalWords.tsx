@@ -11,7 +11,7 @@ interface AdditionalWordsI {
   word: string;
   tolang: string;
   signal: AbortSignal;
-  handleAddWordToDictionary: (word: Omit<IWord, 'id'>) => Promise<void>;
+  handleAddWordToDictionary: (word: IWord) => Promise<void>;
 }
 
 const AdditionalWords: FC<AdditionalWordsI> = ({

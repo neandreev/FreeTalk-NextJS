@@ -11,7 +11,7 @@ interface TranslateCardI {
   word: string;
   signal: AbortSignal;
   toLang: string;
-  onAddWordToDictionary: (word: Omit<IWord, 'id'>) => void;
+  onAddWordToDictionary: (word: IWord) => void;
 }
 
 const CardTranslateRes: FC<TranslateCardI> = ({
@@ -34,7 +34,7 @@ const CardTranslateRes: FC<TranslateCardI> = ({
   const imageURL = useSWR(`/api/findimage?word=${englishWord}`, fetcher).data
     ?.imageUrl;
 
-  const learningWord: Omit<IWord, 'id'> = useMemo(
+  const learningWord: IWord = useMemo(
     () => ({
       en: _capitalize(englishWord),
       ru: _capitalize(russianWord),

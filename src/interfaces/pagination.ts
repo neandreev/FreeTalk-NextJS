@@ -1,5 +1,5 @@
 export interface IPagination {
-	limit: number;
-	index: number;
-	total?: number;
+  limit: number;
+  index: number;
+  total?: number;
 }

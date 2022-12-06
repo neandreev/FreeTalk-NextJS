@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-  await ssg.fetchQuery('collections');
+  await ssg.prefetchQuery('collections');
 
   return {
     props: {

@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  await ssg.fetchQuery('words', email);
+  await ssg.prefetchQuery('words', email);
 
   return {
     props: {

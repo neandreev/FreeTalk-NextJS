@@ -36,8 +36,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const collectionId = context.params?.id as string;
-  await ssg.fetchQuery('collections');
-  await ssg.fetchQuery('collection-words', +collectionId);
+  await ssg.prefetchQuery('collections');
+  await ssg.prefetchQuery('collection-words', +collectionId);
 
   return {
     props: {

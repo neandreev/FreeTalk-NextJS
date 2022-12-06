@@ -22,7 +22,7 @@ import { useStore } from '@/store/store';
 import trpc from '../../../utils/trpc';
 
 import ExpandableInfo from '../../atoms/ExpandableInfo';
-import { WordCategory } from '../../atoms/WordCategory';
+import WordCategory from '../../atoms/WordCategory';
 
 import style from './Dictionary.module.css';
 
@@ -92,7 +92,7 @@ const Dictionary: FC = () => {
 
       return { previousWords };
     },
-    onError(err, updateData, context: any) {
+    onError(err, updateData, context) {
       const previousWords = context?.previousWords || [];
       utils.setQueryData(['words', email], previousWords);
     },

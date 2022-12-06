@@ -1,3 +1,3 @@
-import { TrainingIntro } from './TrainingIntro';
+import TrainingIntro from './TrainingIntro';
 
-export { TrainingIntro };
+export default TrainingIntro;

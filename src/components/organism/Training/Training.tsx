@@ -14,11 +14,11 @@ import { useSession } from 'next-auth/react';
 import { LearningWord } from '@prisma/client';
 import { useStore } from '@/store/store';
 import shallow from 'zustand/shallow';
-import Quiz from '../Quiz';
 
+import TrainingIntro from '@/components/atoms/TrainingIntro';
+import Quiz from '../Quiz';
 import { RepeatTraining } from '../../atoms/RepeatTraining';
 import { IQuestion } from '../../../interfaces/question';
-import { TrainingIntro } from '../../atoms/TrainingIntro';
 
 import style from './Training.module.css';
 import trpc from '../../../utils/trpc';

@@ -1,15 +1,15 @@
 .img {
-	width: 300px;
+  width: 300px;
 }
 
 .description {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .description.center {
-	text-align: center;
+  text-align: center;
 }
 
 .col {
-	margin-bottom: 24px;
+  margin-bottom: 24px;
 }

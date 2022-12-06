@@ -1,3 +1,3 @@
-import { QuizResponse } from './QuizResponse';
+import QuizResponse from './QuizResponse';
 
-export { QuizResponse };
+export default QuizResponse;

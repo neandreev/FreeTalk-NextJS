@@ -6,8 +6,9 @@ import { Card, Space } from 'antd';
 
 import { selectCurrentQuestion, useStore } from '@/store/store';
 import { LearningWord } from '@prisma/client';
+
+import QuizResponse from '@/components/atoms/QuizResponse';
 import QuizList from '../QuizList';
-import { QuizResponse } from '../../atoms/QuizResponse';
 
 import { ITrainingAnswer } from '../../../interfaces/training';
 
@@ -49,10 +50,9 @@ const QuizQuestions: FC = () => {
   return (
     <Card title={QuestionTitle}>
       <QuizList variants={shuffledVariants} />
-      <QuizResponse
-        wasAnswered={wasAnswered}
-        handleNextQuestion={handleNextQuestionLink}
-      />
+      {wasAnswered && (
+        <QuizResponse handleNextQuestion={handleNextQuestionLink} />
+      )}
     </Card>
   );
 };

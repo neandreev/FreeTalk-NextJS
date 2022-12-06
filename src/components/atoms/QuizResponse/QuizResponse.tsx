@@ -5,19 +5,16 @@ import { AnswerInform } from '../AnswerInform';
 import style from './QuizResponse.module.css';
 
 interface IQuizResponse {
-	wasAnswered: boolean;
-	handleNextQuestion: MouseEventHandler;
+  handleNextQuestion: MouseEventHandler;
 }
 
-export const QuizResponse: FC<IQuizResponse> = (props) => (
-	<>
-		{props.wasAnswered && (
-			<div className={style.quizFooter}>
-				<AnswerInform />
-				<span className={style.quizNextWord} onClick={props.handleNextQuestion}>
-					Следующее слово
-				</span>
-			</div>
-		)}
-	</>
+const QuizResponse: FC<IQuizResponse> = ({ handleNextQuestion }) => (
+  <div className={style.quizFooter}>
+    <AnswerInform />
+    <span className={style.quizNextWord} onClick={handleNextQuestion}>
+      Следующее слово
+    </span>
+  </div>
 );
+
+export default QuizResponse;

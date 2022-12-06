@@ -6,7 +6,7 @@ import { Card, Row } from 'antd';
 
 import { LearningWord } from '@prisma/client';
 import { useStore } from '@/store/store';
-import { WordStat } from '../../atoms/WordStat';
+import WordStat from '@/components/atoms/WordStat';
 
 import { IQuestion } from '../../../interfaces/question';
 

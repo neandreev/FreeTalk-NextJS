@@ -5,7 +5,7 @@ import shallow from "zustand/shallow";
 
 import { Card, Space } from 'antd';
 
-import { QuizList } from '../QuizList';
+import QuizList from '../QuizList';
 import { QuizResponse } from '../../atoms/QuizResponse';
 
 import { selectCurrentQuestion, useStore } from "@/store/store";

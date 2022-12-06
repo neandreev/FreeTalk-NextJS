@@ -16,22 +16,12 @@ const Header: FC = () => {
   const session = useSession();
   const isAuthenticated = session.status === 'authenticated';
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const handleCloseModal = useCallback(() => {
-    setIsModalVisible(false);
-  }, [setIsModalVisible]);
-
   return (
     <HeaderAnt className={style.header}>
       <div className="container">
         <HeaderLogo />
         <HeaderEnter />
         {isAuthenticated && <HeaderMenu />}
-        <LoginModalForm
-          isModalVisible={isModalVisible}
-          handleCloseModal={handleCloseModal}
-        />
       </div>
     </HeaderAnt>
   );

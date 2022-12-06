@@ -1,48 +1,51 @@
 import { FC } from 'react';
-import { getSession } from 'next-auth/react';
-import Dictionary from '../../src/components/organism/Dictionary';
-
-import style from './Dictionary.module.css';
-import { createSSGHelpers } from '@trpc/react/ssg';
-import { appRouter } from '../api/trpc/[trpc]';
-
 import superjson from 'superjson';
-import { GetServerSidePropsContext } from 'next';
+import { unstable_getServerSession } from 'next-auth';
+import { createSSGHelpers } from '@trpc/react/ssg';
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const ssg = await createSSGHelpers({
-		router: appRouter,
-		ctx: {},
-		transformer: superjson,
-	});
+import { GetServerSideProps } from 'next';
 
-	const session = await getSession(context);
-	const email = session?.user?.email || null;
+import { appRouter } from 'pages/api/trpc/[trpc]';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import Dictionary from '@/components/organism/Dictionary';
 
-	if (!email) {
-		return {
-			redirect: {
-				destination: '/',
-				permanent: false,
-			},
-		};
-	}
-	await ssg.fetchQuery('words', email);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const ssg = await createSSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  });
 
-	return {
-		props: {
-			session,
-			trpcState: ssg.dehydrate(),
-		},
-	};
-}
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  const email = session?.user?.email || null;
 
-export const DictionaryPage: FC = () => {
-	return (
-		<div>
-			<Dictionary />
-		</div>
-	);
+  if (!email) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  await ssg.fetchQuery('words', email);
+
+  return {
+    props: {
+      session,
+      trpcState: ssg.dehydrate(),
+    },
+  };
 };
+
+const DictionaryPage: FC = () => (
+  <div>
+    <Dictionary />
+  </div>
+);
 
 export default DictionaryPage;

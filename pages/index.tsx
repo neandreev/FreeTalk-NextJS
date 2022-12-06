@@ -1,25 +1,34 @@
 import superjson from 'superjson';
+import { unstable_getServerSession } from 'next-auth/next';
 
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSideProps } from 'next';
 import { createSSGHelpers } from '@trpc/react/ssg';
 
 import Translate from 'src/components/organism/Translate';
 
 import { appRouter } from 'pages/api/trpc/[trpc]';
+import { authOptions } from './api/auth/[...nextauth]';
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const ssg = await createSSGHelpers({
-		router: appRouter,
-		ctx: {},
-		transformer: superjson,
-	});
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const ssg = await createSSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  });
 
-	return {
-		props: {
-			trpcState: ssg.dehydrate(),
-		},
-	};
-}
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  return {
+    props: {
+      session,
+      trpcState: ssg.dehydrate(),
+    },
+  };
+};
 
 export const MainPage = () => <Translate />;
 

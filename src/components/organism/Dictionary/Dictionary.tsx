@@ -21,7 +21,7 @@ import { LearningWord } from '@prisma/client';
 import { useStore } from '@/store/store';
 import trpc from '../../../utils/trpc';
 
-import ExpandableInfo from '../../atoms/ExpandableInfo';
+import ExpandableInfo from '@/components/atoms/ExpandableInfo';
 import WordCategory from '../../atoms/WordCategory';
 
 import style from './Dictionary.module.css';

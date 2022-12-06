@@ -1,3 +1,3 @@
-import { ExpandableInfo } from "./ExpandableInfo";
+import ExpandableInfo from './ExpandableInfo';
 
 export default ExpandableInfo;

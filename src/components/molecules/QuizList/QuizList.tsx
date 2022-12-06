@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
+import AnswerButtons from '@/components/atoms/AnswerButtons';
 import { ITrainingAnswer } from '../../../interfaces/training';
-import { AnswerButtons } from '../../atoms/AnswerButtons';
 
 interface IQuizList {
   variants: ITrainingAnswer[];

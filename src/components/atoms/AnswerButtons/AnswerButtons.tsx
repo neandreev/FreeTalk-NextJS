@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 
 import { Col, Row } from 'antd';
 
-import { QuizButton } from '../QuizButton';
+import QuizButton from '@/components/atoms/QuizButton';
 
 import { ITrainingAnswer } from '../../../interfaces/training';
 import { useStore } from "@/store/store";

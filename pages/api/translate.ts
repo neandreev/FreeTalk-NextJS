@@ -25,7 +25,6 @@ const translateWords = async (word: string, translateTo: string) => {
   );
 
   const json = await translateResponse.json();
-  console.log('json translate', json);
 
   return json.translations[0].text;
 };
@@ -33,9 +32,6 @@ const translateWords = async (word: string, translateTo: string) => {
 const translateAPI = async (req: NextApiRequest, res: NextApiResponse) => {
   const queries = req.query as { words: string; tolang: string };
   const translation = await translateWords(queries.words, queries.tolang);
-
-  console.log('translationWord', queries.words);
-  console.log('translationResult', translation);
 
   res.status(200).json({ translation });
 };

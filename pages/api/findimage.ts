@@ -25,9 +25,6 @@ const findImageAPI = async (req: NextApiRequest, res: NextApiResponse) => {
   const queries = req.query as { word: string };
   const imageUrl = await findWordImage(queries.word);
 
-  console.log('findImageWord', queries.word);
-  console.log('findImageResult', imageUrl);
-
   res.status(200).json({ imageUrl });
 };
 

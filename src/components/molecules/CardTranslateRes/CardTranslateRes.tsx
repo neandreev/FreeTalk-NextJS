@@ -47,8 +47,6 @@ const CardTranslateRes: FC<TranslateCardI> = ({
     [englishWord, russianWord, imageURL]
   );
 
-  // debugger;
-
   const handleAddWordToDictionary = useCallback(
     () => onAddWordToDictionary(learningWord),
     [onAddWordToDictionary, learningWord]

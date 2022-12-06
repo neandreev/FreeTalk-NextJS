@@ -12,7 +12,7 @@ import { Col, Row } from 'antd';
 
 import { useSession } from 'next-auth/react';
 import { LearningWord } from '@prisma/client';
-import { useStore } from '@/store/store';
+import { useStore } from '@/store';
 import shallow from 'zustand/shallow';
 
 import TrainingIntro from '@/components/atoms/TrainingIntro';

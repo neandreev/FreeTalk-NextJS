@@ -4,7 +4,7 @@ import { FC, useMemo } from 'react';
 
 import { Card, Space } from 'antd';
 
-import { selectCurrentQuestion, useStore } from '@/store/store';
+import { selectCurrentQuestion, useStore } from '@/store';
 import { LearningWord } from '@prisma/client';
 
 import QuizResponse from '@/components/atoms/QuizResponse';

@@ -5,7 +5,7 @@ import shallow from 'zustand/shallow';
 import { Card, Row } from 'antd';
 
 import { LearningWord } from '@prisma/client';
-import { useStore } from '@/store/store';
+import { useStore } from '@/store';
 import WordStat from '@/components/atoms/WordStat';
 
 import { IQuestion } from '../../../interfaces/question';

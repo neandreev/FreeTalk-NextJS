@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 import { LearningWord } from '@prisma/client';
 
-import { selectCurrentQuestion, useStore } from '@/store/store';
+import { selectCurrentQuestion, useStore } from '@/store';
 import style from './QuizButton.module.css';
 
 import trpc from '../../../utils/trpc';

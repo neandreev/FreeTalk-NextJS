@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useStore } from '@/store/store';
+import { useStore } from '@/store';
 import QuizStats from '../../molecules/QuizStats';
 import QuizQuestions from '../../molecules/QuizQuestions';
 

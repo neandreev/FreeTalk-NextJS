@@ -18,7 +18,7 @@ import { TableRowSelection } from 'antd/lib/table/interface';
 import { ColumnsType } from 'antd/lib/table';
 
 import { LearningWord } from '@prisma/client';
-import { useStore } from '@/store/store';
+import { useStore } from '@/store';
 import trpc from '../../../utils/trpc';
 
 import ExpandableInfo from '@/components/atoms/ExpandableInfo';

@@ -3,7 +3,7 @@ import { FC, MouseEventHandler } from 'react';
 import Image from 'next/image';
 import { Spin, Button, Card, Tooltip, Row, Col } from 'antd';
 
-import { useStore } from '@/store/store';
+import { useStore } from '@/store';
 import style from './TrainingIntro.module.css';
 
 import Training from '../../../assets/english-for-trainers-and-athletes.webp';

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { selectCurrentQuestion, useStore } from '@/store/store';
+import { selectCurrentQuestion, useStore } from '@/store';
 
 const AnswerInform: FC = () => {
   const question = useStore(selectCurrentQuestion);

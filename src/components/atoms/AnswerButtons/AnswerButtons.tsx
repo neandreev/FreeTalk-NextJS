@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 
 import QuizButton from '@/components/atoms/QuizButton';
 
-import { useStore } from '@/store/store';
+import { useStore } from '@/store';
 
 import { ITrainingAnswer } from '../../../interfaces/training';
 

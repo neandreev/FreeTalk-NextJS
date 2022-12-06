@@ -1,3 +1,3 @@
-import { RepeatTraining } from './RepeatTraining';
+import RepeatTraining from './RepeatTraining';
 
-export { RepeatTraining };
+export default RepeatTraining;

@@ -16,8 +16,8 @@ import { useStore } from '@/store/store';
 import shallow from 'zustand/shallow';
 
 import TrainingIntro from '@/components/atoms/TrainingIntro';
+import RepeatTraining from '@/components/atoms/RepeatTraining';
 import Quiz from '../Quiz';
-import { RepeatTraining } from '../../atoms/RepeatTraining';
 import { IQuestion } from '../../../interfaces/question';
 
 import style from './Training.module.css';
@@ -138,10 +138,7 @@ const Training: FC = () => {
             handleStart={handleStartTraining}
           />
         )}
-        <RepeatTraining
-          isCompleted={isCompleted}
-          handleReset={handleResetTraining}
-        />
+        {isCompleted && <RepeatTraining handleReset={handleResetTraining} />}
       </Col>
     </Row>
   );

@@ -8,29 +8,19 @@ import FreeTalkMobile from '../../../assets/FreeTalkMobile.svg';
 
 import style from './HeaderLogo.module.css';
 
-const HeaderLogo: FC = () => {
-	return (
-		<div className={style.logoWrapper}>
-			<Link href='/'>
-				<div>
-					<div className={style.logo}>
-						<Image
-							src={FreeTalk}
-							alt='FreeTalk logo'
-              priority
-						/>
-					</div>
-					<div className={`${style.logo} ${style.logoMobile}`}>
-						<Image
-							src={FreeTalkMobile}
-							alt='FreeTalk Mobile logo'
-              priority
-						/>
-					</div>
-				</div>
-			</Link>
-		</div>
-	);
-};
+const HeaderLogo: FC = () => (
+  <div className={style.logoWrapper}>
+    <Link href="/">
+      <div>
+        <div className={style.logo}>
+          <Image src={FreeTalk} alt="FreeTalk logo" priority />
+        </div>
+        <div className={`${style.logo} ${style.logoMobile}`}>
+          <Image src={FreeTalkMobile} alt="FreeTalk Mobile logo" priority />
+        </div>
+      </div>
+    </Link>
+  </div>
+);
 
-export { HeaderLogo };
+export default HeaderLogo;

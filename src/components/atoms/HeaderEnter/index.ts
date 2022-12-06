@@ -1,3 +1,3 @@
-import { HeaderEnter } from './HeaderEnter';
+import HeaderEnter from './HeaderEnter';
 
 export default HeaderEnter;

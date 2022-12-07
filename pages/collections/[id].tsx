@@ -1,8 +1,7 @@
 import superjson from 'superjson';
 import { unstable_getServerSession } from 'next-auth';
 import { createSSGHelpers } from '@trpc/react/ssg';
-
-import { Row, Col, Spin } from 'antd';
+import { Collection } from '@prisma/client';
 
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
@@ -54,19 +53,11 @@ const DetailCollectionPage = (
   const { collectionId } = props;
 
   const collectionWords = trpc.useQuery(['collections']);
-  const { data } = collectionWords;
+  const data = collectionWords.data as Collection[];
 
   return (
     <div style={{ height: '100%' }}>
-      {data ? (
-        <DetailCollection pid={collectionId} data={data} />
-      ) : (
-        <Row justify="center" align="middle" style={{ height: '100%' }}>
-          <Col>
-            <Spin size="large" />
-          </Col>
-        </Row>
-      )}
+      <DetailCollection pid={collectionId} data={data} />
     </div>
   );
 };

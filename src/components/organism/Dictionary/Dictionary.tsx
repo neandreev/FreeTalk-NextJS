@@ -92,7 +92,11 @@ const Dictionary: FC = () => {
 
       return { previousWords };
     },
-    onError(err, updateData, context) {
+    onError(
+      err,
+      updateData,
+      context: { previousWords: LearningWord[] } | undefined
+    ) {
       const previousWords = context?.previousWords || [];
       utils.setQueryData(['words', email], previousWords);
     },

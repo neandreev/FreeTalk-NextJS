@@ -11,7 +11,7 @@ interface AdditionalWordsI {
   word: string;
   tolang: string;
   signal: AbortSignal;
-  handleAddWordToDictionary: (word: Omit<IWord, 'id'>) => Promise<void>;
+  handleAddWordToDictionary: (word: IWord) => Promise<void>;
 }
 
 const AdditionalWords: FC<AdditionalWordsI> = ({
@@ -51,10 +51,7 @@ const AdditionalWords: FC<AdditionalWordsI> = ({
       </div>
     );
 
-  // debugger;
-
   const additionalWords = data.wordSynonims as string[];
-  console.log('additionalWords', additionalWords);
 
   return (
     <>

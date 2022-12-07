@@ -1,70 +1,70 @@
 import { FC } from 'react';
+import superjson from 'superjson';
+import { unstable_getServerSession } from 'next-auth';
+import { createSSGHelpers } from '@trpc/react/ssg';
+import { Collection } from '@prisma/client';
 
-import Collections from '../../src/components/organism/Collections';
+import { GetServerSideProps } from 'next';
 
-import { Row, Col, Spin } from 'antd';
+import { Row, Col } from 'antd';
+
+import { appRouter } from 'pages/api/trpc/[trpc]';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import trpc from '@/utils/trpc';
+
+import Collections from '@/components/organism/Collections';
+
 import styles from './CollectionsPage.module.css';
 
-import { GetServerSidePropsContext } from 'next';
-import { createSSGHelpers } from '@trpc/react/ssg';
-import superjson from 'superjson';
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const ssg = await createSSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  });
 
-import { appRouter } from '../api/trpc/[trpc]';
-import { getSession } from 'next-auth/react';
-import trpc from '../../src/utils/trpc';
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  const email = session?.user?.email || null;
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const ssg = await createSSGHelpers({
-		router: appRouter,
-		ctx: {},
-		transformer: superjson,
-	});
+  if (!email) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+  await ssg.prefetchQuery('collections');
 
-	const session = await getSession(context);
-	const email = session?.user?.email || null;
-
-	if (!email) {
-		return {
-			redirect: {
-				destination: '/',
-				permanent: false,
-			},
-		};
-	}
-	await ssg.fetchQuery('collections');
-
-	return {
-		props: {
-			session,
-			trpcState: ssg.dehydrate(),
-		},
-	};
-}
+  return {
+    props: {
+      session,
+      trpcState: ssg.dehydrate(),
+    },
+  };
+};
 
 const CollectionsPage: FC = () => {
-	const collectionsQuery = trpc.useQuery(['collections']);
-	const data = collectionsQuery.data || [];
+  const collectionsQuery = trpc.useQuery(['collections']);
+  const data = collectionsQuery.data as Collection[];
 
-	return (
-		<div style={{ height: '100%' }}>
-			{data ? (
-				<>
-					<Row>
-						<Col span={24}>
-							<h1 className={`page__title ${styles.title}`}>Предлагаемые коллекции</h1>
-							<hr />
-						</Col>
-					</Row>
-					<Collections data={data} />
-				</>
-			) : (
-				<div className={styles.wrapSpinner}>
-					<Spin size="large" />
-				</div>
-			)
-		}
-		</div>
-	);
+  return (
+    <div style={{ height: '100%' }}>
+      <Row>
+        <Col span={24}>
+          <h1 className={`page__title ${styles.title}`}>
+            Предлагаемые коллекции
+          </h1>
+          <hr />
+        </Col>
+      </Row>
+      <Collections data={data} />
+    </div>
+  );
 };
 
 export default CollectionsPage;

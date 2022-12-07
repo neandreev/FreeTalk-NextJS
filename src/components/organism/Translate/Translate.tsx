@@ -15,8 +15,6 @@ import { IWord } from '@/interfaces/word';
 
 import styles from './Translate.module.css';
 
-type TWordWithoutID = Omit<IWord, 'id'>;
-
 const wordIsDublicated = (en: string, data: LearningWord[]) => {
   if (!data || data?.length === 0) {
     return false;
@@ -57,7 +55,7 @@ const Translate = () => {
   const [word, setWord] = useState('');
   const [toLang, setToLang] = useState('ru');
 
-  const handleAddWordToDictionary = async (word: TWordWithoutID) => {
+  const handleAddWordToDictionary = async (word: IWord) => {
     if (!session) {
       message.warning({
         content: 'Авторизуйтесь для добавления слова в словарь',

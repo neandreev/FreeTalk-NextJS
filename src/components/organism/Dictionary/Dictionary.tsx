@@ -18,11 +18,11 @@ import { TableRowSelection } from 'antd/lib/table/interface';
 import { ColumnsType } from 'antd/lib/table';
 
 import { LearningWord } from '@prisma/client';
-import { useStore } from '@/store/store';
+import { useStore } from '@/store';
 import trpc from '../../../utils/trpc';
 
-import ExpandableInfo from '../../atoms/ExpandableInfo';
-import { WordCategory } from '../../atoms/WordCategory';
+import ExpandableInfo from '@/components/atoms/ExpandableInfo';
+import WordCategory from '../../atoms/WordCategory';
 
 import style from './Dictionary.module.css';
 
@@ -92,7 +92,11 @@ const Dictionary: FC = () => {
 
       return { previousWords };
     },
-    onError(err, updateData, context: any) {
+    onError(
+      err,
+      updateData,
+      context: { previousWords: LearningWord[] } | undefined
+    ) {
       const previousWords = context?.previousWords || [];
       utils.setQueryData(['words', email], previousWords);
     },

@@ -9,3 +9,12 @@
 	font-weight: bold;
 	color: var(--green);
 }
+
+.card-cover {
+  position: relative;
+  height: 200px;
+}
+
+.card-image {
+  object-fit: cover;
+}

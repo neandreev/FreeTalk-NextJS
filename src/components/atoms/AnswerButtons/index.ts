@@ -1,3 +1,3 @@
-import { AnswerButtons } from './AnswerButtons';
+import AnswerButtons from './AnswerButtons';
 
-export { AnswerButtons };
+export default AnswerButtons;

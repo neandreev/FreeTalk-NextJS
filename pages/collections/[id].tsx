@@ -1,71 +1,65 @@
-import { FC } from 'react';
+import superjson from 'superjson';
+import { unstable_getServerSession } from 'next-auth';
+import { createSSGHelpers } from '@trpc/react/ssg';
+import { Collection } from '@prisma/client';
+
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+
+import { appRouter } from 'pages/api/trpc/[trpc]';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import trpc from '@/utils/trpc';
 
 import DetailCollection from '../../src/components/organism/DetailCollection';
 
-import { Row, Col, Spin } from 'antd';
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const ssg = await createSSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  });
 
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { createSSGHelpers } from '@trpc/react/ssg';
-import superjson from 'superjson';
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  const email = session?.user?.email || null;
 
-import { appRouter } from '../api/trpc/[trpc]';
-import { getSession } from 'next-auth/react';
-import trpc from '../../src/utils/trpc';
-import { promisify } from 'util';
+  if (!email) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
-export async function getServerSideProps(
-	context: GetServerSidePropsContext<{ id: string }>
-) {
-	const ssg = await createSSGHelpers({
-		router: appRouter,
-		ctx: {},
-		transformer: superjson,
-	});
+  const collectionId = context.params?.id as string;
+  await ssg.prefetchQuery('collections');
+  await ssg.prefetchQuery('collection-words', +collectionId);
 
-	const session = await getSession(context);
-	const email = session?.user?.email || null;
-
-	if (!email) {
-		return {
-			redirect: {
-				destination: '/',
-				permanent: false,
-			},
-		};
-	}
-
-	const collectionId = context.params?.id as string;
-	await ssg.fetchQuery('collections');
-	await ssg.fetchQuery('collection-words', +collectionId)
-
-	return {
-		props: {
-			collectionId: +collectionId,
-			session,
-			trpcState: ssg.dehydrate(),
-		},
-	};
-}
+  return {
+    props: {
+      collectionId: +collectionId,
+      session,
+      trpcState: ssg.dehydrate(),
+    },
+  };
+};
 
 const DetailCollectionPage = (
-	props: InferGetServerSidePropsType<typeof getServerSideProps>
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-	const collectionWords = trpc.useQuery(['collections']);
-	const { data } = collectionWords;
+  const { collectionId } = props;
 
-	return (
-		<div style={{ height: '100%' }}>
-			{data ? (
-				<DetailCollection pid={props.collectionId} data={data} />
-			) : (
-				<Row justify='center' align='middle' style={{ height: '100%' }}>
-					<Col>
-						<Spin size='large' />
-					</Col>
-				</Row>
-			)}
-		</div>
-	);
+  const collectionWords = trpc.useQuery(['collections']);
+  const data = collectionWords.data as Collection[];
+
+  return (
+    <div style={{ height: '100%' }}>
+      <DetailCollection pid={collectionId} data={data} />
+    </div>
+  );
 };
 
 export default DetailCollectionPage;

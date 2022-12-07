@@ -1,3 +1,3 @@
-import { WordCategory } from "./WordCategory";
+import WordCategory from './WordCategory';
 
-export { WordCategory };
+export default WordCategory;

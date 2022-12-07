@@ -1,3 +1,3 @@
-import { WordStat } from './WordStat';
+import WordStat from './WordStat';
 
-export { WordStat };
+export default WordStat;

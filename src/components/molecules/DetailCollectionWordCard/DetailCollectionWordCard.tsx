@@ -2,6 +2,7 @@ import { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 
 import { Card, Button } from 'antd';
+import Image from 'next/image';
 
 import { CollectionWord } from '@prisma/client';
 
@@ -59,11 +60,12 @@ const DetailCollectionWordCard: FC<{ word: CollectionWord }> = ({ word }) => {
       <Card
         style={{ width: '100%' }}
         cover={
-          <div style={{ overflow: 'hidden', height: '200px' }}>
-            <img
+          <div className={styles['card-cover']}>
+            <Image
               alt={word.en}
-              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+              className={styles['card-image']}
               src={word.image}
+              fill
             />
           </div>
         }

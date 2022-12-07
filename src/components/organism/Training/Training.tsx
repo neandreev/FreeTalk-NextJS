@@ -12,13 +12,13 @@ import { Col, Row } from 'antd';
 
 import { useSession } from 'next-auth/react';
 import { LearningWord } from '@prisma/client';
-import { useStore } from '@/store/store';
+import { useStore } from '@/store';
 import shallow from 'zustand/shallow';
-import Quiz from '../Quiz';
 
-import { RepeatTraining } from '../../atoms/RepeatTraining';
+import TrainingIntro from '@/components/atoms/TrainingIntro';
+import RepeatTraining from '@/components/atoms/RepeatTraining';
+import Quiz from '../Quiz';
 import { IQuestion } from '../../../interfaces/question';
-import { TrainingIntro } from '../../atoms/TrainingIntro';
 
 import style from './Training.module.css';
 import trpc from '../../../utils/trpc';
@@ -138,10 +138,7 @@ const Training: FC = () => {
             handleStart={handleStartTraining}
           />
         )}
-        <RepeatTraining
-          isCompleted={isCompleted}
-          handleReset={handleResetTraining}
-        />
+        {isCompleted && <RepeatTraining handleReset={handleResetTraining} />}
       </Col>
     </Row>
   );

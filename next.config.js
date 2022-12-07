@@ -13,4 +13,12 @@ module.exports = withBundleAnalyzer({
 		REACT_APP_FIND_HYPONEMES_API_KEY:
 			'10e37ab4e9msh26e8717bce565ecp1cb909jsn6cb00869c920',
 	},
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
+  },
 });

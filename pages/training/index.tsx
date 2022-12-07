@@ -1,46 +1,51 @@
-import { GetServerSidePropsContext } from 'next';
 import { FC } from 'react';
-import { createSSGHelpers } from '@trpc/react/ssg';
 import superjson from 'superjson';
+import { unstable_getServerSession } from 'next-auth';
+import { createSSGHelpers } from '@trpc/react/ssg';
 
-import Training from '../../src/components/organism/Training';
-import { appRouter } from '../api/trpc/[trpc]';
-import { getSession } from 'next-auth/react';
+import { GetServerSideProps } from 'next';
 
-// import style from './TrainingPage.module.css'; //TODO: import TrainingPage style
+import { appRouter } from 'pages/api/trpc/[trpc]';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import Training from '@/components/organism/Training';
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const ssg = await createSSGHelpers({
-		router: appRouter,
-		ctx: {},
-		transformer: superjson,
-	});
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const ssg = await createSSGHelpers({
+    router: appRouter,
+    ctx: {},
+    transformer: superjson,
+  });
 
-	const session = await getSession(context);
-	const email = session?.user?.email || null;
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  const email = session?.user?.email || null;
 
-	if (!email) {
-		return {
-			redirect: {
-				destination: '/',
-				permanent: false,
-			},
-		};
-	}
-	await ssg.fetchQuery('words', email);
+  if (!email) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
-	return {
-		props: {
-			session,
-			trpcState: ssg.dehydrate(),
-		},
-	};
-}
+  await ssg.prefetchQuery('words', email);
+
+  return {
+    props: {
+      session,
+      trpcState: ssg.dehydrate(),
+    },
+  };
+};
 
 const TrainingPage: FC = () => (
-	<div>
-		<Training />
-	</div>
+  <div>
+    <Training />
+  </div>
 );
 
 export default TrainingPage;

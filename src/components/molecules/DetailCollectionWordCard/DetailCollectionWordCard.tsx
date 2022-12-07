@@ -15,12 +15,12 @@ const DetailCollectionWordCard: FC<{ word: CollectionWord }> = ({ word }) => {
 
   const { data: session } = useSession();
   const email = session?.user?.email || null;
-  const query = trpc.useQuery(['words', email]);
+  const query = trpc.words.useQuery(email);
   const words = useMemo(() => query.data || [], [query]);
 
-  const addWordMutation = trpc.useMutation('add-word', {
+  const addWordMutation = trpc.addWord.useMutation({
     onSuccess() {
-      utils.invalidateQueries('words');
+      utils.words.invalidate();
     },
   });
 

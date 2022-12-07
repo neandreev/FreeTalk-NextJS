@@ -68,27 +68,29 @@ const Dictionary: FC = () => {
   const session = useSession();
 
   const email = session.data?.user?.email || null;
-  const wordsQuery = trpc.useQuery(['words', email]);
+  const wordsQuery = trpc.words.useQuery(email);
   const words = wordsQuery.data || [];
 
-  const deleteMutation = trpc.useMutation('delete-words', {
+  console.log(breakpoint);
+
+  const deleteMutation = trpc.deleteWords.useMutation({
     onSuccess() {
-      utils.invalidateQueries('words');
+      utils.words.invalidate();
     },
   });
-  const updateCategoryMutation = trpc.useMutation('update-word-category', {
+  const updateCategoryMutation = trpc.updateWordCategory.useMutation({
     onSuccess() {
-      utils.invalidateQueries('words');
+      utils.words.invalidate();
     },
   });
-  const updateStatusMutation = trpc.useMutation('update-words-status', {
+  const updateStatusMutation = trpc.updateWordsStatus.useMutation({
     async onMutate({ ids, learned }) {
-      await utils.cancelQuery(['words']);
-      const previousWords = utils.getQueryData(['words', email]) || [];
+      await utils.words.cancel();
+      const previousWords = utils.words.getData(email) || [];
       const newWords = previousWords.map((word) =>
         ids.includes(word.id) ? { ...word, learned } : word
       );
-      utils.setQueryData(['words', email], newWords);
+      utils.words.setData(email, newWords);
 
       return { previousWords };
     },
@@ -98,10 +100,10 @@ const Dictionary: FC = () => {
       context: { previousWords: LearningWord[] } | undefined
     ) {
       const previousWords = context?.previousWords || [];
-      utils.setQueryData(['words', email], previousWords);
+      utils.words.setData(email, previousWords);
     },
     onSettled() {
-      utils.invalidateQueries(['words', email]);
+      utils.words.invalidate(email);
     },
   });
 

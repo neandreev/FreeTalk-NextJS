@@ -44,9 +44,9 @@ const QuizButton: FC<IQuizButton> = ({ wordId, isCorrect }) => {
   const trainingWords = useStore(({ trainingWords }) => trainingWords);
   const { wasAnswered } = useStore(selectCurrentQuestion);
 
-  const updateWordMutation = trpc.useMutation('update-word-trainingdata', {
+  const updateWordMutation = trpc.updateWordTrainingdata.useMutation({
     onSuccess() {
-      utils.invalidateQueries(['words']);
+      utils.words.invalidate();
     },
   });
 

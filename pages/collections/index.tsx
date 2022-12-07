@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import superjson from 'superjson';
 import { unstable_getServerSession } from 'next-auth';
-import { createSSGHelpers } from '@trpc/react/ssg';
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { Collection } from '@prisma/client';
 
 import { GetServerSideProps } from 'next';
 
 import { Row, Col } from 'antd';
 
-import { appRouter } from 'pages/api/trpc/[trpc]';
+import { appRouter } from '@/server/routers/_app';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import trpc from '@/utils/trpc';
 
@@ -17,7 +17,7 @@ import Collections from '@/components/organism/Collections';
 import styles from './CollectionsPage.module.css';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const ssg = await createSSGHelpers({
+  const ssg = await createProxySSGHelpers({
     router: appRouter,
     ctx: {},
     transformer: superjson,
@@ -38,7 +38,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-  await ssg.prefetchQuery('collections');
+
+  await ssg.collections.prefetch();
 
   return {
     props: {
@@ -49,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const CollectionsPage: FC = () => {
-  const collectionsQuery = trpc.useQuery(['collections']);
+  const collectionsQuery = trpc.collections.useQuery();
   const data = collectionsQuery.data as Collection[];
 
   return (

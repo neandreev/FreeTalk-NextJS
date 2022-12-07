@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import superjson from 'superjson';
 import { unstable_getServerSession } from 'next-auth';
-import { createSSGHelpers } from '@trpc/react/ssg';
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 
 import { GetServerSideProps } from 'next';
 
-import { appRouter } from 'pages/api/trpc/[trpc]';
+import { appRouter } from '@/server/routers/_app';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import Training from '@/components/organism/Training';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const ssg = await createSSGHelpers({
+  const ssg = await createProxySSGHelpers({
     router: appRouter,
     ctx: {},
     transformer: superjson,
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  await ssg.prefetchQuery('words', email);
+  await ssg.words.prefetch(email);
 
   return {
     props: {

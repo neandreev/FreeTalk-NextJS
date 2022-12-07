@@ -70,7 +70,7 @@ const Training: FC = () => {
     shallow
   );
 
-  const wordsQuery = trpc.useQuery(['words', email]);
+  const wordsQuery = trpc.words.useQuery(email);
   const { isLoading } = wordsQuery;
   const words = useMemo(() => wordsQuery.data || [], [wordsQuery.data]);
   const wordsForTraining = useMemo(

@@ -1,18 +1,18 @@
 import superjson from 'superjson';
 import { unstable_getServerSession } from 'next-auth';
-import { createSSGHelpers } from '@trpc/react/ssg';
+import { createProxySSGHelpers } from '@trpc/react-query/ssg';
 import { Collection } from '@prisma/client';
 
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-import { appRouter } from 'pages/api/trpc/[trpc]';
+import { appRouter } from '@/server/routers/_app';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import trpc from '@/utils/trpc';
 
 import DetailCollection from '../../src/components/organism/DetailCollection';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const ssg = await createSSGHelpers({
+  const ssg = await createProxySSGHelpers({
     router: appRouter,
     ctx: {},
     transformer: superjson,
@@ -35,8 +35,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const collectionId = context.params?.id as string;
-  await ssg.prefetchQuery('collections');
-  await ssg.prefetchQuery('collection-words', +collectionId);
+
+  await ssg.collections.prefetch();
+  await ssg.collectionWords.prefetch(+collectionId);
 
   return {
     props: {
@@ -52,7 +53,7 @@ const DetailCollectionPage = (
 ) => {
   const { collectionId } = props;
 
-  const collectionWords = trpc.useQuery(['collections']);
+  const collectionWords = trpc.collections.useQuery();
   const data = collectionWords.data as Collection[];
 
   return (

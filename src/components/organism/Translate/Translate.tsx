@@ -27,10 +27,10 @@ const Translate = () => {
   const { data: session } = useSession();
   const email = session?.user?.email || null;
 
-  const query = trpc.useQuery(['words', email]);
+  const query = trpc.words.useQuery(email);
   const words = query.data || [];
 
-  const addWord = trpc.useMutation('add-word', {
+  const addWord = trpc.addWord.useMutation({
     onError(e) {
       message.error({
         content: 'Не удалось добавить новое слово: проблемы с сетью',
@@ -39,7 +39,7 @@ const Translate = () => {
       console.error(e);
     },
     onSuccess(data) {
-      utils.invalidateQueries('words');
+      utils.words.invalidate();
       message.success({
         content: `Добавлено новое слово: ${data.word.en}`,
         duration: 2,

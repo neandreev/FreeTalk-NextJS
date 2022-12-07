@@ -17,7 +17,7 @@ const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
   pid,
 }) => {
   const router = useRouter();
-  const collectionWordsQuery = trpc.useQuery(['collection-words', pid]);
+  const collectionWordsQuery = trpc.collectionWords.useQuery(pid);
   const collectionWords = useMemo(
     () => collectionWordsQuery.data || [],
     [collectionWordsQuery]

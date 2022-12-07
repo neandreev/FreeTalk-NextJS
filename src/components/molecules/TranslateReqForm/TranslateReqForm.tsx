@@ -38,10 +38,20 @@ const TranslateReqForm: FC<ITranslateReqForm> = ({
 
   const prefixSelector = (
     <Form.Item name="TranslateDirection" noStyle>
-      <Select style={{ width: 100 }} onChange={handleChangeTranslateDirection}>
-        <Option value="EN-RU">{'EN->RU'}</Option>
-        <Option value="RU-EN">{'RU->EN'}</Option>
-      </Select>
+      <Select
+        bordered={false}
+        options={[
+          {
+            value: 'EN-RU',
+            label: 'EN->RU',
+          },
+          {
+            value: 'RU-EN',
+            label: 'RU->EN',
+          },
+        ]}
+        onChange={handleChangeTranslateDirection}
+      />
     </Form.Item>
   );
 

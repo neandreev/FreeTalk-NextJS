@@ -15,7 +15,7 @@ const HeaderLogo: FC = () => (
         <div className={style.logo}>
           <Image src={FreeTalk} alt="FreeTalk logo" priority />
         </div>
-        <div className={`${style.logo} ${style.logoMobile}`}>
+        <div className={style.logoMobile}>
           <Image src={FreeTalkMobile} alt="FreeTalk Mobile logo" priority />
         </div>
       </div>

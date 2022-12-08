@@ -57,7 +57,7 @@ const CollectionsPage: FC = () => {
     <div style={{ height: '100%' }}>
       <Row>
         <Col span={24}>
-          <h1 className={`page__title ${styles.title}`}>
+          <h1 className={`page-title ${styles.title}`}>
             Предлагаемые коллекции
           </h1>
           <hr />

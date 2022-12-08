@@ -1,148 +1,148 @@
 .container {
-	height: 100%;
-	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 0 10px;
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
 .layout {
-	height: auto;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	background-color: var(--light-gray)!important;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--light-gray) !important;
 }
 
 .content {
-	flex: 1 0 auto;
-	padding-top: 45px;
-	padding-bottom: 25px;
+  flex: 1 0 auto;
+  padding-top: 45px;
+  padding-bottom: 25px;
 }
 
 .page {
-	height: 100%;
-	padding: 70px 190px;
+  height: 100%;
+  padding: 70px 190px;
 }
 
-.page__title {
-	margin-bottom: 0;
-	font-size: 25px;
-	letter-spacing: 0.04em;
+.page-title {
+  margin-bottom: 0;
+  font-size: 25px;
+  letter-spacing: 0.04em;
 }
 
 hr {
-	margin-top: 0;
-	color: var(--middle-gray);
+  margin-top: 0;
+  color: var(--middle-gray);
 }
 
 .container.ant-layout-content {
-	height: auto;
-	min-height: calc(100vh - 64px - 73px);
+  height: auto;
+  min-height: calc(100vh - 64px - 73px);
 }
 
 .ant-card-cover img {
-	border-top-left-radius: 5px!important;
-	border-top-right-radius: 5px!important;
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
 }
 
 .ant-card.ant-card-bordered {
-	border-radius: 5px;
+  border-radius: 5px;
 }
 
 .ant-card-bordered .ant-card-cover {
-	margin: 0!important;
+  margin: 0 !important;
 }
 
 .ant-card-body {
-	padding: 24px 12px!important;
+  padding: 24px 12px !important;
 }
 
 .ant-pagination-prev,
 .ant-pagination-item,
 .ant-pagination-next {
-	width: 36px;
-	height: 36px;
-	margin-right: 12px;
+  width: 36px;
+  height: 36px;
+  margin-right: 12px;
 }
 
 .ant-pagination-item,
 .ant-pagination-item-link {
-	border: 0 !important;
-	border-radius: 4px !important;
-	background-color: var(--step-bg) !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  background-color: var(--step-bg) !important;
 }
 
 .ant-pagination-item-active {
-	background-color: var(--blue) !important;
+  background-color: var(--blue) !important;
 }
 
 .ant-pagination-item a {
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 16px;
-	line-height: 30px;
-	color: var(--light-text) !important;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 30px;
+  color: var(--light-text) !important;
 }
 
 .ant-pagination-item-active a {
-	color: #fff !important;
+  color: #fff !important;
 }
 
 .ant-pagination-item-link svg {
-	color: var(--light-text);
+  color: var(--light-text);
 }
 
 .ant-pagination-disabled .ant-pagination-item-link svg {
-	color: var(--pagination-disabled);
+  color: var(--pagination-disabled);
 }
 
 .ant-modal-title {
-	color: var(--gray)!important;
+  color: var(--gray) !important;
 }
 
 .ant-modal-header {
-	border-bottom: none!important;
-	padding-bottom: 0!important;
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
 }
 
-.ant-modal-body{
-	border-bottom: none!important;
+.ant-modal-body {
+  border-bottom: none !important;
 }
 
 .ant-modal-footer {
-	display: none!important;
+  display: none !important;
 }
 
 .ant-tabs-ink-bar {
-	display: none!important;
+  display: none !important;
 }
 
 .ant-tabs-top > .ant-tabs-nav::before {
-	border: none!important;
+  border: none !important;
 }
 
 .ant-tabs-tab {
-	color: var(--gray);
+  color: var(--gray);
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-	color: var(--dark-text)!important;
+  color: var(--dark-text) !important;
 }
 
 .ant-tabs-tab .ant-tabs-tab-btn:hover {
-	color: var(--dark-text)!important;
+  color: var(--dark-text) !important;
 }
 
 .ant-form-item-label > .ant-form-item-required {
-	color: var(--dark-text);
+  color: var(--dark-text);
 }
 
 .ant-input,
 .ant-select-selection-item {
-	color: var(--dark-text)!important;
+  color: var(--dark-text) !important;
 }

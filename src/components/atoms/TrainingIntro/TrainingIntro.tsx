@@ -25,12 +25,12 @@ const TrainingStartButton: FC<ITrainingStartButton> = ({
 	повторения слов в словаре. Доступно слов: ${trainingWords.length}. Необходимо: 10`;
 
   return isTrainingAvailable ? (
-    <Button className="app-btn _green" type="primary" onClick={handleStart}>
+    <Button className="app-btn green" type="primary" onClick={handleStart}>
       Начать тренировку
     </Button>
   ) : (
     <Tooltip title={tooltipTitle}>
-      <Button className="app-btn _green _disabled">Начать тренировку</Button>
+      <Button className="app-btn green disabled">Начать тренировку</Button>
     </Tooltip>
   );
 };

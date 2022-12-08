@@ -1,31 +1,8 @@
-.quizButton {
-  text-align: center;
-
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 10px;
-
-  font-size: 18px;
-  font-weight: bold;
-
-  transition-duration: 300ms;
-
-  box-sizing: content-box;
-}
-
-.noHover {
-  pointer-events: none;
-}
-
-.imgContainer {
+.img-container {
   position: relative;
   overflow: hidden;
   height: 130px;
   border-radius: 4px 4px 0 0;
-
   transition-duration: 0.3s;
   transition-timing-function: ease-out;
 }
@@ -38,7 +15,6 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-
   transition-duration: 0.3s;
 }
 
@@ -46,18 +22,17 @@
   filter: blur(16px);
 }
 
-.title,
-.blueTitle {
+.word,
+.blue-word {
   margin-right: 10px;
   font-weight: bold;
-
   transition-duration: 0.3s;
 }
 
-.blueTitle {
+.blue-word {
   color: var(--green);
 }
 
-.blurredTitle {
+.blurred-word {
   filter: blur(6px);
 }

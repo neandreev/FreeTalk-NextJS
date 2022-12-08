@@ -106,7 +106,7 @@ const Translate = () => {
 
   return (
     <div>
-      <h2 className={`page__title ${styles.title}`}>
+      <h2 className={`page-title ${styles.title}`}>
         Время учить слова онлайн
       </h2>
       <div className={styles.wrapper}>
@@ -114,7 +114,7 @@ const Translate = () => {
           onSubmitForm={handleSubmitTranslation}
           // disabled={isFormDisabled}
         />
-        <div className={styles.mainTranslate}>
+        <div className={styles['main-translate']}>
           {startTranslate && (
             <Row gutter={[8, 8]} justify="center">
               <Col span={24}>
@@ -132,7 +132,7 @@ const Translate = () => {
           )}
         </div>
 
-        <div className={styles.addTranslate}>
+        <div className={styles['add-translate']}>
           {startTranslate && (
             <AdditionalWords
               tolang={toLang}

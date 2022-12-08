@@ -267,13 +267,13 @@ const Dictionary: FC = () => {
       <Button
         onClick={() => handleRemoveWords(selectedRowKeys)}
         disabled={selectedRowKeys.length === 0}
-        className="app-btn _green _hover-red"
+        className="app-btn green hover-red"
       >
         <DeleteOutlined style={{ color: 'white' }} />
       </Button>
 
       <Button
-        className="app-btn _green"
+        className="app-btn green"
         disabled={selectedRowKeys.length === 0}
         onClick={() => handleLearnWords(selectedRowKeys, true)}
       >
@@ -289,7 +289,7 @@ const Dictionary: FC = () => {
     <div className="dictionary">
       <Row justify="center">
         <Col lg={20} md={22} span={24}>
-          <h1 className={`page__title ${style.title}`}>Словарь</h1>
+          <h1 className={`page-title ${style.title}`}>Словарь</h1>
           <hr />
           <Table
             title={tableHeader}

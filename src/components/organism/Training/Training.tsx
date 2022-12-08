@@ -127,7 +127,7 @@ const Training: FC = () => {
   return (
     <Row justify="center" align="middle">
       <Col className="training">
-        <h1 className={`page__title ${style.title}`}>Тренировка</h1>
+        <h1 className={`page-title ${style.title}`}>Тренировка</h1>
         <hr />
         {!isLoading && isDataPrepared && startTraining ? (
           <Quiz />

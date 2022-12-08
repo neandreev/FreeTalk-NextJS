@@ -1,12 +1,8 @@
 .green {
-	color: var(--green);
-}
-
-.expandableParagraph {
-	margin: 0;
+  color: var(--green);
 }
 
 .title {
-	text-transform: uppercase;
-	color: var(--gray);
+  text-transform: uppercase;
+  color: var(--gray);
 }

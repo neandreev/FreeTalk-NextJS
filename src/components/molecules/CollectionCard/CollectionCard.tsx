@@ -11,8 +11,8 @@ import styles from './CollectionCard.module.css';
 const CollectionCard: FC<Collection> = ({ id, title, cover }) => (
   <Card
     cover={
-      <div className={styles.cardCover}>
-        <Image alt={title} src={cover} fill className={styles.cardImg} />
+      <div className={styles['card-cover']}>
+        <Image alt={title} src={cover} fill className={styles['card-img']} />
       </div>
     }
   >

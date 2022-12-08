@@ -10,28 +10,25 @@
   }
 }
 
-.quizFooter {
+.quiz-footer {
   font-size: 24px;
   display: flex;
-
   transition-duration: 0.3s;
   animation: slide 0.3s cubic-bezier(0.67, 0, 0.3, 1);
-
-  margin: 15px 0 0 0;
+  margin: 15px 0 0;
   justify-content: space-evenly;
 }
 
-.quizFooter > span {
+.quiz-footer > span {
   text-align: end;
 }
 
-.quizNextWord {
+.quiz-next-word {
   font-weight: bold;
-
   color: #0097ee;
 }
 
-.quizNextWord:hover {
+.quiz-next-word:hover {
   cursor: pointer;
   color: #0182cc;
 }

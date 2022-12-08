@@ -7,9 +7,9 @@ const HeaderEnter: FC = () => {
   const { data: session } = useSession();
 
   return (
-    <div className={style.headerAction}>
+    <div className={style['header-action']}>
       <span
-        className={style.authBtn}
+        className={style['auth-btn']}
         onClick={!session ? () => signIn() : () => signOut()}
       >
         {session ? 'Выход' : 'Вход'}

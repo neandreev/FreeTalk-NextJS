@@ -82,7 +82,7 @@ const DetailCollectionWordCard: FC<{ word: CollectionWord }> = ({ word }) => {
             </div>
           </div>
           <Button
-            className="app-btn _green"
+            className="app-btn green"
             disabled={isAddedToDictionary}
             onClick={handleAddToDictionary}
           >

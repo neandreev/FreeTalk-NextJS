@@ -16,3 +16,7 @@ bstart:
 
 lint:
 	npx eslint . --ext .js,.jsx,.ts,.tsx
+
+stylelint:
+	npx stylelint "**/*.css"
+

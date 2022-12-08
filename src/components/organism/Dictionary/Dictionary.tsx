@@ -71,8 +71,6 @@ const Dictionary: FC = () => {
   const wordsQuery = trpc.words.useQuery(email);
   const words = wordsQuery.data || [];
 
-  console.log(breakpoint);
-
   const deleteMutation = trpc.deleteWords.useMutation({
     onSuccess() {
       utils.words.invalidate();

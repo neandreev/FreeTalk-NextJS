@@ -1,5 +1,6 @@
 install:
 	pnpm install
+	pnpx prisma generate
 
 develop:
 	pnpm dev

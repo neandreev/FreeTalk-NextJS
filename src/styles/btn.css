@@ -1,6 +1,6 @@
 .app-btn {
   background: var(--blue);
-  border-radius: 4px;
+  border-radius: 8px;
   min-height: 36px;
   font-weight: bold;
   font-size: 12px;
@@ -51,7 +51,7 @@
 .app-btn.green {
   max-width: 380px;
   background: var(--green);
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .app-btn.green:hover {

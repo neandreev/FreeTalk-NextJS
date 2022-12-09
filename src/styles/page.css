@@ -42,12 +42,12 @@ hr {
 }
 
 .ant-card-cover img {
-  border-top-left-radius: 5px !important;
-  border-top-right-radius: 5px !important;
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
 }
 
 .ant-card.ant-card-bordered {
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .ant-card-bordered .ant-card-cover {
@@ -69,7 +69,7 @@ hr {
 .ant-pagination-item,
 .ant-pagination-item-link {
   border: 0 !important;
-  border-radius: 4px !important;
+  border-radius: 8px !important;
   background-color: var(--step-bg) !important;
 }
 

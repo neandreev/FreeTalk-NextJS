@@ -1,0 +1,11 @@
+.button {
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.button > img {
+  margin-top: 2px;
+}

@@ -9,7 +9,10 @@ const { Footer: FooterAnt } = Layout;
 const Footer: FC = () => (
   <FooterAnt className={style.footer}>
     <div className="container">
-      <span className={style.copyright}>©FreeTalk 2022</span>
+      <span className={style.copyright}>
+        <span>FreeTalk, </span>
+        <a href="https://github.com/neandreev/freetalk-nextjs">Open-Source Project</a>
+      </span>
     </div>
   </FooterAnt>
 );

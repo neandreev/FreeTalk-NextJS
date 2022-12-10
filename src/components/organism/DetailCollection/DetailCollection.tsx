@@ -76,7 +76,7 @@ const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
     <>
       <Row>
         <Col span={24}>
-          <h1 className={`page__title ${styles.title}`}>
+          <h1 className={`page-title ${styles.title}`}>
             {selectedCollection?.title}
           </h1>
           <hr />
@@ -101,7 +101,7 @@ const DetailCollection: FC<{ data: Collection[]; pid: number }> = ({
         </Col>
         <Col style={{ marginTop: '10px' }}>
           <Button
-            className={`app-btn ${styles.btnCollections}`}
+            className={`app-btn ${styles['btn-collections']}`}
             onClick={handleBack}
           >
             Вернуться к коллекциям

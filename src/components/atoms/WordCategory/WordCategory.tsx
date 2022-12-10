@@ -39,7 +39,7 @@ const WordCategory: FC<IWordCategory> = ({ record, handleUpdateWord }) => {
       type="text"
       size="small"
       value={inputValue}
-      className={style.wordCategory_input}
+      className={style['word-category-input']}
       onChange={(e) => setInputValue(e.target.value)}
       onBlur={handleUpdate}
       onPressEnter={handleUpdate}
@@ -47,7 +47,7 @@ const WordCategory: FC<IWordCategory> = ({ record, handleUpdateWord }) => {
   ) : (
     <Tag
       icon={<EditOutlined style={{ color: 'var(--green)' }} />}
-      className={style.wordCategory_tag}
+      className={style['word-category-tag']}
       onClick={() => {
         setInputVisible(true);
       }}

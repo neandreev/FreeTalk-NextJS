@@ -1,5 +1,6 @@
 install:
 	pnpm install
+	pnpx prisma generate
 
 develop:
 	pnpm dev
@@ -16,3 +17,7 @@ bstart:
 
 lint:
 	npx eslint . --ext .js,.jsx,.ts,.tsx
+
+stylelint:
+	npx stylelint "**/*.css"
+

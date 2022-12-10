@@ -63,7 +63,7 @@ const CardTranslateRes: FC<TranslateCardI> = ({
 
   if (error)
     return (
-      <div className={styles.translateError}>
+      <div className={styles['translate-error']}>
         <h3 className={styles.title}>Сожалеем, перевод не найден</h3>
         <Empty description={false} />
       </div>
@@ -84,7 +84,7 @@ const CardTranslateRes: FC<TranslateCardI> = ({
       }
     >
       <Row justify="space-between" align="middle" wrap={false} gutter={[8, 8]}>
-        <Col className={styles.cardText}>
+        <Col className={styles['card-text']}>
           <p className={styles.translate}>
             <span className={styles.title}>EN:</span>
             {_capitalize(englishWord)}
@@ -95,10 +95,7 @@ const CardTranslateRes: FC<TranslateCardI> = ({
           </p>
         </Col>
         <Col>
-          <Button
-            className="app-btn _green"
-            onClick={handleAddWordToDictionary}
-          >
+          <Button className="app-btn green" onClick={handleAddWordToDictionary}>
             Добавить
           </Button>
         </Col>

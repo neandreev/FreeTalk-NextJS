@@ -1,12 +1,12 @@
 .footer {
-	text-align: center;
-	flex-shrink: 0;
-	background: var(--dark-text)!important;
+  text-align: center;
+  flex-shrink: 0;
+  background: var(--dark-text) !important;
 }
 
 .copyright {
-	margin-bottom: 0;
-	font-size: 16px;
-	letter-spacing: 0.04em;
-	color: var(--middle-gray);
+  margin-bottom: 0;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--middle-gray);
 }

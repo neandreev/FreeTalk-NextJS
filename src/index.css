@@ -1,156 +1,150 @@
-@import '~antd/dist/reset.css';
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import './styles/variables.css';
-@import './styles/btn.css';
-@import './styles/page.css';
+@import url('~antd/dist/reset.css');
+@import url('./styles/variables.css');
+@import url('./styles/btn.css');
+@import url('./styles/page.css');
 
-html, body {
-	height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 body {
-	margin: 0;
-	font-family: 'Roboto', sans-serif;
-	background-color: var(--light-gray)!important;
+  margin: 0;
+  background-color: var(--light-gray) !important;
 }
 
 #root {
   height: 100%;
 }
 
-.App {
-  height: 100%;
-}
-
 .header-navigation.ant-menu {
-	background: none;
+  background: none;
 }
 
 .header-navigation.ant-menu-horizontal {
-	border-bottom: none;
-}
-
-.header-navigation.ant-menu-horizontal > .ant-menu-item a {
-	letter-spacing: 0.06em;
-	color: var(--gray);
+  border-bottom: none;
 }
 
 .ant-menu-title-content::before {
-	display: none;
-}
-
-.header-navigation.ant-menu-horizontal > .ant-menu-item a:hover {
-	color: var(--dark-text);
-}
-
-.header-navigation.ant-menu-horizontal:not(.ant-menu-dark) >
-.ant-menu-item-selected::after {
-	border-bottom: 2px solid var(--blue);
-}
-
-.header-navigation.ant-menu-horizontal:not(.ant-menu-dark) >
-.ant-menu-item:hover:after {
-	border-bottom: 2px solid var(--dark-text);
-}
-
-.ant-menu-item::after {
-	display: none;
+  display: none;
 }
 
 .ant-menu-item-selected a {
-	color: var(--dark-text)!important;
+  color: var(--dark-text) !important;
+}
+
+.ant-menu-item::after {
+  display: none;
+}
+
+.header-navigation.ant-menu-horizontal > .ant-menu-item a {
+  letter-spacing: 0.06em;
+  color: var(--gray);
+}
+
+.header-navigation.ant-menu-horizontal > .ant-menu-item a:hover {
+  color: var(--dark-text);
+}
+
+.header-navigation.ant-menu-horizontal:not(.ant-menu-dark)
+  > .ant-menu-item-selected::after {
+  border-bottom: 2px solid var(--blue);
+}
+
+.header-navigation.ant-menu-horizontal:not(.ant-menu-dark)
+  > .ant-menu-item:hover::after {
+  border-bottom: 2px solid var(--dark-text);
 }
 
 .ant-layout-header {
-	padding: 0!important;
+  padding: 0 !important;
 }
 
 .quiz .ant-card-head-title {
-	text-align: center;
-	font-size: 22px;
+  text-align: center;
+  font-size: 22px;
 }
 
 .training {
-	width: 600px;
-	max-width: 600px;
+  width: 600px;
+  max-width: 600px;
 }
 
 .dictionary .ant-table-checkbox-cell,
 .dictionary .ant-table-cell.centered {
-	text-align: center;
+  text-align: center;
 }
 
 .dictionary .ant-table-cell {
-	padding: 16px 12px;
+  padding: 16px 12px;
 }
 
 .dictionary .ant-table-cell:first-child {
-	padding: 16px;
+  padding: 16px;
 }
 
 .dictionary .centered.ant-table-cell .ant-checkbox {
-	transform: matrix(1.35, 0, 0, 1.35, 0, 0);
+  transform: matrix(1.35, 0, 0, 1.35, 0, 0);
 }
 
 .dictionary .anticon-delete {
-	color: var(--gray);
-	transform: matrix(1.8, 0, 0, 1.8, 0, 0);
-
-	transition-property: color;
-	transition-duration: 0.3s;
+  color: var(--gray);
+  transform: matrix(1.8, 0, 0, 1.8, 0, 0);
+  transition-property: color;
+  transition-duration: 0.3s;
 }
 
 .dictionary .anticon-delete:hover {
-	color: red;
+  color: red;
 }
 
 .dictionary .ant-checkbox-checked .ant-checkbox-inner,
 .dictionary .ant-btn-primary {
-	background-color: var(--green);
+  background-color: var(--green);
 }
 
-.dictionary .app-btn._green._hover-red:hover {
-	background: red;
+.dictionary .app-btn.green.hover-red:hover {
+  background: red;
 }
 
-.card-description.ant-card{
-	padding-top: 15px;
+.card-description.ant-card {
+  padding-top: 15px;
 }
 
 .card-description .ant-card-body {
-	padding: 15px;
+  padding: 15px;
 }
 
-.card-description  div.ant-card-cover {
-	box-sizing: border-box;
-	width: 100%;
-	height: 150px;
-	margin: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	overflow: hidden;
+.card-description div.ant-card-cover {
+  box-sizing: border-box;
+  width: 100%;
+  height: 150px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .card-description img.card-cover {
-	width: auto;
-	height: 100%;
-	max-height: none;
+  width: auto;
+  height: 100%;
+  max-height: none;
 }
 
-.card-description .card-cover  {
-	width: auto;
-	max-width: 100%;
-	height: auto;
-	max-height: 100%;
+.card-description .card-cover {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
 }
 
 .card-description.ant-card-hoverable {
-	cursor: default;
+  cursor: default;
 }
 
 .quiz-stats {
-	max-width: 600px;
+  max-width: 600px;
 }
 
 .quiz-stats .ant-card-head-title {
@@ -158,62 +152,61 @@ body {
 }
 
 .quiz {
-	transition-property: all;
-	transition-duration: 0.3s;
+  transition-property: all;
+  transition-duration: 0.3s;
 }
 
 .card-translate-res {
-	width: 100%;
+  width: 100%;
 }
 
-.card-translate-res  div.ant-card-cover {
-	width: 100%;
-	height: 150px;
-	margin: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	overflow: hidden;
-	border-radius: 5px 5px 0 0;
+.card-translate-res div.ant-card-cover {
+  width: 100%;
+  height: 150px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
 }
 
 .card-translate-res img.card-cover {
-	width: 100%;
-	height: auto;
-	max-height: none;
+  width: 100%;
+  height: auto;
+  max-height: none;
 }
 
-.card-translate-res .card-cover  {
-	width: auto;
-	max-width: 100%;
-	height: auto;
-	max-height: 100%;
+.card-translate-res .card-cover {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
 }
 
 .card-translate-res .ant-card-body {
-	padding: 15px;
-
+  padding: 15px;
 }
 
-._disabled {
-	background-color: var(--button-blue-disabled)!important;
-	color: #fff;
+.disabled {
+  background-color: var(--button-blue-disabled) !important;
+  color: #fff;
 }
 
-.quizButton .ant-card-body {
-	padding: 12px;
+.quiz-button .ant-card-body {
+  padding: 12px;
 }
 
-.quizButton.ant-card-bordered .ant-card-cover {
-	margin: 0
+.quiz-button .ant-card-bordered .ant-card-cover {
+  margin: 0;
 }
 
-.quiz .quizButton_wrong {
-	background-color: #f88e86;
-	border-color: #f5564a;
+.quiz .quiz-button-wrong {
+  background-color: #f88e86;
+  border-color: #f5564a;
 }
 
-.quiz .quizButton_correct {
-	background-color: #87cd8a;
-	border-color: #4bb450;
+.quiz .quiz-button-correct {
+  background-color: #87cd8a;
+  border-color: #4bb450;
 }

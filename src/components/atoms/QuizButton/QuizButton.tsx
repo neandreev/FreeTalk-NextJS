@@ -72,16 +72,22 @@ const QuizButton: FC<IQuizButton> = ({ wordId, isCorrect }) => {
     setIsClicked(true);
   };
 
-  const coverStyles = cn(style.img, { [style.blurred]: !wasAnswered });
+  const imageStyles = cn(style.img, { [style.blurred]: !wasAnswered });
+  const coverStyles = cn(style['img-container'], {
+    [style.answered]: wasAnswered,
+  });
   const cover = (
-    <div className={cn(style.imgContainer, { [style.answered]: wasAnswered })}>
-      <Image className={coverStyles} src={word.image} alt={word.ru} fill />
+    <div className={coverStyles}>
+      <Image className={imageStyles} src={word.image} alt={word.ru} fill />
     </div>
   );
 
-  const cardStyles = cn('quizButton', {
-    quizButton_wrong: !isCorrect && isClicked,
-    quizButton_correct: isCorrect && isClicked,
+  const cardStyles = cn('quiz-button', {
+    'quiz-button-wrong': !isCorrect && isClicked,
+    'quiz-button-correct': isCorrect && isClicked,
+  });
+  const wordStyles = cn(style.word, {
+    [style['blurred-word']]: !wasAnswered,
   });
 
   return (
@@ -94,16 +100,12 @@ const QuizButton: FC<IQuizButton> = ({ wordId, isCorrect }) => {
     >
       <div>
         <div>
-          <span className={style.blueTitle}>RU:</span>
+          <span className={style['blue-word']}>RU:</span>
           <span>{word.ru}</span>
         </div>
         <div>
-          <span className={cn(style.blueTitle)}>EN:</span>
-          <span
-            className={cn(style.title, { [style.blurredTitle]: !wasAnswered })}
-          >
-            {word.en}
-          </span>
+          <span className={cn(style['blue-word'])}>EN:</span>
+          <span className={wordStyles}>{word.en}</span>
         </div>
       </div>
     </Card>

@@ -13,9 +13,9 @@ interface IWordStat {
 }
 
 const WordStat: FC<IWordStat> = ({ correct, word }) => {
-  const wordStyle = cn([style.wordStat], {
-    [style.wordStat_correct]: correct,
-    [style.wordStat_wrong]: !correct,
+  const wordStyle = cn([style['word-stat']], {
+    [style['word-stat-correct']]: correct,
+    [style['word-stat-wrong']]: !correct,
   });
 
   return (

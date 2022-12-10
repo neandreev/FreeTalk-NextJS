@@ -1,14 +1,14 @@
-.logoWrapper {
-	float: left;
+.logo-wrapper {
+  float: left;
 }
 
 @media (max-width: 768px) {
-	.logo {
-		display: none;
-	}
+  .logo {
+    display: none;
+  }
 }
 @media (min-width: 769px) {
-	.logoMobile {
-		display: none;
-	}
+  .logo-mobile {
+    display: none;
+  }
 }

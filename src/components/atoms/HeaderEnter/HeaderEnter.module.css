@@ -1,21 +1,20 @@
-.headerAction {
-	height: 100%;
-	float: right;
-	display: flex;
-	align-items: center;
-	padding-right: 10px;
+.header-action {
+  height: 100%;
+  float: right;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
 }
 
-.authBtn {
-	font-size: 14px;
-	line-height: 22px;
-	letter-spacing: 0.06em;
-	color: var(--gray);
-
-	cursor: pointer;
+.auth-btn {
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.06em;
+  color: var(--gray);
+  cursor: pointer;
 }
 
-.authBtn:hover {
-	font-weight: 500;
-	color: var(--dark-text);
+.auth-btn:hover {
+  font-weight: 500;
+  color: var(--dark-text);
 }

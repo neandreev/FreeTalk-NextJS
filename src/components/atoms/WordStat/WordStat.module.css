@@ -1,14 +1,13 @@
-.wordStat {
+.word-stat {
   text-align: center;
   font-weight: bold;
-
   font-size: 20px;
 }
 
-.wordStat_wrong {
+.word-stat-wrong {
   color: #ff8a8a;
 }
 
-.wordStat_correct {
+.word-stat-correct {
   color: #a9da60;
 }

@@ -21,23 +21,29 @@ const HeaderMenu: FC = () => {
     setCurrentKeyMenu(getCurrentKeyMenu(route));
   }, [route]);
 
+  const menuItems = [
+    {
+      key: '1',
+      label: <Link href="/dictionary">Словарь</Link>,
+    },
+    {
+      key: '2',
+      label: <Link href="/training">Тренировка</Link>,
+    },
+    {
+      key: '3',
+      label: <Link href="/collections">Коллекции</Link>,
+    },
+  ];
+
   return (
     <Menu
       mode="horizontal"
       className="header-navigation"
       defaultSelectedKeys={[]}
       selectedKeys={[currentKeyMenu]}
-    >
-      <Menu.Item className="navigation-item" key="1">
-        <Link href="/dictionary">Словарь</Link>
-      </Menu.Item>
-      <Menu.Item className="navigation-item" key="2">
-        <Link href="/training">Тренировка</Link>
-      </Menu.Item>
-      <Menu.Item className="navigation-item" key="3">
-        <Link href="/collections">Коллекции</Link>
-      </Menu.Item>
-    </Menu>
+      items={menuItems}
+    />
   );
 };
 

@@ -9,11 +9,11 @@ interface IRepeatTraining {
 }
 
 const RepeatTraining: FC<IRepeatTraining> = ({ handleReset }) => (
-  <Row justify="space-around" className={style.repeatTraining}>
+  <Row justify="space-around" className={style['repeat-training']}>
     <Col />
 
     <Col push={2}>
-      <Button className="app-btn _green" onClick={handleReset}>
+      <Button className="app-btn green" onClick={handleReset}>
         Вернуться к тренировке
       </Button>
     </Col>

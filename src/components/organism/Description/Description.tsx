@@ -40,10 +40,10 @@ const DESC_DATA = [
 
 const Description: FC = () => (
   <div className={styles.description}>
-    <h3 className={`page__title ${styles.title}`}>
+    <h3 className={`page-title ${styles.title}`}>
       Изучайте английский вместе с FreeTalk
     </h3>
-    <div className={styles.cardsWrapper}>
+    <div className={styles['cards-wrapper']}>
       {DESC_DATA.map((item) => (
         <Card
           key={item.title}
@@ -58,8 +58,8 @@ const Description: FC = () => (
           }
           className={`card-description ${styles.card}`}
         >
-          <h4 className={styles.cardTitle}>{item.title}</h4>
-          <p className={styles.cardDescription}>{item.description}</p>
+          <h4 className={styles['card-title']}>{item.title}</h4>
+          <p className={styles['card-description']}>{item.description}</p>
         </Card>
       ))}
     </div>

@@ -9,9 +9,9 @@ interface IQuizResponse {
 }
 
 const QuizResponse: FC<IQuizResponse> = ({ handleNextQuestion }) => (
-  <div className={style.quizFooter}>
+  <div className={style['quiz-footer']}>
     <AnswerInform />
-    <span className={style.quizNextWord} onClick={handleNextQuestion}>
+    <span className={style['quiz-next-word']} onClick={handleNextQuestion}>
       Следующее слово
     </span>
   </div>

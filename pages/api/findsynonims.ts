@@ -7,7 +7,7 @@ interface DatamuseMLI {
 }
 
 const findSynonims = async (word: string) => {
-  const result = await fetch(`https://api.datamuse.com/words?max=4&ml=${word}`);
+  const result = await fetch(`https://api.datamuse.com/words?max=2&ml=${word}`);
 
   const closeWordsData = (await result.json()) as DatamuseMLI[];
   const closeWords = closeWordsData.map((wordData) => wordData.word);

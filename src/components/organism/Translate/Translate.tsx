@@ -99,6 +99,14 @@ const Translate = () => {
   };
 
   useEffect(() => {
+    if (session) {
+      router.prefetch('/dictionary');
+      router.prefetch('/training');
+      router.prefetch('/collections');
+    }
+  }, [session, router]);
+
+  useEffect(() => {
     if (router.query.error === 'OAuthAccountNotLinked') {
       message.error({
         content:

@@ -5,7 +5,7 @@ import plural from 'plural-ru';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 
-import { Checkbox, Col, Grid, Row, Space } from 'antd';
+import { Checkbox, Col, Grid, Row, Space, Divider } from 'antd';
 
 import { LearningWord } from '@prisma/client';
 import WordCategory from '@/components/atoms/WordCategory';
@@ -41,9 +41,14 @@ const ExpandableInfo: FC<IExpandableInfo> = ({
 
   return (
     <>
-      <Row justify="space-between" gutter={[8, 8]} align="middle" wrap={false}>
-        <Col style={{ textAlign: 'start' }} span={12}>
-          {!breakpoint.md && (
+      {!breakpoint.md && (
+        <Row
+          justify="space-between"
+          gutter={[8, 8]}
+          align="middle"
+          wrap={false}
+        >
+          <Col style={{ textAlign: 'start' }} span={12}>
             <Space>
               <span>Категория:</span>
               <WordCategory
@@ -51,10 +56,9 @@ const ExpandableInfo: FC<IExpandableInfo> = ({
                 handleUpdateWord={onUpdateCategory}
               />
             </Space>
-          )}
-        </Col>
-        <Col style={{ textAlign: 'start' }} span={12}>
-          {!breakpoint.md && (
+          </Col>
+          <Divider type="vertical" />
+          <Col style={{ textAlign: 'start' }} span={12}>
             <Space>
               <span>Изучено:</span>
               <Checkbox
@@ -62,10 +66,11 @@ const ExpandableInfo: FC<IExpandableInfo> = ({
                 onClick={() => onUpdateStatus([record.id])}
               />
             </Space>
-          )}
-        </Col>
-      </Row>
-      {record.learned ? null : (
+          </Col>
+        </Row>
+      )}
+      {!record.learned && !breakpoint.md && <Divider />}
+      {!record.learned && (
         <Row
           justify="space-between"
           gutter={[8, 8]}
@@ -77,6 +82,7 @@ const ExpandableInfo: FC<IExpandableInfo> = ({
               Кол-во повторений: {getWordsRepeatsPlural(record.completedTrains)}
             </span>
           </Col>
+          <Divider type="vertical" />
           <Col span={12}>
             <span>
               <span>Доступно в тренировке с: </span>

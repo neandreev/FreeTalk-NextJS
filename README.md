@@ -41,9 +41,8 @@
 	- В отличие от популярных ORM, Prisma позволяет описывать модели приложения декларативно и просто (в форме [Prisma Schema](https://www.prisma.io/docs/concepts/components/prisma-schema))
 	- Описывал модели приложения через Prisma, я также автоматически получаю их TypeScript типы, что приятно)
 - [Redux RTK Query](https://redux-toolkit.js.org/rtk-query/overview) ==> [tRPC](https://trpc.io)
-	- Server-Side Rendering не имел бы никакой пользы если бы я не мог производить префетчинг данных перед выдачей страницы пользователю, а RTK Query по своей природе этого не умеет
-	- tRPC же в свою очередь может работать на сервере, а также нативно работает с NextJS
-	- TypeScript-совместим
+	- TypeSafe API из коробки
 - [Redux Toolkit](https://redux-toolkit.js.org) ==> [Zustand](https://github.com/pmndrs/zustand)
 	- RTK Query больше не нужен, а он - очень большой довод в пользу Redux
 	- Zustang позволяет писать store'ы с намного меньшим boilerplate-кодом, при этом не лишая основного функционала redux
+	- Весит всего ~1Kb

@@ -2,6 +2,7 @@
   "name": "freetalk",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@next-auth/prisma-adapter": "^1.0.3",

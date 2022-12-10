@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { Col, Row, message } from 'antd';
 
@@ -23,6 +24,7 @@ const wordIsDublicated = (en: string, data: LearningWord[]) => {
 };
 
 const Translate = () => {
+  const router = useRouter();
   const utils = trpc.useContext();
   const { data: session } = useSession();
   const email = session?.user?.email || null;
@@ -95,6 +97,24 @@ const Translate = () => {
     setWord(translateRequest);
     setToLang(toLang);
   };
+
+  useEffect(() => {
+    if (session) {
+      router.prefetch('/dictionary');
+      router.prefetch('/training');
+      router.prefetch('/collections');
+    }
+  }, [session, router]);
+
+  useEffect(() => {
+    if (router.query.error === 'OAuthAccountNotLinked') {
+      message.error({
+        content:
+          'Не удалось авторизоваться: почта, привязанная к аккаунту, через который вы пытались войти, уже подключена к другому аккаунту.',
+        duration: 5,
+      });
+    }
+  }, [router.query.error]);
 
   useEffect(() => () => controller.abort(), [controller]);
 

@@ -25,6 +25,15 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/',
+  },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      return baseUrl;
+    },
+  },
 };
 
 export default NextAuth(authOptions);

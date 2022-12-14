@@ -18,7 +18,7 @@ const findWordImage = async (word: string) => {
 
     const json = await response.json();
 
-    const imageUrl = json.results[0]?.urls?.small || undefinedUrl;
+    const imageUrl = json.results[0]?.urls?.regular || undefinedUrl;
 
     return { data: imageUrl, error: null };
   } catch (e) {

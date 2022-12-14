@@ -21,10 +21,18 @@ const CardTranslateRes: FC<TranslateCardI> = ({
   signal,
   onAddWordToDictionary,
 }) => {
-  const fetcher = (url: string) =>
-    fetch(url, { signal }).then((res) => res.json());
+  const fetcher = async (url: string) => {
+    const res = await fetch(url, { signal });
 
-  const { data, error } = useSWR(
+    if (!res.ok) {
+      const error = new Error('An error occurred while fetching the data.');
+      throw error;
+    }
+
+    return res.json();
+  };
+
+  const { data, error, isLoading } = useSWR(
     `/api/translate?words=${word}&tolang=${toLang}`,
     fetcher
   );
@@ -32,8 +40,11 @@ const CardTranslateRes: FC<TranslateCardI> = ({
   const [englishWord, russianWord] =
     toLang === 'ru' ? [word, data?.translation] : [data?.translation, word];
 
-  const imageURL = useSWR(`/api/findimage?word=${englishWord}`, fetcher).data
-    ?.imageUrl;
+  const {
+    data: imageData,
+    error: imageError,
+    isLoading: isImageLoading,
+  } = useSWR(`/api/findimage?word=${englishWord}`, fetcher);
 
   const learningWord: IWord = useMemo(
     () => ({
@@ -43,9 +54,9 @@ const CardTranslateRes: FC<TranslateCardI> = ({
       learned: false,
       timeToTrain: Date.now(),
       completedTrains: 0,
-      imageURL,
+      imageURL: imageData?.imageUrl,
     }),
-    [englishWord, russianWord, imageURL]
+    [englishWord, russianWord, imageData]
   );
 
   const handleAddWordToDictionary = useCallback(
@@ -53,19 +64,19 @@ const CardTranslateRes: FC<TranslateCardI> = ({
     [onAddWordToDictionary, learningWord]
   );
 
-  if (!data)
-    return (
-      <div className={styles.loading}>
-        <h3 className={styles.title}>Ищем перевод ...</h3>
-        <Spin className={styles.spin} size="large" />
-      </div>
-    );
-
-  if (error)
+  if (error || imageError)
     return (
       <div className={styles['translate-error']}>
         <h3 className={styles.title}>Сожалеем, перевод не найден</h3>
         <Empty description={false} />
+      </div>
+    );
+
+  if (isLoading || isImageLoading)
+    return (
+      <div className={styles.loading}>
+        <h3 className={styles.title}>Ищем перевод ...</h3>
+        <Spin className={styles.spin} size="large" />
       </div>
     );
 
@@ -77,8 +88,9 @@ const CardTranslateRes: FC<TranslateCardI> = ({
           <Image
             className={styles['card-image']}
             alt={russianWord}
-            src={imageURL}
+            src={imageData.imageUrl}
             fill
+            sizes="25vw"
           />
         </div>
       }

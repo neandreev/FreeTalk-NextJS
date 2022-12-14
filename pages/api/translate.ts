@@ -10,30 +10,38 @@ const translateWords = async (word: string, translateTo: string) => {
     targetLanguageCode: translateTo,
   };
 
-  const translateResponse = await fetch(
-    'https://translate.api.cloud.yandex.net/translate/v2/translate',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Api-Key ${SECRET}`,
-      },
-      mode: 'no-cors',
-      body: JSON.stringify(translateData),
-      // signal,
-    }
-  );
+  try {
+    const translateResponse = await fetch(
+      'https://translate.api.cloud.yandex.net/translate/v2/translate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Api-Key ${SECRET}`,
+        },
+        mode: 'no-cors',
+        body: JSON.stringify(translateData),
+        // signal,
+      }
+    );
 
-  const json = await translateResponse.json();
+    const json = await translateResponse.json();
 
-  return json.translations[0].text;
+    return { data: json.translations[0].text, error: null };
+  } catch (e) {
+    return { data: null, error: e };
+  }
 };
 
 const translateAPI = async (req: NextApiRequest, res: NextApiResponse) => {
   const queries = req.query as { words: string; tolang: string };
-  const translation = await translateWords(queries.words, queries.tolang);
+  const translateData = await translateWords(queries.words, queries.tolang);
 
-  res.status(200).json({ translation });
+  if (translateData.error !== null) {
+    res.status(502).json({ error: translateData.error });
+  } else {
+    res.status(200).json({ translation: translateData.data });
+  }
 };
 
 export default translateAPI;

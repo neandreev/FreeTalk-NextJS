@@ -7,19 +7,25 @@ interface DatamuseMLI {
 }
 
 const findSynonims = async (word: string) => {
-  const result = await fetch(`https://api.datamuse.com/words?max=2&ml=${word}`);
+  try {
+    const result = await fetch(
+      `https://api.datamuse.com/words?max=2&rel_syn=${word}`
+    );
 
-  const closeWordsData = (await result.json()) as DatamuseMLI[];
-  const closeWords = closeWordsData.map((wordData) => wordData.word);
+    const closeWordsData = (await result.json()) as DatamuseMLI[];
+    const closeWords = closeWordsData.map((wordData) => wordData.word);
 
-  return closeWords;
+    return { data: closeWords, error: null };
+  } catch (e) {
+    return { data: [], error: e };
+  }
 };
 
 const findSynonimsAPI = async (req: NextApiRequest, res: NextApiResponse) => {
   const queries = req.query as { word: string };
-  const wordSynonims = await findSynonims(queries.word);
+  const wordSynonimsData = await findSynonims(queries.word);
 
-  res.status(200).json({ wordSynonims });
+  res.status(200).json({ wordSynonims: wordSynonimsData.data });
 };
 
 export default findSynonimsAPI;

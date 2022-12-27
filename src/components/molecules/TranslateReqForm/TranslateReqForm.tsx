@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 
-import { Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 
 const { Option } = Select;
 
@@ -55,23 +55,27 @@ const TranslateReqForm: FC<ITranslateReqForm> = ({
     </Form.Item>
   );
 
+  const submitButton = (
+    <Form.Item name="TranslateDirection" noStyle>
+      <Button size="small" type="link" htmlType="submit">
+        Перевести
+      </Button>
+    </Form.Item>
+  );
+
   return (
     <Form
       form={form}
       onFinish={onFinish}
       style={{ width: '100%' }}
       initialValues={{ TranslateDirection: directTranslate }}
-      onKeyPress={(e) => {
-        if (e.key === 'Enter') {
-          form.submit();
-        }
-      }}
     >
       <Form.Item name="TranslateRequest">
         <Input
           placeholder="Введите слово ..."
           size="large"
           addonBefore={prefixSelector}
+          addonAfter={submitButton}
           // disabled={disabled}
           autoComplete="off"
         />
